@@ -1,3 +1,5 @@
+package homework01;
+
 /**
  * Test for your ArrayStorage implementation
  */
