@@ -29,12 +29,12 @@ public class MainArray {
                 case "list":
                     printAll();
                     break;
-                case "size":
-                    System.out.println(ARRAY_STORAGE.size());
+                case "sizeStorage":
+                    System.out.println(ARRAY_STORAGE.sizeStorage());
                     break;
                 case "save":
                     r = new Resume();
-                    r.uuid = uuid;
+                    r.setUuid(uuid);
                     ARRAY_STORAGE.save(r);
                     printAll();
                     break;

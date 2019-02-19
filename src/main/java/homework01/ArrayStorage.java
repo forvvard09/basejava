@@ -6,46 +6,47 @@ import java.util.Arrays;
  * Class ArrayStorage based storage for Resume.
  *
  * @author Sergei Poddubniak (forvvard09@gmail.com)
- * @version 1.0
+ * @version 2.0
  * @since 18.02.2019
  */
 public class ArrayStorage {
 
-    /**
-     * property array Resume based storage.
-     */
     private Resume[] storage;
-    /**
-     * property index save count resume in storage.
-     */
     private int index;
-
-    /**
-     * property default size SimpleArrayList.
-     */
     private static final int COUNT_ELEMENTS = 10_000;
 
-    /**
-     * Constructor it creates container with the specified values.
-     *
-     */
     public ArrayStorage() {
-        this.storage = new Resume[COUNT_ELEMENTS];
-        this.index = 0;
+        storage = new Resume[COUNT_ELEMENTS];
+        index = 0;
     }
 
     /**
-     * Method checks profile on tanking.
-     *@param uuid - uuid for resume
+     * Method is cleaning storage.
      *
      */
-    private boolean isDuplicates(String uuid) {
+    public void clear() {
         for (int i = 0; i < index; i++) {
-            if (this.storage[i].getUuid().equals(uuid)) {
-                return true;
-            }
+            storage[i] = null;
         }
-        return false;
+        index = 0;
+    }
+
+    public void save(Resume newResume) {
+        if (index != 0) {
+            if (-1 == getIndex(newResume.getUuid())) {
+                storage[index++] = newResume;
+            }
+        } else {
+            storage[index++] = newResume;
+        }
+    }
+
+    public Resume get(String uuid) {
+        int indexGet = getIndex(uuid);
+        if (indexGet != -1) {
+            return storage[indexGet];
+        }
+        return null;
     }
 
     /**
@@ -55,13 +56,18 @@ public class ArrayStorage {
      */
     private int getIndex(String uuid) {
         for (int i = 0; i < index; i++) {
-            if (this.storage[i].getUuid().equals(uuid)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
         }
-        int result = -1;
-        return result;
+        return -1;
+    }
 
+    public void delete(String uuid) {
+        int indexDelElement = getIndex(uuid);
+        if (indexDelElement != -1) {
+            removeElementsWithSaveStructure(indexDelElement);
+        }
     }
 
     /**
@@ -70,94 +76,22 @@ public class ArrayStorage {
      *
      */
     private void removeElementsWithSaveStructure(int indexRemove) {
-        Resume[] copiedSourceStorage = Arrays.copyOf(this.storage, this.storage.length);
+        //Resume[] copiedSourceStorage = Arrays.copyOf(storage, storage.length);
         if (0 == indexRemove) {
-            System.arraycopy(copiedSourceStorage, ++indexRemove, this.storage, 0, this.size() -1);
-        } else if (indexRemove == size() - 1 || indexRemove == this.storage.length - 1) {
-            this.storage[indexRemove] = null;
+            System.arraycopy(storage, ++indexRemove, storage, 0, sizeStorage() -1);
+        } else if (indexRemove == sizeStorage() - 1 || indexRemove == storage.length - 1) {
+            storage[indexRemove] = null;
         } else {
-            System.arraycopy(copiedSourceStorage, ++indexRemove, this.storage, --indexRemove, size() - ++indexRemove);
+            System.arraycopy(storage, ++indexRemove, storage, --indexRemove, sizeStorage() - ++indexRemove);
         }
-        this.index--;
+        index--;
     }
 
-    /**
-     * Method is cleaning storage.
-     *
-     */
-    public void clear() {
-        for (int i = 0; i < index; i++) {
-            this.storage[i] = null;
-        }
-        this.index = 0;
-    }
-
-    /**
-     * Method is adding new resume to storage.
-     *
-     * @param newResume new resume
-     *
-     * @return result add
-     */
-    public boolean save(Resume newResume) {
-        boolean result = false;
-        if (this.index != 0) {
-            if (!isDuplicates(newResume.uuid)) {
-                this.storage[this.index++] = newResume;
-                result = true;
-            }
-
-        } else {
-            this.storage[this.index++] = newResume;
-            result = true;
-        }
-        return result;
-    }
-
-    /**
-     * Method return resume by uuid.
-     *
-     * @param uuid id resume
-     *
-     * @return resume or null, if resume dont search
-     */
-    public Resume get(String uuid) {
-        int indexGet = getIndex(uuid);
-        if (indexGet != -1) {
-            return this.storage[indexGet];
-        }
-        return null;
-    }
-
-    /**
-     * Method remove resume by uuid.
-     *
-     * @param uuid id resume
-     *
-     */
-    public void delete(String uuid) {
-        int getIndex = getIndex(uuid);
-        if (getIndex != -1) {
-            removeElementsWithSaveStructure(getIndex);
-        }
-    }
-
-    /**
-     * Method return resume all resumes.
-     *
-     * @return array, contains only Resumes in storage (without null)
-     */
     public Resume[] getAll() {
-        Resume[] resultAllResume = Arrays.stream(this.storage).limit(index).toArray(size -> new Resume[index]);
-        return resultAllResume;
+        return Arrays.stream(storage).limit(index).toArray(size -> new Resume[index]);
     }
 
-    /**
-     * Method return count of resume.
-     *
-     * @return count resume
-     */
-    public int size() {
-        return this.index;
+    public int sizeStorage() {
+        return index;
     }
 }
