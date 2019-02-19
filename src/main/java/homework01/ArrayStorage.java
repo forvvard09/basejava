@@ -49,6 +49,14 @@ public class ArrayStorage {
         return null;
     }
 
+
+    public void delete(String uuid) {
+        int indexDelElement = getIndex(uuid);
+        if (indexDelElement != -1) {
+            removeElementsWithSaveStructure(indexDelElement);
+        }
+    }
+
     /**
      * Method return index resume by uuid, if it is in the store or -1 if it is not.
      *@param uuid - uuid for resume
@@ -61,13 +69,6 @@ public class ArrayStorage {
             }
         }
         return -1;
-    }
-
-    public void delete(String uuid) {
-        int indexDelElement = getIndex(uuid);
-        if (indexDelElement != -1) {
-            removeElementsWithSaveStructure(indexDelElement);
-        }
     }
 
     /**
