@@ -42,9 +42,9 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int indexGet = getIndex(uuid);
-        if (indexGet != -1) {
-            return storage[indexGet];
+        int index = getIndex(uuid);
+        if (index != -1) {
+            return storage[index];
         }
         return null;
     }
@@ -76,13 +76,12 @@ public class ArrayStorage {
      *
      */
     private void removeElementsWithSaveStructure(int indexRemove) {
-        //Resume[] copiedSourceStorage = Arrays.copyOf(storage, storage.length);
         if (0 == indexRemove) {
-            System.arraycopy(storage, ++indexRemove, storage, 0, sizeStorage() -1);
-        } else if (indexRemove == sizeStorage() - 1 || indexRemove == storage.length - 1) {
+            System.arraycopy(storage, ++indexRemove, storage, 0, index -1);
+        } else if (indexRemove == index - 1 || indexRemove == storage.length - 1) {
             storage[indexRemove] = null;
         } else {
-            System.arraycopy(storage, ++indexRemove, storage, --indexRemove, sizeStorage() - ++indexRemove);
+            System.arraycopy(storage, ++indexRemove, storage, --indexRemove, index - ++indexRemove);
         }
         index--;
     }
