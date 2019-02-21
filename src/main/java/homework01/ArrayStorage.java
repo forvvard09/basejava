@@ -20,19 +20,30 @@ public class ArrayStorage {
         index = 0;
     }
 
-    /**
-     * Method is cleaning storage.
-     *
-     */
-    public void clear() {
-        for (int i = 0; i < index; i++) {
-            storage[i] = null;
-        }
+    public ArrayStorage(int sizeStorage) {
+        storage = new Resume[sizeStorage];
         index = 0;
     }
 
+    /**
+     * Method is cleaning storage.
+     */
+    public void clear() {
+        if (index == 0) {
+            System.out.println("Storage Empty.");
+        } else {
+            for (int i = 0; i < index; i++) {
+                storage[i] = null;
+            }
+            index = 0;
+        }
+    }
+
     public void save(Resume newResume) {
-        if (index != 0) {
+        if (storage.length == index) {
+            System.out.println("Error. Unable to add resume, storage perforated.");
+        }
+        else if (index != 0) {
             if (-1 == getIndex(newResume.getUuid())) {
                 storage[index++] = newResume;
             }
@@ -46,6 +57,7 @@ public class ArrayStorage {
         if (index != -1) {
             return storage[index];
         }
+        System.out.println("Resume not found in storage.");
         return null;
     }
 
@@ -54,13 +66,25 @@ public class ArrayStorage {
         int indexDelElement = getIndex(uuid);
         if (indexDelElement != -1) {
             removeElementsWithSaveStructure(indexDelElement);
+        } else {
+            System.out.println("Resume not found in storage.");
         }
     }
 
+    public void update(String uuid, Resume newResume) {
+        int index = getIndex(uuid);
+           if (index == -1) {
+              System.out.println("Resume not found in storage.");
+           } else if (getIndex(newResume.getUuid()) == -1) {
+               storage[index] = newResume;
+             }
+    }
+
+
     /**
      * Method return index resume by uuid, if it is in the store or -1 if it is not.
-     *@param uuid - uuid for resume
      *
+     * @param uuid - uuid for resume
      */
     private int getIndex(String uuid) {
         for (int i = 0; i < index; i++) {
@@ -73,12 +97,12 @@ public class ArrayStorage {
 
     /**
      * Method remove element from storage with preservation of structure.
-     *@param indexRemove - index resume for remove
      *
+     * @param indexRemove - index resume for remove
      */
     private void removeElementsWithSaveStructure(int indexRemove) {
         if (0 == indexRemove) {
-            System.arraycopy(storage, ++indexRemove, storage, 0, index -1);
+            System.arraycopy(storage, ++indexRemove, storage, 0, index - 1);
         } else if (indexRemove == index - 1 || indexRemove == storage.length - 1) {
             storage[indexRemove] = null;
         } else {
