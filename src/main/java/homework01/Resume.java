@@ -12,6 +12,7 @@ public class Resume {
     private String uuid;
     private String description;
 
+
     public Resume(String inputUuid, String inputDescription) {
         uuid = inputUuid;
         description = inputDescription;
@@ -19,11 +20,19 @@ public class Resume {
 
     public Resume() {
         uuid = getRandomUuid();
-        description = null;
+        description = "default description";
     }
 
     final private String getRandomUuid() {
         return String.valueOf(((int) (Math.random() * 999)));
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getUuid() {
@@ -36,6 +45,6 @@ public class Resume {
 
     @Override
     public String toString() {
-        return uuid;
+        return String.format("%s: %s;", uuid, description);
     }
 }

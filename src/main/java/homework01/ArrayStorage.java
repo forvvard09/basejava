@@ -42,8 +42,7 @@ public class ArrayStorage {
     public void save(Resume newResume) {
         if (storage.length == index) {
             System.out.println("Error. Unable to add resume, storage perforated.");
-        }
-        else if (index != 0) {
+        } else if (index != 0) {
             if (-1 == getIndex(newResume.getUuid())) {
                 storage[index++] = newResume;
             }
@@ -71,13 +70,13 @@ public class ArrayStorage {
         }
     }
 
-    public void update(String uuid, Resume newResume) {
-        int index = getIndex(uuid);
-           if (index == -1) {
-              System.out.println("Resume not found in storage.");
-           } else if (getIndex(newResume.getUuid()) == -1) {
-               storage[index] = newResume;
-             }
+    public void update(Resume newResume) {
+        int index = getIndex(newResume.getUuid());
+        if (index == -1) {
+            System.out.println("Resume not found in storage.");
+        } else {
+            storage[index].setDescription(newResume.getDescription());
+        }
     }
 
 

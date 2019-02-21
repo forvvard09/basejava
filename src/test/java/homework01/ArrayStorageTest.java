@@ -22,7 +22,16 @@ public class ArrayStorageTest {
         MainTestArrayStorage.printAll(arrayStorage);
 
         //test update method
-        arrayStorage.update("1", new Resume("999", "newTest"));
+        Resume newResume = new Resume("1", "newDescription");
+        Resume newTestResume = new Resume("333", "newDescription");
+        System.out.println();
+
+        //message is not search resume
+        arrayStorage.update(newTestResume);
+
+        //update resume
+        arrayStorage.update(newResume);
+
         MainTestArrayStorage.printAll(arrayStorage);
     }
 }
