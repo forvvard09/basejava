@@ -10,41 +10,18 @@ package homework01;
 public class Resume {
 
     private String uuid;
-    private String description;
 
-
-    public Resume(String inputUuid, String inputDescription) {
-        uuid = inputUuid;
-        description = inputDescription;
-    }
-
-    public Resume() {
-        uuid = getRandomUuid();
-        description = "default description";
-    }
-
-    final private String getRandomUuid() {
-        return String.valueOf(((int) (Math.random() * 999)));
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public String getUuid() {
         return uuid;
     }
 
     public void setUuid(String inUuid) {
-         uuid = inUuid;
+        uuid = inUuid;
     }
 
     @Override
     public String toString() {
-        return String.format("%s: %s;", uuid, description);
+        return uuid;
     }
 }

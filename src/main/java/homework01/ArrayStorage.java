@@ -12,43 +12,42 @@ import java.util.Arrays;
 public class ArrayStorage {
 
     private Resume[] storage;
-    private int index;
+    private int size;
     private static final int COUNT_ELEMENTS = 10_000;
 
     public ArrayStorage() {
         storage = new Resume[COUNT_ELEMENTS];
-        index = 0;
-    }
-
-    public ArrayStorage(int sizeStorage) {
-        storage = new Resume[sizeStorage];
-        index = 0;
+        size = 0;
     }
 
     /**
      * Method is cleaning storage.
      */
     public void clear() {
-        if (index == 0) {
-            System.out.println("Storage Empty.");
-        } else {
-            for (int i = 0; i < index; i++) {
+        if (size != 0) {
+            for (int i = 0; i < size; i++) {
                 storage[i] = null;
             }
-            index = 0;
+            size = 0;
         }
     }
 
     public void save(Resume newResume) {
-        if (storage.length == index) {
-            System.out.println("Error. Unable to add resume, storage perforated.");
-        } else if (index != 0) {
-            if (-1 == getIndex(newResume.getUuid())) {
-                storage[index++] = newResume;
+        if (!isFullStorage()) {
+            if (getIndex(newResume.getUuid()) != -1) {
+                System.out.println("Error. A resume with such uuid already exists.");
+            } else {
+                storage[size++] = newResume;
             }
-        } else {
-            storage[index++] = newResume;
         }
+    }
+
+    private boolean isFullStorage() {
+        if (size == storage.length) {
+            System.out.println("Error is adding. Storage is full");
+            return true;
+        }
+        return false;
     }
 
     public Resume get(String uuid) {
@@ -64,57 +63,42 @@ public class ArrayStorage {
     public void delete(String uuid) {
         int indexDelElement = getIndex(uuid);
         if (indexDelElement != -1) {
-            removeElementsWithSaveStructure(indexDelElement);
+            storage[indexDelElement] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         } else {
-            System.out.println("Resume not found in storage.");
+            System.out.println("Resume for del not found in storage.");
         }
+    }
+
+    public Resume[] getAll() {
+        return Arrays.copyOfRange(storage, 0, size);
+    }
+
+    public int sizeStorage() {
+        return size;
     }
 
     public void update(Resume newResume) {
         int index = getIndex(newResume.getUuid());
-        if (index == -1) {
-            System.out.println("Resume not found in storage.");
+        if (index != -1) {
+            storage[index] = newResume;
         } else {
-            storage[index].setDescription(newResume.getDescription());
+            System.out.println("Resume for update not found in storage.");
         }
     }
 
-
     /**
-     * Method return index resume by uuid, if it is in the store or -1 if it is not.
+     * Method return size resume by uuid, if it is in the store or -1 if it is not.
      *
      * @param uuid - uuid for resume
      */
     private int getIndex(String uuid) {
-        for (int i = 0; i < index; i++) {
+        for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
         }
         return -1;
-    }
-
-    /**
-     * Method remove element from storage with preservation of structure.
-     *
-     * @param indexRemove - index resume for remove
-     */
-    private void removeElementsWithSaveStructure(int indexRemove) {
-        if (0 == indexRemove) {
-            System.arraycopy(storage, ++indexRemove, storage, 0, index - 1);
-        } else if (indexRemove == index - 1 || indexRemove == storage.length - 1) {
-            storage[indexRemove] = null;
-        } else {
-            System.arraycopy(storage, ++indexRemove, storage, --indexRemove, index - ++indexRemove);
-        }
-        index--;
-    }
-
-    public Resume[] getAll() {
-        return Arrays.stream(storage).limit(index).toArray(size -> new Resume[index]);
-    }
-
-    public int sizeStorage() {
-        return index;
     }
 }
