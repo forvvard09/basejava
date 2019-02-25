@@ -1,4 +1,4 @@
-package homework01;
+package app;
 
 /**
  * Class Resume initialisation resume class.
@@ -8,16 +8,14 @@ package homework01;
  * @since 18.02.2019
  */
 public class Resume {
-
     private String uuid;
-
 
     public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(String inUuid) {
-        uuid = inUuid;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     @Override

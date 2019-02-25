@@ -1,4 +1,4 @@
-package homework01;
+package app;
 
 import java.util.Arrays;
 
@@ -20,9 +20,6 @@ public class ArrayStorage {
         size = 0;
     }
 
-    /**
-     * Method is cleaning storage.
-     */
     public void clear() {
         if (size != 0) {
             for (int i = 0; i < size; i++) {
@@ -33,22 +30,15 @@ public class ArrayStorage {
     }
 
     public void save(Resume newResume) {
-        if (!isFullStorage()) {
-            if (getIndex(newResume.getUuid()) != -1) {
-                System.out.println("Error. A resume with such uuid already exists.");
-            } else {
-                storage[size++] = newResume;
-            }
-        }
-    }
-
-    private boolean isFullStorage() {
         if (size == storage.length) {
             System.out.println("Error is adding. Storage is full");
-            return true;
-        }
-        return false;
+        } else if (getIndex(newResume.getUuid()) != -1) {
+            System.out.println("Error. A resume with such uuid already exists.");
+          } else {
+              storage[size++] = newResume;
+            }
     }
+
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
@@ -75,7 +65,7 @@ public class ArrayStorage {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    public int sizeStorage() {
+    public int getSize() {
         return size;
     }
 
