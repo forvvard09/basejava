@@ -1,4 +1,4 @@
-package app;
+package main.java.app;
 
 import java.util.Arrays;
 
@@ -34,9 +34,9 @@ public class ArrayStorage {
             System.out.println("Error is adding. Storage is full");
         } else if (getIndex(newResume.getUuid()) != -1) {
             System.out.println("Error. A resume with such uuid already exists.");
-          } else {
-              storage[size++] = newResume;
-            }
+        } else {
+            storage[size++] = newResume;
+        }
     }
 
 
