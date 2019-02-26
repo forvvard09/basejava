@@ -1,4 +1,6 @@
-package main.java.app;
+package main.java.app.storage;
+
+import main.java.app.model.Resume;
 
 import java.util.Arrays;
 
@@ -9,11 +11,12 @@ import java.util.Arrays;
  * @version 2.0
  * @since 18.02.2019
  */
-public class ArrayStorage {
+public class ArrayStorage implements Storage {
 
+    private static final int COUNT_ELEMENTS = 1000;
     private Resume[] storage;
     private int size;
-    private static final int COUNT_ELEMENTS = 10_000;
+
 
     public ArrayStorage() {
         storage = new Resume[COUNT_ELEMENTS];
@@ -21,16 +24,13 @@ public class ArrayStorage {
     }
 
     public void clear() {
-        if (size != 0) {
-            for (int i = 0; i < size; i++) {
-                storage[i] = null;
-            }
-            size = 0;
-        }
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
+
     }
 
     public void save(Resume newResume) {
-        if (size == storage.length) {
+        if (size == COUNT_ELEMENTS) {
             System.out.println("Error is adding. Storage is full");
         } else if (getIndex(newResume.getUuid()) != -1) {
             System.out.println("Error. A resume with such uuid already exists.");

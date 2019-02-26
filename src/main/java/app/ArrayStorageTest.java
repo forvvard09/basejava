@@ -1,5 +1,8 @@
 package main.java.app;
 
+import main.java.app.model.Resume;
+import main.java.app.storage.ArrayStorage;
+
 /**
  * Test for ArrayStorage.
  *
