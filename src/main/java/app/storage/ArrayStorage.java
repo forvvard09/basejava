@@ -11,23 +11,13 @@ import java.util.Arrays;
  * @version 2.0
  * @since 18.02.2019
  */
-public class ArrayStorage implements Storage {
-
-    private static final int COUNT_ELEMENTS = 1000;
-    private Resume[] storage;
-    private int size;
-
+public class ArrayStorage extends AbstractArrayStorage {
 
     public ArrayStorage() {
         storage = new Resume[COUNT_ELEMENTS];
         size = 0;
     }
 
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
-
-    }
 
     public void save(Resume newResume) {
         if (size == COUNT_ELEMENTS) {
@@ -37,16 +27,6 @@ public class ArrayStorage implements Storage {
         } else {
             storage[size++] = newResume;
         }
-    }
-
-
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index != -1) {
-            return storage[index];
-        }
-        System.out.println("Resume not found in storage.");
-        return null;
     }
 
 
@@ -65,10 +45,6 @@ public class ArrayStorage implements Storage {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    public int getSize() {
-        return size;
-    }
-
     public void update(Resume newResume) {
         int index = getIndex(newResume.getUuid());
         if (index != -1) {
@@ -78,12 +54,17 @@ public class ArrayStorage implements Storage {
         }
     }
 
+    public void clear() {
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
+    }
+
     /**
      * Method return size resume by uuid, if it is in the store or -1 if it is not.
      *
      * @param uuid - uuid for resume
      */
-    private int getIndex(String uuid) {
+    protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
