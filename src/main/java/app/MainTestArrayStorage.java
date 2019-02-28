@@ -2,12 +2,13 @@ package main.java.app;
 
 import main.java.app.model.Resume;
 import main.java.app.storage.ArrayStorage;
+import main.java.app.storage.Storage;
 
 /**
  * Test for your ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    private static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    private static final Storage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
         final Resume r1 = new Resume();
@@ -36,7 +37,7 @@ public class MainTestArrayStorage {
         System.out.println("Size: " + ARRAY_STORAGE.getSize());
     }
 
-    private static void printAll(ArrayStorage arrayStorage) {
+    private static void printAll(Storage arrayStorage) {
         System.out.println("\nGet All");
         for (Resume r : arrayStorage.getAll()) {
             System.out.println(r);

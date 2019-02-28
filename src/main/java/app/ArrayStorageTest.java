@@ -1,7 +1,8 @@
 package main.java.app;
 
 import main.java.app.model.Resume;
-import main.java.app.storage.ArrayStorage;
+import main.java.app.storage.SortedArrayStorage;
+import main.java.app.storage.Storage;
 
 /**
  * Test for ArrayStorage.
@@ -11,22 +12,18 @@ import main.java.app.storage.ArrayStorage;
  * @since 21.02.2019
  */
 public class ArrayStorageTest {
-
-
     public static void main(String[] args) {
-
-        ArrayStorage arrayStorage = new ArrayStorage();
+        Storage storage = new SortedArrayStorage();
         for (int i = 0; i < 10000; i++) {
             Resume resume = new Resume();
             resume.setUuid(String.valueOf(i));
-            arrayStorage.save(resume);
+            storage.save(resume);
         }
 
-        System.out.println(arrayStorage.getSize());
+        System.out.println(storage.getSize());
         //we receive a message that the storage is full
-        arrayStorage.save(new Resume());
-        arrayStorage.clear();
-        System.out.println(arrayStorage.getSize());
+        storage.save(new Resume());
+        storage.clear();
+        System.out.println(storage.getSize());
     }
-
 }
