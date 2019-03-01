@@ -23,6 +23,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
             storage[index] = null;
         } else {
             System.arraycopy(storage, index + 1, storage, index, size - index - 1);
+            storage[size - 1] = null;
         }
     }
 
