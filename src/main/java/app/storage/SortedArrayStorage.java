@@ -8,16 +8,12 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void insertToStorage(int index, Resume newResume) {
-        if (size == 0) {
+        index = -index - 1;
+        if (index == size) {
             storage[size] = newResume;
-        } else if (index < 0) {
-            index = -1 * index - 1;
-            if (index == size) {
-                storage[index] = newResume;
-            } else {
-                System.arraycopy(storage, index, storage, index + 1, size - index);
-                storage[index] = newResume;
-            }
+        } else {
+            System.arraycopy(storage, index, storage, index + 1, size - index);
+            storage[index] = newResume;
         }
     }
 
@@ -26,7 +22,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         if (index == size - 1) {
             storage[index] = null;
         } else {
-            System.arraycopy(storage, index + 1, storage, index, size - 1);
+            System.arraycopy(storage, index + 1, storage, index, size - index - 1);
         }
     }
 

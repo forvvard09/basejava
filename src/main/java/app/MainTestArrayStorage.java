@@ -1,14 +1,14 @@
 package main.java.app;
 
 import main.java.app.model.Resume;
-import main.java.app.storage.ArrayStorage;
+import main.java.app.storage.SortedArrayStorage;
 import main.java.app.storage.Storage;
 
 /**
  * Test for your ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    private static final Storage ARRAY_STORAGE = new ArrayStorage();
+    private static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
         final Resume r1 = new Resume();
