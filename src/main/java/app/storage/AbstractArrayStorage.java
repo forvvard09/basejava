@@ -1,5 +1,8 @@
 package main.java.app.storage;
 
+import main.java.app.exception.ExistStorageException;
+import main.java.app.exception.NotExistStorageException;
+import main.java.app.exception.StorageException;
 import main.java.app.model.Resume;
 
 import java.util.Arrays;
@@ -13,11 +16,11 @@ public abstract class AbstractArrayStorage implements Storage {
     @Override
     public void save(Resume newResume) {
         if (size == COUNT_ELEMENTS) {
-            System.out.println("Error is adding. Storage is full");
+            throw new StorageException("Error is adding. Storage is full.", newResume.getUuid());
         } else {
             int searchIndex = getIndex(newResume.getUuid());
             if (searchIndex >= 0) {
-                System.out.println("Error. A resume with such uuid already exists.");
+                throw new ExistStorageException(newResume.getUuid());
             } else {
                 insertToStorage(searchIndex, newResume);
                 size++;
@@ -42,7 +45,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             storage[index] = newResume;
         } else {
-            System.out.println("Resume for update not found in storage.");
+            throw new NotExistStorageException(newResume.getUuid());
         }
     }
 
@@ -54,7 +57,7 @@ public abstract class AbstractArrayStorage implements Storage {
             storage[size - 1] = null;
             size--;
         } else {
-            System.out.println("Resume for del not found in storage.");
+            throw new NotExistStorageException(uuid);
         }
     }
 
@@ -69,8 +72,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             return storage[index];
         }
-        System.out.println("Resume not found in storage.");
-        return null;
+        throw new NotExistStorageException(uuid);
     }
 
     protected abstract void removeFromStorage(int index);

@@ -18,7 +18,6 @@ public class ArrayStorageTest {
         ArrayStorage arrayStorage = new ArrayStorage();
         for (int i = 0; i < 10000; i++) {
             Resume resume = new Resume();
-            resume.setUuid(String.valueOf(i));
             arrayStorage.save(resume);
         }
 

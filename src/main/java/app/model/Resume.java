@@ -1,6 +1,7 @@
 package main.java.app.model;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Class Resume initialisation resume class.
@@ -10,14 +11,18 @@ import java.util.Objects;
  * @since 18.02.2019
  */
 public class Resume implements Comparable<Resume> {
-    private String uuid;
+    private final String uuid;
+
+    public Resume() {
+        this(UUID.randomUUID().toString());
+    }
+
+    public Resume(String uuid) {
+        this.uuid = uuid;
+    }
 
     public String getUuid() {
         return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     @Override
