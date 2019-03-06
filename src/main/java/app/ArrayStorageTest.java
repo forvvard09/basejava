@@ -27,5 +27,4 @@ public class ArrayStorageTest {
         arrayStorage.clear();
         System.out.println(arrayStorage.getSize());
     }
-
 }

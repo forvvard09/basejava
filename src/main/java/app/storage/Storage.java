@@ -17,5 +17,4 @@ public interface Storage {
     void clear();
 
     int getSize();
-
 }
