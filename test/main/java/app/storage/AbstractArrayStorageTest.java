@@ -10,7 +10,7 @@ import org.junit.Test;
 
 
 public abstract class AbstractArrayStorageTest {
-    private Storage storage;
+    private final Storage storage;
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
@@ -36,8 +36,8 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void save() {
         storage.save(RESUME_TEST);
-        Assert.assertEquals(4, storage.getSize());
         Assert.assertEquals(RESUME_TEST, storage.get(RESUME_TEST.getUuid()));
+        getSize(4);
     }
 
     @Test(expected = ExistStorageException.class)
@@ -69,7 +69,7 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void clear() {
         storage.clear();
-        Assert.assertEquals(0, storage.getSize());
+        getSize(0);
     }
 
     @Test
@@ -87,9 +87,8 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete(UUID_1);
-        Assert.assertEquals(2, storage.getSize());
+        getSize(2);
         storage.get(UUID_1);
-
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -99,7 +98,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void getSize() {
-        Assert.assertEquals(3, storage.getSize());
+        getSize(3);
     }
 
     @Test
@@ -110,5 +109,9 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() {
         storage.get(TEST_UID);
+    }
+
+    private void getSize(int extendedSize) {
+        Assert.assertEquals(extendedSize, storage.getSize());
     }
 }
