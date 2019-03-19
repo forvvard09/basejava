@@ -52,7 +52,6 @@ public abstract class AbstractArrayStorageTest {
         try {
             for (int i = 0; i < AbstractArrayStorage.COUNT_ELEMENTS; i++) {
                 storage.save(new Resume(String.valueOf(i)));
-
             }
         } catch (StorageException ste) {
             Assert.fail("Unexpected overflow occurred storage.");
@@ -72,6 +71,7 @@ public abstract class AbstractArrayStorageTest {
         Assert.assertEquals(0, storage.getSize());
     }
 
+
     @Test
     public void update() {
         Resume r = new Resume(UUID_1);
@@ -79,10 +79,12 @@ public abstract class AbstractArrayStorageTest {
         Assert.assertSame(r, storage.get(r.getUuid()));
     }
 
+
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
         storage.update(RESUME_TEST);
     }
+
 
     @Test(expected = NotExistStorageException.class)
     public void delete() {
