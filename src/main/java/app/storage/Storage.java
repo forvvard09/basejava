@@ -4,13 +4,13 @@ import main.java.app.model.Resume;
 
 public interface Storage {
 
-    void save(Resume resume);
+    void save(final Resume resume);
 
-    Resume get(String uuid);
+    Resume get(final String uuid);
 
-    void delete(String uuid);
+    void delete(final String uuid);
 
-    void update(Resume newResume);
+    void update(final Resume newResume);
 
     void clear();
 

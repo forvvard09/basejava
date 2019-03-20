@@ -26,7 +26,7 @@ public class Resume implements Comparable<Resume> {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
@@ -44,7 +44,7 @@ public class Resume implements Comparable<Resume> {
     }
 
     @Override
-    public int compareTo(Resume o) {
+    public int compareTo(final Resume o) {
         return uuid.compareTo(o.uuid);
     }
 }

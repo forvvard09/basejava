@@ -7,34 +7,30 @@ import java.util.List;
 
 public class ListStorage extends AbstractStorage {
 
-    private List<Resume> listStorage;
-
-    public ListStorage() {
-        this.listStorage = new ArrayList();
-    }
+    private final List<Resume> listStorage = new ArrayList<>();
 
     @Override
-    protected void saveToStorage(Object position, Resume newResume) {
+    protected void saveToStorage(final Object position, final Resume newResume) {
         listStorage.add(newResume);
     }
 
     @Override
-    protected Resume getFromStorage(Object position) {
+    protected Resume getFromStorage(final Object position) {
         return listStorage.get((int) position);
     }
 
     @Override
-    protected void updateInStorage(Object position, Resume newResume) {
+    protected void updateInStorage(final Object position, final Resume newResume) {
         listStorage.set((int) position, newResume);
     }
 
     @Override
-    protected void deleteFromStorage(Object position) {
+    protected void deleteFromStorage(final Object position) {
         listStorage.remove((int) position);
     }
 
     @Override
-    protected Object searchPositionInStorage(String uuid) {
+    protected Object searchPositionInStorage(final String uuid) {
         for (int i = 0; i < listStorage.size(); i++) {
             if (listStorage.get(i).getUuid().equals(uuid)) {
                 return i;

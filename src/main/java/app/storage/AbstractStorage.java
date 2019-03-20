@@ -7,56 +7,52 @@ import main.java.app.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     @Override
-    public void save(Resume newResume) {
-        Integer location = (Integer) searchPositionInStorage(newResume.getUuid());
-        if (isStorage(location)) {
+    public void save(final Resume newResume) {
+        Integer position = (Integer) searchPositionInStorage(newResume.getUuid());
+        if (checkPresence(position)) {
             throw new ExistStorageException(newResume.getUuid());
         }
-        saveToStorage(location, newResume);
+        saveToStorage(position, newResume);
     }
 
     @Override
-    public void update(Resume newResume) {
+    public void update(final Resume newResume) {
         Integer location = (Integer) searchPositionInStorage(newResume.getUuid());
-        if (!isStorage(location)) {
+        if (!checkPresence(location)) {
             throw new NotExistStorageException(newResume.getUuid());
         }
         updateInStorage(location, newResume);
     }
 
     @Override
-    public void delete(String uuid) {
-        Integer location = (Integer) searchPositionInStorage(uuid);
-        if (!isStorage(location)) {
+    public void delete(final String uuid) {
+        Integer position = (Integer) searchPositionInStorage(uuid);
+        if (!checkPresence(position)) {
             throw new NotExistStorageException(uuid);
         }
-        deleteFromStorage(location);
+        deleteFromStorage(position);
     }
 
     @Override
-    public Resume get(String uuid) {
-        Integer location = (Integer) searchPositionInStorage(uuid);
-        if (!isStorage(location)) {
+    public Resume get(final String uuid) {
+        Integer position = (Integer) searchPositionInStorage(uuid);
+        if (!checkPresence(position)) {
             throw new NotExistStorageException(uuid);
         }
-        return getFromStorage(location);
+        return getFromStorage(position);
     }
 
-    private boolean isStorage(int index) {
-        boolean result = false;
-        if (index >= 0) {
-            result = true;
-        }
-        return result;
+    private boolean checkPresence(final int index) {
+        return index >= 0;
     }
 
-    protected abstract void saveToStorage(Object position, Resume newResume);
+    protected abstract void saveToStorage(final Object position, final Resume newResume);
 
-    protected abstract Resume getFromStorage(Object position);
+    protected abstract Resume getFromStorage(final Object position);
 
-    protected abstract void updateInStorage(Object position, Resume newResume);
+    protected abstract void updateInStorage(final Object position, final Resume newResume);
 
-    protected abstract void deleteFromStorage(Object position);
+    protected abstract void deleteFromStorage(final Object position);
 
-    protected abstract Object searchPositionInStorage(String uuid);
+    protected abstract Object searchPositionInStorage(final String uuid);
 }

@@ -13,7 +13,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 
     @Override
-    protected void saveToStorage(Object position, Resume newResume) {
+    protected void saveToStorage(final Object position, final Resume newResume) {
         if (size == COUNT_ELEMENTS) {
             throw new StorageException("Error is adding. Storage is full.", newResume.getUuid());
         } else {
@@ -24,25 +24,20 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getFromStorage(Object position) {
+    protected Resume getFromStorage(final Object position) {
         return storage[(int) position];
     }
 
     @Override
-    protected void updateInStorage(Object position, Resume newResume) {
+    protected void updateInStorage(final Object position, final Resume newResume) {
         storage[(int) position] = newResume;
     }
 
     @Override
-    protected void deleteFromStorage(Object position) {
+    protected void deleteFromStorage(final Object position) {
         removeFromStorage((int) position);
         storage[size - 1] = null;
         size--;
-    }
-
-    @Override
-    protected Object searchPositionInStorage(String uuid) {
-        return getIndex(uuid);
     }
 
     @Override
@@ -61,9 +56,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    protected abstract int getIndex(String uuid);
 
-    protected abstract void insertToStorage(int searchIndex, Resume newResume);
+    protected abstract void insertToStorage(final int searchIndex, final Resume newResume);
 
-    protected abstract void removeFromStorage(int index);
+    protected abstract void removeFromStorage(final int index);
 }

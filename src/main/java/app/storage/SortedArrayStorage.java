@@ -7,13 +7,13 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected int getIndex(String uuid) {
+    protected Object searchPositionInStorage(String uuid) {
         Resume searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 
     @Override
-    protected void insertToStorage(int index, Resume newResume) {
+    protected void insertToStorage(int index, final Resume newResume) {
         index = -index - 1;
         if (index == size) {
             storage[size] = newResume;
@@ -24,7 +24,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void removeFromStorage(int index) {
+    protected void removeFromStorage(final int index) {
         if (index == size - 1) {
             storage[index] = null;
         } else {
