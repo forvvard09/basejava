@@ -5,6 +5,13 @@ import main.java.app.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class MapStorage based storage for Resume use List.
+ *
+ * @author Sergei Poddubniak (forvvard09@gmail.com)
+ * @version 2.0
+ * @since 28.03.2019
+ */
 public class ListStorage extends AbstractStorage {
 
     private final List<Resume> listStorage = new ArrayList<>();
@@ -30,7 +37,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object searchPositionInStorage(final String uuid) {
+    protected Object getPosition(final String uuid) {
         for (int i = 0; i < listStorage.size(); i++) {
             if (listStorage.get(i).getUuid().equals(uuid)) {
                 return i;
@@ -53,4 +60,10 @@ public class ListStorage extends AbstractStorage {
     public Resume[] getAll() {
         return listStorage.toArray(new Resume[0]);
     }
+
+    @Override
+    protected boolean checkPresence(Object position) {
+        return (Integer) position != -1;
+    }
+
 }

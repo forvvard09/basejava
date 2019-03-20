@@ -8,7 +8,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(final Resume newResume) {
-        Integer position = (Integer) searchPositionInStorage(newResume.getUuid());
+        Object position = getPosition(newResume.getUuid());
         if (checkPresence(position)) {
             throw new ExistStorageException(newResume.getUuid());
         }
@@ -17,16 +17,16 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void update(final Resume newResume) {
-        Integer location = (Integer) searchPositionInStorage(newResume.getUuid());
-        if (!checkPresence(location)) {
+        Object position = getPosition(newResume.getUuid());
+        if (!checkPresence(position)) {
             throw new NotExistStorageException(newResume.getUuid());
         }
-        updateInStorage(location, newResume);
+        updateInStorage(position, newResume);
     }
 
     @Override
     public void delete(final String uuid) {
-        Integer position = (Integer) searchPositionInStorage(uuid);
+        Object position = getPosition(uuid);
         if (!checkPresence(position)) {
             throw new NotExistStorageException(uuid);
         }
@@ -35,24 +35,26 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public Resume get(final String uuid) {
-        Integer position = (Integer) searchPositionInStorage(uuid);
+        Object position = getPosition(uuid);
         if (!checkPresence(position)) {
             throw new NotExistStorageException(uuid);
         }
         return getFromStorage(position);
     }
 
-    private boolean checkPresence(final int index) {
-        return index >= 0;
-    }
 
-    protected abstract void saveToStorage(final Object position, final Resume newResume);
+    protected abstract void saveToStorage(Object position, Resume newResume);
 
-    protected abstract Resume getFromStorage(final Object position);
+    protected abstract Resume getFromStorage(Object position);
 
-    protected abstract void updateInStorage(final Object position, final Resume newResume);
+    protected abstract void updateInStorage(Object position, Resume newResume);
 
-    protected abstract void deleteFromStorage(final Object position);
+    protected abstract void deleteFromStorage(Object position);
 
-    protected abstract Object searchPositionInStorage(final String uuid);
+    protected abstract Object getPosition(String uuid);
+
+    protected abstract boolean checkPresence(Object position);
+
+
+
 }

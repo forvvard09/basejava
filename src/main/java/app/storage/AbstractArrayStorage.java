@@ -7,10 +7,8 @@ import java.util.Arrays;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int COUNT_ELEMENTS = 10_000;
-
     protected Resume[] storage = new Resume[COUNT_ELEMENTS];
     protected int size = 0;
-
 
     @Override
     protected void saveToStorage(final Object position, final Resume newResume) {
@@ -19,7 +17,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         } else {
             insertToStorage((int) position, newResume);
         }
-
         size++;
     }
 
@@ -47,6 +44,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
+    protected boolean checkPresence(Object position) {
+        return (Integer) position >= 0;
+    }
+
+    @Override
     public int getSize() {
         return size;
     }
@@ -56,8 +58,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
+    protected abstract void insertToStorage(int searchIndex, Resume newResume);
 
-    protected abstract void insertToStorage(final int searchIndex, final Resume newResume);
-
-    protected abstract void removeFromStorage(final int index);
+    protected abstract void removeFromStorage(int index);
 }
