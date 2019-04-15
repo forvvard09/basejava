@@ -16,7 +16,6 @@ import java.util.Map;
 public class MapStorage extends AbstractStorage {
 
     private final Map<String, Resume> mapStorage = new HashMap<>();
-    private final static String NOT_FOUND = "not found";
 
     @Override
     protected void saveToStorage(final Object position, final Resume newResume) {
@@ -39,11 +38,8 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected final String getPosition(final String uuid) {
-        if (mapStorage.get(uuid) != null) {
+    protected final Object getPosition(final String uuid) {
             return uuid;
-        }
-        return NOT_FOUND;
     }
 
     @Override
@@ -65,6 +61,6 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected boolean checkPresence(final Object position) {
-        return !position.equals(NOT_FOUND);
+        return mapStorage.containsKey(position.toString());
     }
 }
