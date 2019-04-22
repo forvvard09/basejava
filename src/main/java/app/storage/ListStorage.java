@@ -17,7 +17,7 @@ public class ListStorage extends AbstractStorage {
     private final List<Resume> listStorage = new ArrayList<>();
 
     @Override
-    protected void saveToStorage(final Object position, final Resume newResume) {
+    protected void doSave(final Object position, final Resume newResume) {
         listStorage.add(newResume);
     }
 
@@ -27,12 +27,12 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateInStorage(final Object position, final Resume newResume) {
+    protected void doUpdate(final Object position, final Resume newResume) {
         listStorage.set((int) position, newResume);
     }
 
     @Override
-    protected void deleteFromStorage(final Object position) {
+    protected void doDelete(final Object position) {
         listStorage.remove((int) position);
     }
 
@@ -62,7 +62,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean checkPresence(Object position) {
+    protected boolean isExist(Object position) {
         return (Integer) position != -1;
     }
 

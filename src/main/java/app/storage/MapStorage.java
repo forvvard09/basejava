@@ -18,7 +18,7 @@ public class MapStorage extends AbstractStorage {
     private final Map<String, Resume> mapStorage = new HashMap<>();
 
     @Override
-    protected void saveToStorage(final Object position, final Resume newResume) {
+    protected void doSave(final Object position, final Resume newResume) {
         mapStorage.put(newResume.getUuid(), newResume);
     }
 
@@ -28,12 +28,12 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateInStorage(final Object position, final Resume newResume) {
+    protected void doUpdate(final Object position, final Resume newResume) {
         mapStorage.put(newResume.getUuid(), newResume);
     }
 
     @Override
-    protected void deleteFromStorage(final Object position) {
+    protected void doDelete(final Object position) {
         mapStorage.remove(position.toString());
     }
 
@@ -60,7 +60,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean checkPresence(final Object position) {
+    protected boolean isExist(final Object position) {
         return mapStorage.containsKey(position.toString());
     }
 }

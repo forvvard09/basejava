@@ -6,12 +6,17 @@ import main.java.app.model.Resume;
 import java.util.Arrays;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
+
     protected static final int COUNT_ELEMENTS = 10_000;
     protected Resume[] storage = new Resume[COUNT_ELEMENTS];
     protected int size = 0;
 
+
+    protected abstract void insertToStorage(int searchIndex, Resume newResume);
+    protected abstract void removeFromStorage(int index);
+
     @Override
-    protected void saveToStorage(final Object position, final Resume newResume) {
+    protected void doSave(final Object position, final Resume newResume) {
         if (size == COUNT_ELEMENTS) {
             throw new StorageException("Error is adding. Storage is full.", newResume.getUuid());
         } else {
@@ -26,12 +31,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateInStorage(final Object position, final Resume newResume) {
+    protected void doUpdate(final Object position, final Resume newResume) {
         storage[(int) position] = newResume;
     }
 
     @Override
-    protected void deleteFromStorage(final Object position) {
+    protected void doDelete(final Object position) {
         removeFromStorage((int) position);
         storage[size - 1] = null;
         size--;
@@ -44,7 +49,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean checkPresence(Object position) {
+    protected boolean isExist(Object position) {
         return (Integer) position >= 0;
     }
 
@@ -57,8 +62,4 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
-
-    protected abstract void insertToStorage(int searchIndex, Resume newResume);
-
-    protected abstract void removeFromStorage(int index);
 }
