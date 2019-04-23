@@ -10,9 +10,8 @@ import java.util.UUID;
  * @version 2.0
  * @since 18.02.2019
  */
-public class Resume {
+public class Resume implements Comparable<Resume> {
     private final String uuid;
-    //private final String fulName;
 
 
     public Resume() {
@@ -43,5 +42,10 @@ public class Resume {
     @Override
     public String toString() {
         return uuid;
+    }
+
+    @Override
+    public int compareTo(final Resume o) {
+        return uuid.compareTo(o.uuid);
     }
 }

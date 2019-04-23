@@ -29,25 +29,20 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
 
     // анонимный класс
-    /*
+
     @Override
     protected Object getPosition(String uuid) {
         Resume searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey, RESUME_COMPARATOR);
     }
 
-    private static final Comparator<Resume> RESUME_COMPARATOR = new Comparator<Resume>() {
-        @Override
-        public int compare(Resume o1, Resume o2) {
-            return o1.getUuid().compareTo(o2.getUuid());
-        }
-    };
-    */
+    private static final Comparator<Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
+
 
     // ----------------------------------------------------------------------
 
     // анонимный класс
-
+    /*
     @Override
     protected Object getPosition(String uuid) {
         Resume searchKey = new Resume(uuid);
@@ -58,6 +53,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
             }
         });
     }
+    */
 
     @Override
     protected void insertToStorage(int index, final Resume newResume) {
@@ -69,6 +65,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
             storage[index] = newResume;
         }
     }
+
 
     @Override
     protected void removeFromStorage(final int index) {
