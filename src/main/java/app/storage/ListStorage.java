@@ -3,6 +3,8 @@ package main.java.app.storage;
 import main.java.app.model.Resume;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -57,13 +59,14 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return listStorage.toArray(new Resume[0]);
+    public List<Resume> getAllSorted() {
+        Collections.sort(listStorage);
+        return listStorage;
     }
 
     @Override
-    protected boolean isExist(Object position) {
-        return (Integer) position != -1;
+    protected boolean isExist(Object key) {
+        return (Integer) key != -1;
     }
 
 }

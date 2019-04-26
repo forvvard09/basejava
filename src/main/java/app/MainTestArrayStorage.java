@@ -8,35 +8,35 @@ import main.java.app.storage.Storage;
  * Test for your ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    private static final Storage ARRAY_STORAGE = new ArrayStorage();
+    private static final Storage STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
         final Resume r1 = new Resume("uuid1");
         final Resume r2 = new Resume("uuid2");
         final Resume r3 = new Resume("uuid3");
 
-        ARRAY_STORAGE.save(r1);
-        ARRAY_STORAGE.save(r2);
-        ARRAY_STORAGE.save(r3);
+        STORAGE.save(r1);
+        STORAGE.save(r2);
+        STORAGE.save(r3);
 
 
-        System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
-        System.out.println("Size: " + ARRAY_STORAGE.getSize());
+        System.out.println("Get r1: " + STORAGE.get(r1.getUuid()));
+        System.out.println("Size: " + STORAGE.getSize());
 
-        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
+        System.out.println("Get dummy: " + STORAGE.get("dummy"));
 
-        printAll(ARRAY_STORAGE);
-        ARRAY_STORAGE.delete(r1.getUuid());
-        printAll(ARRAY_STORAGE);
-        ARRAY_STORAGE.clear();
-        printAll(ARRAY_STORAGE);
+        printAll(STORAGE);
+        STORAGE.delete(r1.getUuid());
+        printAll(STORAGE);
+        STORAGE.clear();
+        printAll(STORAGE);
 
-        System.out.println("Size: " + ARRAY_STORAGE.getSize());
+        System.out.println("Size: " + STORAGE.getSize());
     }
 
-    private static void printAll(Storage arrayStorage) {
+    private static void printAll(Storage storage) {
         System.out.println("\nGet All");
-        for (Resume r : arrayStorage.getAll()) {
+        for (Resume r : storage.getAllSorted()) {
             System.out.println(r);
         }
     }

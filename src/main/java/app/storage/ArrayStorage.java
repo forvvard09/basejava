@@ -2,6 +2,10 @@ package main.java.app.storage;
 
 import main.java.app.model.Resume;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Class ArrayStorage based storage for Resume.
  *
@@ -29,5 +33,15 @@ public class ArrayStorage extends AbstractArrayStorage {
     @Override
     protected void removeFromStorage(final int index) {
         storage[index] = storage[size - 1];
+    }
+
+    @Override
+    protected List<Resume> getSortedList() {
+        List<Resume> listResumes = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            listResumes.add(storage[i]);
+        }
+        Collections.sort(listResumes);
+        return listResumes;
     }
 }

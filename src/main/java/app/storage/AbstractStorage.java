@@ -6,6 +6,18 @@ import main.java.app.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
+    protected abstract void doSave(Object position, Resume newResume);
+
+    protected abstract Resume getFromStorage(Object position);
+
+    protected abstract void doUpdate(Object position, Resume newResume);
+
+    protected abstract void doDelete(Object position);
+
+    protected abstract Object getPosition(String uuid);
+
+    protected abstract boolean isExist(Object key);
+
     @Override
     public void save(final Resume newResume) {
         Object position = getExistedPosition(newResume.getUuid());
@@ -31,31 +43,18 @@ public abstract class AbstractStorage implements Storage {
     }
 
     private Object getExistedPosition(String uuid) {
-        Object searchKey = getPosition(uuid);
-        if (isExist(searchKey)) {
+        Object position = getPosition(uuid);
+        if (isExist(position)) {
             throw new ExistStorageException(uuid);
         }
-        return searchKey;
+        return position;
     }
 
     private Object getNotExistedPosition(String uuid) {
-        Object searchKey = getPosition(uuid);
-        if (!isExist(searchKey)) {
+        Object position = getPosition(uuid);
+        if (!isExist(position)) {
             throw new NotExistStorageException(uuid);
         }
-        return searchKey;
+        return position;
     }
-
-    protected abstract void doSave(Object position, Resume newResume);
-
-    protected abstract Resume getFromStorage(Object position);
-
-    protected abstract void doUpdate(Object position, Resume newResume);
-
-    protected abstract void doDelete(Object position);
-
-    protected abstract Object getPosition(String uuid);
-
-    protected abstract boolean isExist(Object position);
-
 }

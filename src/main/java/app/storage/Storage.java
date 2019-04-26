@@ -2,6 +2,8 @@ package main.java.app.storage;
 
 import main.java.app.model.Resume;
 
+import java.util.List;
+
 public interface Storage {
 
     void save(final Resume resume);
@@ -16,5 +18,5 @@ public interface Storage {
 
     int getSize();
 
-    Resume[] getAll();
+    List<Resume> getAllSorted();
 }

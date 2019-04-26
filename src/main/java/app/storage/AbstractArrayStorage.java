@@ -3,7 +3,10 @@ package main.java.app.storage;
 import main.java.app.exception.StorageException;
 import main.java.app.model.Resume;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
 
@@ -14,6 +17,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract void insertToStorage(int searchIndex, Resume newResume);
     protected abstract void removeFromStorage(int index);
+    protected abstract List<Resume> getSortedList();
 
     @Override
     protected void doSave(final Object position, final Resume newResume) {
@@ -49,8 +53,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object position) {
-        return (Integer) position >= 0;
+    protected boolean isExist(Object key) {
+        return (Integer) key >= 0;
     }
 
     @Override
@@ -59,7 +63,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
+    public List<Resume> getAllSorted() {
+        return getSortedList();
     }
 }
