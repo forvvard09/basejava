@@ -19,10 +19,13 @@ public abstract class AbstractStorageTest {
     protected static final String UUID_2 = "uuid2";
     protected static final String UUID_3 = "uuid3";
     protected static final String TEST_UID = "testUuid";
-    protected static final Resume RESUME_ONE = new Resume(UUID_1);
-    protected static final Resume RESUME_TWO = new Resume(UUID_2);
-    protected static final Resume RESUME_THREE = new Resume(UUID_3);
-    protected static final Resume RESUME_TEST = new Resume(TEST_UID);
+    protected static final String TEST_NAME = "testName";
+
+
+    protected static final Resume RESUME_ONE = new Resume(UUID_1, TEST_NAME);
+    protected static final Resume RESUME_TWO = new Resume(UUID_2, TEST_NAME);
+    protected static final Resume RESUME_THREE = new Resume(UUID_3, TEST_NAME);
+    protected static final Resume RESUME_TEST = new Resume(TEST_UID, TEST_NAME);
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -45,7 +48,7 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = ExistStorageException.class)
     public void saveExistStorage() {
-        Resume resume = new Resume(UUID_1);
+        Resume resume = new Resume(UUID_1, TEST_NAME);
         storage.save(resume);
     }
 
@@ -64,7 +67,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume r = new Resume(UUID_1);
+        Resume r = new Resume(UUID_1, TEST_NAME);
         storage.update((r));
         Assert.assertSame(r, storage.get(r.getUuid()));
     }

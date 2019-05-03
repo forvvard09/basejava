@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Class MapStorage based storage for Resume use List.
+ * Class MapKeyUuidStorage based storage for Resume use List.
  *
  * @author Sergei Poddubniak (forvvard09@gmail.com)
  * @version 2.0
@@ -19,23 +19,23 @@ public class ListStorage extends AbstractStorage {
     private final List<Resume> listStorage = new ArrayList<>();
 
     @Override
-    protected void doSave(final Object position, final Resume newResume) {
+    protected void doSave(final Object searchKey, final Resume newResume) {
         listStorage.add(newResume);
     }
 
     @Override
-    protected Resume getFromStorage(final Object position) {
-        return listStorage.get((int) position);
+    protected Resume getFromStorage(final Object searchKey) {
+        return listStorage.get((int) searchKey);
     }
 
     @Override
-    protected void doUpdate(final Object position, final Resume newResume) {
-        listStorage.set((int) position, newResume);
+    protected void doUpdate(final Object searchKey, final Resume newResume) {
+        listStorage.set((int) searchKey, newResume);
     }
 
     @Override
-    protected void doDelete(final Object position) {
-        listStorage.remove((int) position);
+    protected void doDelete(final Object searchKey) {
+        listStorage.remove((int) searchKey);
     }
 
     @Override
@@ -65,8 +65,13 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object key) {
-        return (Integer) key != -1;
+    protected List<Resume> doGetListResume() {
+        return listStorage;
+    }
+
+    @Override
+    protected boolean isExist(Object searchKey) {
+        return (Integer) searchKey != -1;
     }
 
 }

@@ -9,59 +9,12 @@ import java.util.List;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-
-    // вложеный  класс (статический)
-    /*
-    @Override
-    protected Object getPosition(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return Arrays.binarySearch(storage, 0, size, searchKey, ResumeComparator);
-    }
-
-    private static final ResumeComparator RESUME_COMPARATOR = new ResumeComparator();
-
-    private static final class ResumeComparator implements Comparator<Resume> {
-
-        @Override
-        public int compare(Resume o1, Resume o2) {
-            return o1.getUuid().compareTo(o2.getUuid());
-        }
-    }
-    */
-
-    // анонимный класс
-    /*
-    @Override
-    protected Object getPosition(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return Arrays.binarySearch(storage, 0, size, searchKey, new Comparator<Resume>() {
-            @Override
-            public int compare(Resume o1, Resume o2) {
-                return o1.getUuid().compareTo(o2.getUuid());
-            }
-        });
-    }
-    */
-
-
-    // анонимный класс и лямбды
-
-    /*
-    @Override
-    protected Object getPosition(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return Arrays.binarySearch(storage, 0, size, searchKey, new RESUME_COMPARATOR);
-    }
-
     private static final Comparator<Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
 
-     */
-    // ----------------------------------------------------------------------
-
     @Override
     protected Object getPosition(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return Arrays.binarySearch(storage, 0, size, searchKey);
+        Resume searchIndex = new Resume(uuid, "template");
+        return Arrays.binarySearch(storage, 0, size, searchIndex, RESUME_COMPARATOR);
     }
 
     @Override
@@ -83,14 +36,5 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         } else {
             System.arraycopy(storage, index + 1, storage, index, size - index - 1);
         }
-    }
-
-    @Override
-    protected List<Resume> getSortedList() {
-        List<Resume> listResumes = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            listResumes.add(storage[i]);
-        }
-        return listResumes;
     }
 }

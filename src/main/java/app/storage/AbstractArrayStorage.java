@@ -17,33 +17,38 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract void insertToStorage(int searchIndex, Resume newResume);
     protected abstract void removeFromStorage(int index);
-    protected abstract List<Resume> getSortedList();
+
 
     @Override
-    protected void doSave(final Object position, final Resume newResume) {
+    protected void doSave(final Object index, final Resume newResume) {
         if (size == COUNT_ELEMENTS) {
             throw new StorageException("Error is adding. Storage is full.", newResume.getUuid());
         } else {
-            insertToStorage((int) position, newResume);
+            insertToStorage((int) index, newResume);
         }
         size++;
     }
 
     @Override
-    protected Resume getFromStorage(final Object position) {
-        return storage[(int) position];
+    protected Resume getFromStorage(final Object searchKey) {
+        return storage[(int) searchKey];
     }
 
     @Override
-    protected void doUpdate(final Object position, final Resume newResume) {
-        storage[(int) position] = newResume;
+    protected void doUpdate(final Object searchKey, final Resume newResume) {
+        storage[(int) searchKey] = newResume;
     }
 
     @Override
-    protected void doDelete(final Object position) {
-        removeFromStorage((int) position);
+    protected void doDelete(final Object searchKey) {
+        removeFromStorage((int) searchKey);
         storage[size - 1] = null;
         size--;
+    }
+
+    @Override
+    protected List<Resume> doGetListResume() {
+        return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
     }
 
     @Override
@@ -53,8 +58,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object key) {
-        return (Integer) key >= 0;
+    protected boolean isExist(Object searchKey) {
+        return (Integer) searchKey >= 0;
     }
 
     @Override
@@ -62,8 +67,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    @Override
-    public List<Resume> getAllSorted() {
-        return getSortedList();
-    }
+
+
 }
