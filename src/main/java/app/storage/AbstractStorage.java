@@ -9,7 +9,7 @@ import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected abstract void doSave(Object searchKey, Resume newResume);
+    protected abstract void doSave(Object key, Resume newResume);
 
     protected abstract Resume getFromStorage(Object searchKey);
 

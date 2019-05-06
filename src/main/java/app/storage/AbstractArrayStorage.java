@@ -16,6 +16,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 
     protected abstract void insertToStorage(int searchIndex, Resume newResume);
+
     protected abstract void removeFromStorage(int index);
 
 
@@ -66,7 +67,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public int getSize() {
         return size;
     }
-
 
 
 }

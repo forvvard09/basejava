@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Class MapKeyUuidStorage based storage for Resume use List.
+ * Class ListStorage based storage for Resume use List.
  *
  * @author Sergei Poddubniak (forvvard09@gmail.com)
  * @version 2.0
@@ -66,7 +66,8 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected List<Resume> doGetListResume() {
-        return listStorage;
+        List<Resume> copyListStorage = new ArrayList<>(listStorage);
+        return copyListStorage;
     }
 
     @Override

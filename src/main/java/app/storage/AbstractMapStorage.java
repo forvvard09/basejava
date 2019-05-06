@@ -6,7 +6,12 @@ import java.util.*;
 
 public abstract class AbstractMapStorage extends AbstractStorage {
 
-    protected final Map<Object, Resume> mapStorage = new HashMap<>();
+    protected final Map<String, Resume> mapStorage = new HashMap<>();
+
+    @Override
+    protected void doSave(Object key, Resume newResume) {
+        mapStorage.put(newResume.getUuid(), newResume);
+    }
 
     @Override
     public void clear() {

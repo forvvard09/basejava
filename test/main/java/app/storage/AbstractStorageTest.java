@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractStorageTest {
-
     protected Storage storage;
 
     protected static final String UUID_1 = "uuid1";
@@ -48,8 +47,7 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = ExistStorageException.class)
     public void saveExistStorage() {
-        Resume resume = new Resume(UUID_1, TEST_NAME);
-        storage.save(resume);
+        storage.save(RESUME_ONE);
     }
 
     @Test
