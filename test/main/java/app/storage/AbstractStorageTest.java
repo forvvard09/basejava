@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractStorageTest {
+
     protected Storage storage;
 
     protected static final String UUID_1 = "uuid1";

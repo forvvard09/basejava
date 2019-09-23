@@ -19,9 +19,9 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Object getPosition(String uuid);
 
-    protected abstract List<Resume> doGetListResume();
-
     protected abstract boolean isExist(Object searchKey);
+
+    protected abstract List<Resume> doCopyAll();
 
     @Override
     public void save(final Resume newResume) {
@@ -49,7 +49,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        List<Resume> listResumes = doGetListResume();
+        List<Resume> listResumes = doCopyAll();
         Collections.sort(listResumes);
         return listResumes;
     }

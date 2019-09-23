@@ -59,13 +59,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        Collections.sort(listStorage);
-        return listStorage;
-    }
-
-    @Override
-    protected List<Resume> doGetListResume() {
+    protected List<Resume> doCopyAll() {
         return new ArrayList<>(listStorage);
     }
 
@@ -73,5 +67,4 @@ public class ListStorage extends AbstractStorage {
     protected boolean isExist(Object searchKey) {
         return (Integer) searchKey != -1;
     }
-
 }
