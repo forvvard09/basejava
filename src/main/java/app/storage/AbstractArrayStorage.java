@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     protected static final int COUNT_ELEMENTS = 10_000;
     protected Resume[] storage = new Resume[COUNT_ELEMENTS];
@@ -21,28 +21,28 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 
     @Override
-    protected void doSave(final Object index, final Resume newResume) {
+    protected void doSave(final Integer index, final Resume newResume) {
         if (size == COUNT_ELEMENTS) {
             throw new StorageException("Error is adding. Storage is full.", newResume.getUuid());
         } else {
-            insertToStorage((int) index, newResume);
+            insertToStorage(index, newResume);
         }
         size++;
     }
 
     @Override
-    protected Resume getFromStorage(final Object searchKey) {
-        return storage[(int) searchKey];
+    protected Resume getFromStorage(final Integer searchKey) {
+        return storage[searchKey];
     }
 
     @Override
-    protected void doUpdate(final Object searchKey, final Resume newResume) {
-        storage[(int) searchKey] = newResume;
+    protected void doUpdate(final Integer searchKey, final Resume newResume) {
+        storage[searchKey] = newResume;
     }
 
     @Override
-    protected void doDelete(final Object searchKey) {
-        removeFromStorage((int) searchKey);
+    protected void doDelete(final Integer searchKey) {
+        removeFromStorage(searchKey);
         storage[size - 1] = null;
         size--;
     }
@@ -59,14 +59,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        return (Integer) searchKey >= 0;
+    protected boolean isExist(Integer searchKey) {
+        return searchKey >= 0;
     }
 
     @Override
     public int getSize() {
         return size;
     }
-
-
 }

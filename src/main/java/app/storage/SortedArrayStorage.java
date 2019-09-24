@@ -12,7 +12,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     private static final Comparator<Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
 
     @Override
-    protected Object getPosition(String uuid) {
+    protected Integer getPosition(String uuid) {
         Resume searchIndex = new Resume(uuid, "template");
         return Arrays.binarySearch(storage, 0, size, searchIndex, RESUME_COMPARATOR);
     }

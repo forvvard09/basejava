@@ -20,7 +20,6 @@ public class MapSearchKeyResumeStorage extends AbstractMapStorage {
         mapStorage.remove(((Resume) searchKey).getUuid());
     }
 
-
     @Override
     protected Object getPosition(String uuid) {
         return mapStorage.get(uuid);

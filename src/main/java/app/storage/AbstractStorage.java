@@ -7,43 +7,43 @@ import main.java.app.model.Resume;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<SK> implements Storage {
 
-    protected abstract void doSave(Object key, Resume newResume);
+    protected abstract void doSave(SK key, Resume newResume);
 
-    protected abstract Resume getFromStorage(Object searchKey);
+    protected abstract Resume getFromStorage(SK searchKey);
 
-    protected abstract void doUpdate(Object searchKey, Resume newResume);
+    protected abstract void doUpdate(SK searchKey, Resume newResume);
 
-    protected abstract void doDelete(Object searchKey);
+    protected abstract void doDelete(SK searchKey);
 
-    protected abstract Object getPosition(String uuid);
+    protected abstract SK getPosition(String uuid);
 
-    protected abstract boolean isExist(Object searchKey);
+    protected abstract boolean isExist(SK searchKey);
 
     protected abstract List<Resume> doCopyAll();
 
     @Override
     public void save(final Resume newResume) {
-        Object searchKey = getExistedPosition(newResume.getUuid());
+        SK searchKey = getExistedPosition(newResume.getUuid());
         doSave(searchKey, newResume);
     }
 
     @Override
     public void update(final Resume newResume) {
-        Object searchKey = getNotExistedPosition(newResume.getUuid());
+        SK searchKey = getNotExistedPosition(newResume.getUuid());
         doUpdate(searchKey, newResume);
     }
 
     @Override
     public void delete(final String uuid) {
-        Object searchKey = getNotExistedPosition(uuid);
+        SK searchKey = getNotExistedPosition(uuid);
         doDelete(searchKey);
     }
 
     @Override
     public Resume get(final String uuid) {
-        Object searchKey = getNotExistedPosition(uuid);
+        SK searchKey = getNotExistedPosition(uuid);
         return getFromStorage(searchKey);
     }
 
@@ -54,16 +54,16 @@ public abstract class AbstractStorage implements Storage {
         return listResumes;
     }
 
-    private Object getExistedPosition(String uuid) {
-        Object searchKey = getPosition(uuid);
+    private SK getExistedPosition(String uuid) {
+        SK searchKey = getPosition(uuid);
         if (isExist(searchKey)) {
             throw new ExistStorageException(uuid);
         }
         return searchKey;
     }
 
-    private Object getNotExistedPosition(String uuid) {
-        Object searchKey = getPosition(uuid);
+    private SK getNotExistedPosition(String uuid) {
+        SK searchKey = getPosition(uuid);
         if (!isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
         }

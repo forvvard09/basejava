@@ -14,32 +14,32 @@ import java.util.List;
  * @version 2.0
  * @since 28.03.2019
  */
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
 
     private final List<Resume> listStorage = new ArrayList<>();
 
     @Override
-    protected void doSave(final Object searchKey, final Resume newResume) {
+    protected void doSave(final Integer searchKey, final Resume newResume) {
         listStorage.add(newResume);
     }
 
     @Override
-    protected Resume getFromStorage(final Object searchKey) {
-        return listStorage.get((int) searchKey);
+    protected Resume getFromStorage(final Integer searchKey) {
+        return listStorage.get(searchKey);
     }
 
     @Override
-    protected void doUpdate(final Object searchKey, final Resume newResume) {
-        listStorage.set((int) searchKey, newResume);
+    protected void doUpdate(final Integer searchKey, final Resume newResume) {
+        listStorage.set(searchKey, newResume);
     }
 
     @Override
-    protected void doDelete(final Object searchKey) {
-        listStorage.remove((int) searchKey);
+    protected void doDelete(final Integer searchKey) {
+        listStorage.remove(searchKey.intValue());
     }
 
     @Override
-    protected Object getPosition(final String uuid) {
+    protected Integer getPosition(final String uuid) {
         for (int i = 0; i < listStorage.size(); i++) {
             if (listStorage.get(i).getUuid().equals(uuid)) {
                 return i;
@@ -64,7 +64,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        return (Integer) searchKey != -1;
+    protected boolean isExist(Integer searchKey) {
+        return searchKey != -1;
     }
 }
