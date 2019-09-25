@@ -2,31 +2,31 @@ package main.java.app.storage;
 
 import main.java.app.model.Resume;
 
-public class MapSearchKeyResumeStorage extends AbstractMapStorage {
+public class MapSearchKeyResumeStorage extends AbstractMapStorage<Resume> {
 
 
     @Override
-    protected Resume getFromStorage(Object searchKey) {
-        return (Resume) searchKey;
+    protected Resume getFromStorage(Resume searchKey) {
+        return searchKey;
     }
 
     @Override
-    protected void doUpdate(Object searchKey, Resume newResume) {
+    protected void doUpdate(Resume searchKey, Resume newResume) {
         mapStorage.put(newResume.getUuid(), newResume);
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        mapStorage.remove(((Resume) searchKey).getUuid());
+    protected void doDelete(Resume searchKey) {
+        mapStorage.remove((searchKey).getUuid());
     }
 
     @Override
-    protected Object getPosition(String uuid) {
+    protected Resume getPosition(String uuid) {
         return mapStorage.get(uuid);
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
+    protected boolean isExist(Resume searchKey) {
         return searchKey != null;
     }
 }
