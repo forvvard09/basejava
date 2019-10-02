@@ -7,7 +7,7 @@ public class MapKeyUuidStorage extends AbstractMapStorage<String> {
 
     @Override
     protected Resume getFromStorage(String searchKey) {
-        return mapStorage.get(searchKey.toString());
+        return mapStorage.get(searchKey);
     }
 
     @Override
