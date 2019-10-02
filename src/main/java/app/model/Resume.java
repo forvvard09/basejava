@@ -1,7 +1,8 @@
 package main.java.app.model;
 
-import java.util.Objects;
-import java.util.UUID;
+import sun.swing.SwingUtilities2;
+
+import java.util.*;
 
 /**
  * Class Resume initialisation resume class.
@@ -12,8 +13,15 @@ import java.util.UUID;
  */
 public class Resume implements Comparable<Resume> {
 
+    private final String NEXT_LINE = System.lineSeparator();
+
     private final String uuid;
     private final String fullName;
+
+    private Map<String, String> contacts;
+
+    private final Map<SectionType, AbstractSection> sections;
+
 
 
     public Resume(String fullName) {
@@ -25,10 +33,20 @@ public class Resume implements Comparable<Resume> {
         Objects.requireNonNull(fullName, "fullName must not be null");
         this.uuid = uuid;
         this.fullName = fullName;
+        contacts = new HashMap<>();
+        sections = new HashMap<>();
     }
 
     public String getUuid() {
         return uuid;
+    }
+
+    public Map<String, String> getContacts() {
+        return contacts;
+    }
+
+    public Map<SectionType, AbstractSection> getSections() {
+        return sections;
     }
 
     @Override
@@ -52,7 +70,7 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public String toString() {
-        return String.format("Resume: uuid=%s, fullName=%s", uuid, fullName);
+        return String.format("Resume: uuid=%s;%sfullName=%s", uuid, NEXT_LINE, fullName);
     }
 
 
