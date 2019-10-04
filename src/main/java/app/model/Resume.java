@@ -1,6 +1,6 @@
 package main.java.app.model;
 
-import sun.swing.SwingUtilities2;
+import com.sun.javafx.collections.UnmodifiableObservableMap;
 
 import java.util.*;
 
@@ -13,16 +13,12 @@ import java.util.*;
  */
 public class Resume implements Comparable<Resume> {
 
-    private final String NEXT_LINE = System.lineSeparator();
-
     private final String uuid;
     private final String fullName;
 
     private Map<String, String> contacts;
 
-    private final Map<SectionType, AbstractSection> sections;
-
-
+    private final Map<TypeSection, AbstractSection> sections;
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -34,19 +30,27 @@ public class Resume implements Comparable<Resume> {
         this.uuid = uuid;
         this.fullName = fullName;
         contacts = new HashMap<>();
-        sections = new HashMap<>();
+        sections = new EnumMap<>(TypeSection.class);
     }
 
     public String getUuid() {
         return uuid;
     }
 
-    public Map<String, String> getContacts() {
-        return contacts;
+    public  Map<String, String> getContacts() {
+        return Collections.unmodifiableMap(contacts);
     }
 
-    public Map<SectionType, AbstractSection> getSections() {
-        return sections;
+    public void setContact(String typeContact, String contact) {
+        contacts.put(typeContact, contact);
+    }
+
+    public Map<TypeSection, AbstractSection> getSections() {
+        return Collections.unmodifiableMap(sections);
+    }
+
+    public void setSection(TypeSection typeSection, AbstractSection section) {
+        sections.put(typeSection, section);
     }
 
     @Override
@@ -58,7 +62,6 @@ public class Resume implements Comparable<Resume> {
 
         if (!Objects.equals(uuid, resume.uuid)) return false;
         return Objects.equals(fullName, resume.fullName);
-
     }
 
     @Override
@@ -70,9 +73,8 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public String toString() {
-        return String.format("Resume: uuid=%s;%sfullName=%s", uuid, NEXT_LINE, fullName);
+        return String.format("Resume: uuid=%s;%sfullName=%s", uuid, System.lineSeparator(), fullName);
     }
-
 
     @Override
     public int compareTo(final Resume o) {
