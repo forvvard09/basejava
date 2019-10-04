@@ -11,9 +11,9 @@ public class ResumeTestData {
     public static void main(String[] args) {
         Resume templateResume = new Resume("Egorov Nikalay");
 
-        templateResume.setContact("Phone", "+7(921) 855-0482");
-        templateResume.setContact("Skype", "userSkype");
-        templateResume.setContact("Email", "contact1@mail.ru");
+        templateResume.setContact(TypeContact.valueOf("PHONE"), "+7(921) 855-0482");
+        templateResume.setContact(TypeContact.valueOf("SKYPE"), "userSkype");
+        templateResume.setContact(TypeContact.valueOf("EMEIL"), "contact1@mail.ru");
 
         AbstractSection personal = new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
         templateResume.setSection(TypeSection.valueOf("PERSONAL"), personal);
