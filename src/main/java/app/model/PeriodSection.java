@@ -13,18 +13,24 @@ public class PeriodSection extends AbstractSection {
         this.itemsPeriod = itemsPeriod;
     }
 
+    public List<OrganizationPeriod> getItemsPeriod() {
+        return itemsPeriod;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PeriodSection)) return false;
 
         PeriodSection that = (PeriodSection) o;
-        return itemsPeriod != null ? itemsPeriod.equals(that.itemsPeriod) : that.itemsPeriod == null;
+
+        return itemsPeriod.equals(that.itemsPeriod);
+
     }
 
     @Override
     public int hashCode() {
-        return itemsPeriod != null ? itemsPeriod.hashCode() : 0;
+        return itemsPeriod.hashCode();
     }
 
     @Override

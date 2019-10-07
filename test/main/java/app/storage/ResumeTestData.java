@@ -28,12 +28,12 @@ public class ResumeTestData {
                 "JavaScript: jQuery, ExtJS, Bootstrap.js, underscore.js"));
         templateResume.setSection(TypeSection.valueOf("QUALIFICATIONS"), qualifications);
 
-        OrganizationPeriod educationCoursera = new OrganizationPeriod("Coursera",
+        OrganizationPeriod educationCoursera = new OrganizationPeriod("Coursera", "",
                 YearMonth.of(2013, 3),
                 YearMonth.of(2013, 5),
                 "\"Functional Programming Principles in Scala> by Martin Odersky\""
                 );
-        OrganizationPeriod educationLuxoft = new OrganizationPeriod("Luxoft",
+        OrganizationPeriod educationLuxoft = new OrganizationPeriod("Luxoft", "",
                 YearMonth.of(2011, 3),
                 YearMonth.of(2011, 4),
                 "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\""
@@ -42,12 +42,12 @@ public class ResumeTestData {
         AbstractSection education = new PeriodSection(Arrays.asList(educationCoursera, educationLuxoft));
         templateResume.setSection(TypeSection.valueOf("EDUCATION"), education);
 
-        OrganizationPeriod experienceJavaOnline = new OrganizationPeriod("Java Online Projects",
+        OrganizationPeriod experienceJavaOnline = new OrganizationPeriod("Java Online Projects", "",
                 YearMonth.of(2013, 10),
                 "Автор проекта",
                 new TextSection("Создание, организация и проведение Java онлайн проектов и стажировок.")
         );
-        OrganizationPeriod experienceWrike = new OrganizationPeriod("Wrike",
+        OrganizationPeriod experienceWrike = new OrganizationPeriod("Wrike", "",
                 YearMonth.of(2014, 10),
                 YearMonth.of(2016, 1),
                 "Старший разработчик (backend)",

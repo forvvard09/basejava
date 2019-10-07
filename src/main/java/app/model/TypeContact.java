@@ -1,7 +1,7 @@
 package main.java.app.model;
 
 public enum TypeContact {
-    PHONE ("Мобильный телефон: "),
+    PHONE ("Телефон: "),
     SKYPE ("Skype: "),
     EMEIL ("EMEIL: "),
     LINKEDIN ("Профиль LinkedIn: "),
