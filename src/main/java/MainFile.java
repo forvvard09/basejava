@@ -2,7 +2,6 @@ package main.java;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class MainFile {
@@ -17,7 +16,7 @@ public class MainFile {
         System.out.println(file.isDirectory());
 
 
-        File dir = new File ("./src/main/java");
+        File dir = new File("./src/main/java");
         try {
             System.out.println(dir.getCanonicalPath());
         } catch (IOException e) {
@@ -28,7 +27,7 @@ public class MainFile {
 
         String[] listFilesDir = dir.list();
         if (listFilesDir != null) {
-            for(String name: listFilesDir) {
+            for (String name : listFilesDir) {
                 System.out.println(name);
             }
         }
