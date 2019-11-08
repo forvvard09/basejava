@@ -15,17 +15,46 @@ public abstract class AbstractStorageTest {
 
     protected Storage storage;
 
-    protected static final String UUID_1 = "uuid1";
-    protected static final String UUID_2 = "uuid2";
-    protected static final String UUID_3 = "uuid3";
-    protected static final String TEST_UID = "testUuid";
-    protected static final String TEST_NAME = "testName";
+    private static final String UUID_1 = "uuid1";
+    private static final String UUID_2 = "uuid2";
+    private static final String UUID_3 = "uuid3";
+    private static final String TEST_UID = "testUuid";
 
+    private static final Resume RESUME_ONE;
+    private static final Resume RESUME_TWO;
+    private static final Resume RESUME_THREE;
+    protected static final Resume RESUME_TEST;
 
-    protected static final Resume RESUME_ONE = new Resume(UUID_1, TEST_NAME);
-    protected static final Resume RESUME_TWO = new Resume(UUID_2, TEST_NAME);
-    protected static final Resume RESUME_THREE = new Resume(UUID_3, TEST_NAME);
-    protected static final Resume RESUME_TEST = new Resume(TEST_UID, TEST_NAME);
+    private static final ResumeTestData testDataResume = new ResumeTestData();
+
+    static  {
+        //resume 1
+        RESUME_ONE = new Resume(UUID_1, "Name1");
+        testDataResume.setSectionContacts(RESUME_ONE);
+        testDataResume.setSectionPersonal(RESUME_ONE);
+        testDataResume.setSectionQualifications(RESUME_ONE);
+        testDataResume.setSectionAchievement(RESUME_ONE);
+        testDataResume.setSectionEducation(RESUME_ONE);
+        testDataResume.setSectionExperience(RESUME_ONE);
+
+        //resume 2
+        RESUME_TWO = new Resume(UUID_2, "Name2");
+        testDataResume.setContactEmeil(RESUME_TWO);
+        testDataResume.setSectionPersonal(RESUME_TWO);
+        testDataResume.setSectionQualifications(RESUME_TWO);
+        testDataResume.setSectionExperience(RESUME_TWO);
+
+        //resume 3
+        RESUME_THREE = new Resume(UUID_3, "Name3");
+        testDataResume.setContactSkype(RESUME_THREE);
+        testDataResume.setContactPhone(RESUME_THREE);
+        testDataResume.setSectionExperience(RESUME_THREE);
+
+        //resume 4
+        RESUME_TEST = new Resume(TEST_UID, "NameTest");
+        testDataResume.setSectionPersonal(RESUME_TEST);
+        testDataResume.setSectionExperience(RESUME_TEST);
+    }
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -66,7 +95,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume r = new Resume(UUID_1, TEST_NAME);
+        Resume r = new Resume(UUID_1, "TEST_NAME");
         storage.update((r));
         Assert.assertSame(r, storage.get(r.getUuid()));
     }

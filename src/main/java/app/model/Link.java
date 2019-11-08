@@ -12,14 +12,6 @@ public class Link {
         this.url = url;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,9 +33,6 @@ public class Link {
 
     @Override
     public String toString() {
-        return "Link{" +
-                "name='" + name + '\'' +
-                ", url='" + url + '\'' +
-                '}';
+        return String.format("Название организации:%s;%surl:%s", name, System.lineSeparator(), url);
     }
 }

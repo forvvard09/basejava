@@ -13,10 +13,6 @@ public class PeriodSection extends AbstractSection {
         this.itemsPeriod = itemsPeriod;
     }
 
-    public List<OrganizationPeriod> getItemsPeriod() {
-        return itemsPeriod;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -25,7 +21,6 @@ public class PeriodSection extends AbstractSection {
         PeriodSection that = (PeriodSection) o;
 
         return itemsPeriod.equals(that.itemsPeriod);
-
     }
 
     @Override

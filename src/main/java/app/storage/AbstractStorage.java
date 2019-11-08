@@ -3,6 +3,7 @@ package main.java.app.storage;
 import main.java.app.exception.ExistStorageException;
 import main.java.app.exception.NotExistStorageException;
 import main.java.app.model.Resume;
+import main.java.app.model.TypeSection;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +34,8 @@ public abstract class AbstractStorage<SK> implements Storage {
     @Override
     public void save(final Resume newResume) {
         LOG.info("Save: " + newResume);
+        LOG.info("Save: " + newResume.getContacts());
+        LOG.info("Save: " + newResume.getSections().get(TypeSection.valueOf("EDUCATION")));
         SK searchKey = getExistedPosition(newResume.getUuid());
         doSave(searchKey, newResume);
     }
