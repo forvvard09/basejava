@@ -75,7 +75,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> doCopyAll() {
-        List<Resume> listResume = new ArrayList();
+        List<Resume> listResume = new ArrayList<>();
         File[] listFiles = directory.listFiles();
         if (listFiles != null) {
             for (File file : listFiles) {
@@ -111,9 +111,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     public int getSize() {
         int countFiles = 0;
         File[] listFiles = directory.listFiles();
-        for (File file: listFiles) {
-            if(!file.isDirectory()) {
-                countFiles++;
+        if (listFiles != null) {
+            for (File file: listFiles) {
+                if(!file.isDirectory()) {
+                    countFiles++;
+                }
             }
         }
         return countFiles;

@@ -8,59 +8,40 @@ import java.util.List;
 
 public class ResumeTestData {
 
-    protected static final String UUID_1 = "uuid1";
-    protected static final String UUID_2 = "uuid2";
-    protected static final String UUID_3 = "uuid3";
-    protected static final String TEST_UID = "testUuid";
-
-    private  final Resume RESUME_ONE;
-    private  final Resume RESUME_TWO;
-    private  final Resume RESUME_THREE;
-    private  final Resume RESUME_TEST;
-
-    {
-        //resume 1
-        RESUME_ONE = new Resume(UUID_1, "Name1");
-        this.setSectionContacts(RESUME_ONE);
-        this.setSectionPersonal(RESUME_ONE);
-        this.setSectionQualifications(RESUME_ONE);
-        this.setSectionAchievement(RESUME_ONE);
-        this.setSectionEducation(RESUME_ONE);
-        this.setSectionExperience(RESUME_ONE);
-
-        //resume 2
-        RESUME_TWO = new Resume(UUID_2, "Name2");
-        this.setContactEmeil(RESUME_TWO);
-        this.setSectionPersonal(RESUME_TWO);
-        this.setSectionQualifications(RESUME_TWO);
-        this.setSectionExperience(RESUME_TWO);
-
-        //resume 3
-        RESUME_THREE = new Resume(UUID_3, "Name3");
-        this.setContactSkype(RESUME_THREE);
-        this.setContactPhone(RESUME_THREE);
-        this.setSectionExperience(RESUME_THREE);
-
-        //resume 4
-        RESUME_TEST = new Resume(TEST_UID, "NameTest");
-        this.setSectionPersonal(RESUME_TEST);
-        this.setSectionExperience(RESUME_TEST);
+    public Resume getResumeTypeOne(String uuid, String fullName) {
+        Resume currentResume = new Resume(uuid, fullName);
+        setSectionContacts(currentResume);
+        setSectionPersonal(currentResume);
+        setSectionQualifications(currentResume);
+        setSectionAchievement(currentResume);
+        setSectionEducation(currentResume);
+        setSectionExperience(currentResume);
+        return currentResume;
     }
 
-    public Resume getResumeOne() {
-        return RESUME_ONE;
+    public Resume getResumeTypeTwo(String uuid, String fullName) {
+        Resume currentResume = new Resume(uuid, fullName);
+        setContactEmeil(currentResume);
+        setSectionPersonal(currentResume);
+        setSectionQualifications(currentResume);
+        setSectionExperience(currentResume);
+        return currentResume;
     }
 
-    public Resume getResumeTwo() {
-        return RESUME_TWO;
+    public Resume getResumeTypeTest(String uuid, String fullName) {
+        Resume currentResume = getResumeTypeThree(uuid, fullName);
+        setContactEmeil(currentResume);
+        setSectionEducation(currentResume);
+        setSectionExperience(currentResume);
+        return currentResume;
     }
 
-    public Resume getResumeThree() {
-        return RESUME_THREE;
-    }
-
-    public Resume getResumeTest() {
-        return RESUME_TEST;
+    public Resume getResumeTypeThree(String uuid, String fullName) {
+        Resume currentResume = new Resume(uuid, fullName);
+        setContactSkype(currentResume);
+        setContactPhone(currentResume);
+        setSectionExperience(currentResume);
+        return currentResume;
     }
 
     private void setContactPhone(Resume currentResume) {
