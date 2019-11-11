@@ -8,38 +8,14 @@ import java.util.List;
 
 public class ResumeTestData {
 
-    public Resume getResumeTypeOne(String uuid, String fullName) {
+    public Resume fillResume(String uuid, String fullName) {
         Resume currentResume = new Resume(uuid, fullName);
+        setSectionPersonal(currentResume);
         setSectionContacts(currentResume);
         setSectionPersonal(currentResume);
         setSectionQualifications(currentResume);
         setSectionAchievement(currentResume);
         setSectionEducation(currentResume);
-        setSectionExperience(currentResume);
-        return currentResume;
-    }
-
-    public Resume getResumeTypeTwo(String uuid, String fullName) {
-        Resume currentResume = new Resume(uuid, fullName);
-        setContactEmeil(currentResume);
-        setSectionPersonal(currentResume);
-        setSectionQualifications(currentResume);
-        setSectionExperience(currentResume);
-        return currentResume;
-    }
-
-    public Resume getResumeTypeTest(String uuid, String fullName) {
-        Resume currentResume = getResumeTypeThree(uuid, fullName);
-        setContactEmeil(currentResume);
-        setSectionEducation(currentResume);
-        setSectionExperience(currentResume);
-        return currentResume;
-    }
-
-    public Resume getResumeTypeThree(String uuid, String fullName) {
-        Resume currentResume = new Resume(uuid, fullName);
-        setContactSkype(currentResume);
-        setContactPhone(currentResume);
         setSectionExperience(currentResume);
         return currentResume;
     }

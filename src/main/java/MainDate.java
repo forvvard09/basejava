@@ -1,8 +1,6 @@
 package main.java;
 
-import org.apache.xml.dtm.DTMFilter;
 
-import java.security.cert.LDAPCertStoreParameters;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -37,7 +35,6 @@ public class MainDate {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY:MM:dd");
         System.out.println(dtf.format(ltd));
-
 
 
     }

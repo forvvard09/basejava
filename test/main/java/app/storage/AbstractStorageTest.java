@@ -25,13 +25,13 @@ public abstract class AbstractStorageTest {
 
     static {
         //resume 1
-        RESUME_ONE = testDataResume.getResumeTypeOne(UUID_1, "Name1");
+        RESUME_ONE = testDataResume.fillResume(UUID_1, "Name1");
         //resume 2
-        RESUME_TWO = testDataResume.getResumeTypeTwo(UUID_2, "Name2");
+        RESUME_TWO = testDataResume.fillResume(UUID_2, "Name2");
         //resume 3
-        RESUME_THREE = testDataResume.getResumeTypeThree(UUID_3, "Name3");
+        RESUME_THREE = testDataResume.fillResume(UUID_3, "Name3");
         //resume 4
-        RESUME_TEST = testDataResume.getResumeTypeTest(TEST_UID, "NameTest");
+        RESUME_TEST = testDataResume.fillResume(TEST_UID, "NameTest");
     }
 
     protected Storage storage;
