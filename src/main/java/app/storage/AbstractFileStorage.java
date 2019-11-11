@@ -5,6 +5,7 @@ import main.java.app.model.Resume;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -71,9 +72,25 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         return file.exists();
     }
 
+
     @Override
     protected List<Resume> doCopyAll() {
-        return null;
+        List<Resume> listResume = new ArrayList();
+        File[] listFiles = directory.listFiles();
+        if (listFiles != null) {
+            for (File file : listFiles) {
+                if (!file.isDirectory()) {
+                    try {
+                        listResume.add(doRead(file));
+                    } catch (IOException e) {
+                        throw new StorageException("Error read file", file.getName(), e);
+                    }
+                }
+            }
+        } else {
+            throw new StorageException("folder does not contain resume files. Folder: ", directory.getAbsolutePath());
+        }
+        return listResume;
     }
 
     @Override
@@ -87,9 +104,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
                     }
                 }
             }
-
         }
-
     }
 
     @Override

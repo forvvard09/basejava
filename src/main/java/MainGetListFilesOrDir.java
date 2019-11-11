@@ -2,9 +2,12 @@ package main.java;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainGetListFilesOrDir {
     public static void printListFiles(File dirPath, int level) {
+        List<File> listDir = new ArrayList<>();
         if (!dirPath.isDirectory()) {
             throw new IllegalArgumentException(dirPath.getAbsolutePath() + " is not directory");
         }
@@ -25,13 +28,17 @@ public class MainGetListFilesOrDir {
                         }
                         System.out.println(file.getName());
                     } else {
-                        level++;
+                        listDir.add(file);
+                    }
+                }
+                if (listDir.size() > 0) {
+                    level++;
+                    for(File dir: listDir) {
                         for (int i = 0; i < level; i++) {
-                            System.out.print("  ");
+                            System.out.print("..");
                         }
-
-                        System.out.println(String.format("%s%s", file.getName(), "/"));
-                        printListFiles(file, level);
+                        System.out.println(String.format("%s%s", dir.getName(), "/"));
+                        printListFiles(dir, level);
                     }
                 }
             }

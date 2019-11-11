@@ -1,6 +1,6 @@
 package main.java.app.model;
 
-public enum TypeContact {
+public enum ContactType {
     PHONE ("Телефон: "),
     SKYPE ("Skype: "),
     EMEIL ("EMEIL: "),
@@ -10,7 +10,7 @@ public enum TypeContact {
 
     private String title;
 
-    TypeContact(String title) {
+    ContactType(String title) {
         this.title = title;
     }
 }

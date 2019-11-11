@@ -1,6 +1,6 @@
 package main.java;
 
-import main.java.app.model.TypeSection;
+import main.java.app.model.SectionType;
 
 public class TestEnum {
     public enum Singleton {
@@ -13,7 +13,7 @@ public class TestEnum {
         System.out.println(instance);
         System.out.println(instance.ordinal()); //выводит порядковый номер
         System.out.println();
-        for(TypeSection type : TypeSection.values()) {
+        for(SectionType type : SectionType.values()) {
             System.out.println(type.getTitle());
         }
     }

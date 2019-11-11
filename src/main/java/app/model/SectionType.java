@@ -1,6 +1,6 @@
 package main.java.app.model;
 
-public enum TypeSection {
+public enum SectionType {
     PERSONAL ("Личные качества"),
     OBJECTIVE ("Позиция"),
     ACHIEVEMENT ("Достижения"),
@@ -10,7 +10,7 @@ public enum TypeSection {
 
     private String title;
 
-    TypeSection(String title) {
+    SectionType(String title) {
         this.title = title;
     }
 

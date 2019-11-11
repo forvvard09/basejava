@@ -1,4 +1,4 @@
-package main.java.app.storage;
+package main.java;
 
 public class TestSingleton {
     private static TestSingleton ourInstance = new TestSingleton();

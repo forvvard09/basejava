@@ -7,10 +7,10 @@ public class PositionHeld {
     private final YearMonth startData;
     private final YearMonth finishData;
     private final String title;
-    private final TextSection description;
+    private final String description;
 
 
-    public PositionHeld(YearMonth startData, YearMonth finishData, String title, TextSection description) {
+    public PositionHeld(YearMonth startData, YearMonth finishData, String title, String description) {
         Objects.requireNonNull(startData, "startData must not be null");
         Objects.requireNonNull(title, "title must not be null");
         this.startData = startData;
@@ -23,7 +23,7 @@ public class PositionHeld {
         this(startData, null, title, null);
     }
 
-    public PositionHeld(YearMonth startData, String title, TextSection description) {
+    public PositionHeld(YearMonth startData, String title, String description) {
         this(startData, null, title, description);
     }
 
