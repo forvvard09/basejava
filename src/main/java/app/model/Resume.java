@@ -1,7 +1,5 @@
 package main.java.app.model;
 
-import com.sun.javafx.collections.UnmodifiableObservableMap;
-
 import java.util.*;
 
 /**
@@ -12,13 +10,10 @@ import java.util.*;
  * @since 18.02.2019
  */
 public class Resume implements Comparable<Resume> {
-
     private final String uuid;
     private final String fullName;
-
-    private Map<TypeContact, String> contacts;
-
-    private final Map<TypeSection, AbstractSection> sections;
+    private final Map<SectionType, AbstractSection> sections;
+    private Map<ContactType, String> contacts;
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -29,27 +24,27 @@ public class Resume implements Comparable<Resume> {
         Objects.requireNonNull(fullName, "fullName must not be null");
         this.uuid = uuid;
         this.fullName = fullName;
-        contacts = new EnumMap<>(TypeContact.class);
-        sections = new EnumMap<>(TypeSection.class);
+        contacts = new EnumMap<>(ContactType.class);
+        sections = new EnumMap<>(SectionType.class);
     }
 
     public String getUuid() {
         return uuid;
     }
 
-    public  Map<TypeContact, String> getContacts() {
+    public Map<ContactType, String> getContacts() {
         return Collections.unmodifiableMap(contacts);
     }
 
-    public void setContact(TypeContact typeContact, String contact) {
+    public void setContact(ContactType typeContact, String contact) {
         contacts.put(typeContact, contact);
     }
 
-    public Map<TypeSection, AbstractSection> getSections() {
+    public Map<SectionType, AbstractSection> getSections() {
         return Collections.unmodifiableMap(sections);
     }
 
-    public void setSection(TypeSection typeSection, AbstractSection section) {
+    public void setSection(SectionType typeSection, AbstractSection section) {
         sections.put(typeSection, section);
     }
 
