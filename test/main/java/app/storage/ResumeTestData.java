@@ -59,19 +59,19 @@ public class ResumeTestData {
     }
 
     private void setSectionEducation(Resume currentResume) {
-        PositionHeld firstPostion = new PositionHeld(YearMonth.of(2013, 3),
+        OrganizationPeriod.PositionHeld firstPostion = new OrganizationPeriod.PositionHeld(YearMonth.of(2013, 3),
                 YearMonth.of(2013, 5),
                 "\"Functional Programming Principles in Scala> by Martin Odersky\"");
 
-        PositionHeld secondPostion = new PositionHeld(YearMonth.of(2014, 1),
+        OrganizationPeriod.PositionHeld secondPostion = new OrganizationPeriod.PositionHeld(YearMonth.of(2014, 1),
                 YearMonth.of(2014, 5),
                 "\"Functional Programming Principles in Go> by Bobak\"");
-        List<PositionHeld> listPositionHeldCoursera = Arrays.asList(firstPostion, secondPostion);
+        List<OrganizationPeriod.PositionHeld> listPositionHeldCoursera = Arrays.asList(firstPostion, secondPostion);
 
-        OrganizationPeriod educationCoursera = new OrganizationPeriod("Coursera", "coursera.ru", listPositionHeldCoursera);
+        OrganizationPeriod educationCoursera = new OrganizationPeriod(new Link("Coursera", "coursera.ru"), listPositionHeldCoursera);
 
         Link orgLuxoft = new Link("Luxoft", "");
-        List<PositionHeld> listPositionHeldLuxoft = Arrays.asList(new PositionHeld(YearMonth.of(2011, 3), YearMonth.of(2011, 4),
+        List<OrganizationPeriod.PositionHeld> listPositionHeldLuxoft = Arrays.asList(new OrganizationPeriod.PositionHeld(YearMonth.of(2011, 3), YearMonth.of(2011, 4),
                 "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\""));
 
         OrganizationPeriod educationLuxoft = new OrganizationPeriod(orgLuxoft, listPositionHeldLuxoft);
@@ -81,21 +81,21 @@ public class ResumeTestData {
 
     private void setSectionExperience(Resume currentResume) {
         OrganizationPeriod experienceJavaOnline = new OrganizationPeriod("Java Online Projects", "",
-                Arrays.asList(new PositionHeld(YearMonth.of(2013, 10),
+                             new OrganizationPeriod.PositionHeld(YearMonth.of(2013, 10),
                         "Автор проекта",
-                        "Создание, организация и проведение Java онлайн проектов и стажировок.")));
+                        "Создание, организация и проведение Java онлайн проектов и стажировок."));
+
         OrganizationPeriod experienceWrike = new OrganizationPeriod("Wrike", "",
-                Arrays.asList(
-                        new PositionHeld(YearMonth.of(2014, 10),
+                        new OrganizationPeriod.PositionHeld(YearMonth.of(2014, 10),
                                 YearMonth.of(2016, 1),
                                 "Старший разработчик (backend)",
                                 "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."),
-                        new PositionHeld(YearMonth.of(2016, 2),
+                        new OrganizationPeriod.PositionHeld(YearMonth.of(2016, 2),
                                 YearMonth.of(2018, 11),
                                 "Главный разработчик (fullstack)",
                                 "Проектирование и разработка микросерверной инфраструктуры взаимодействия сервисов (JavaScript, Jquerry, Angular, Docker, Kubernetes)")
-                )
         );
+
         AbstractSection experience = new PeriodSection(Arrays.asList(experienceJavaOnline, experienceWrike));
         currentResume.setSection(SectionType.valueOf("EXPERIENCE"), experience);
     }

@@ -51,7 +51,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         try {
             doWrite(newResume, file);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new StorageException("File write error", newResume.getUuid(), e);
         }
     }
 
@@ -97,10 +97,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     public void clear() {
         File[] listFiles = directory.listFiles();
         if (listFiles != null && listFiles.length > 0) {
-            for (File file: listFiles) {
+            for (File file : listFiles) {
                 if (!file.isDirectory()) {
-                    if(!file.delete()) {
-                       throw new StorageException("Error remove file", file.getName());
+                    if (!file.delete()) {
+                        throw new StorageException("Error remove file", file.getName());
                     }
                 }
             }
@@ -112,11 +112,13 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         int countFiles = 0;
         File[] listFiles = directory.listFiles();
         if (listFiles != null) {
-            for (File file: listFiles) {
-                if(!file.isDirectory()) {
+            for (File file : listFiles) {
+                if (!file.isDirectory()) {
                     countFiles++;
                 }
             }
+        } else {
+            throw new StorageException("Folder haven't of resume.", directory.getName());
         }
         return countFiles;
     }
