@@ -25,18 +25,14 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void doSave(File file, Resume newResume) {
         try {
-            if (file.createNewFile()) {
-                  doWrite(newResume, new FileOutputStream(file));
-            } else {
-                throw new StorageException("Record error to file: ", file.getName());
-            }
-
+            file.createNewFile();
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
+        doUpdate(file, newResume);
     }
 
-    protected abstract void doWrite(Resume newResume, OutputStream file) throws IOException;
+    protected abstract void doWrite(Resume newResume, OutputStream os) throws IOException;
 
     @Override
     protected Resume getFromStorage(File file) {

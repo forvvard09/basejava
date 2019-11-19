@@ -1,5 +1,6 @@
 package main.java.app.model;
 
+import java.io.Serializable;
 import java.time.YearMonth;
 import java.util.Arrays;
 import java.util.List;
@@ -7,7 +8,9 @@ import java.util.Objects;
 
 import static main.java.app.util.DateUtil.NOW;
 
-public class OrganizationPeriod {
+public class OrganizationPeriod implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private final Link homePage;
     private final List<PositionHeld> listPositionHeld;
 
@@ -46,7 +49,9 @@ public class OrganizationPeriod {
         return homePage.toString() + listPositionHeld;
     }
 
-    public static class PositionHeld {
+    public static class PositionHeld implements Serializable {
+        private static final long serialVersionUID = 1L;
+
         private final YearMonth startData;
         private final YearMonth finishData;
         private final String title;

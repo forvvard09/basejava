@@ -1,5 +1,6 @@
 package main.java.app.model;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -9,7 +10,9 @@ import java.util.*;
  * @version 2.0
  * @since 18.02.2019
  */
-public class Resume implements Comparable<Resume> {
+public class Resume implements Comparable<Resume>, Serializable {
+    private static final long serialVersionUID = 1L;
+
     private final String uuid;
     private final String fullName;
     private final Map<SectionType, AbstractSection> sections;
