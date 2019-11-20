@@ -76,6 +76,10 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     public void clear() {
         try {
             Files.list(directory).forEach(this::doDelete);
+            /*
+            List<Path> list = Files.list(directory).collect(Collectors.toList());
+            list.forEach(this::doDelete);
+             */
         } catch (IOException e) {
             throw new StorageException("Path delete error", null);
         }

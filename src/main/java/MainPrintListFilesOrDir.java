@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainGetListFilesOrDir {
+public class MainPrintListFilesOrDir {
     public static void printListFiles(File dirPath, int level) {
         List<File> listDir = new ArrayList<>();
         if (!dirPath.isDirectory()) {
