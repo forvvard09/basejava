@@ -3,6 +3,7 @@ package main.java.app.storage;
 import main.java.app.exception.ExistStorageException;
 import main.java.app.exception.NotExistStorageException;
 import main.java.app.model.Resume;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,6 +51,11 @@ public abstract class AbstractStorageTest {
         storage.save(RESUME_ONE);
         storage.save(RESUME_TWO);
         storage.save(RESUME_THREE);
+    }
+
+    @After
+    public void doClean() {
+        storage.clear();
     }
 
     @Test
