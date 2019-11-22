@@ -12,13 +12,14 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
     protected final static File STORAGE_DIR = new File("C:\\Users\\poddubnyak\\Dropbox\\07 Programming\\topJavaProjects\\basejava\\src\\main\\java\\app\\resumes");
     protected Storage storage;
+    protected  ObjectStreamStorageStrategy strategyStream;
 
     protected static final ResumeTestData testDataResume = new ResumeTestData();
     protected static final String UUID_1 = "uuid1";
@@ -42,12 +43,12 @@ public abstract class AbstractStorageTest {
     }
 
     protected AbstractStorageTest(Storage storage) {
+        Objects.requireNonNull(storage, "storage must not be null");
         this.storage = storage;
     }
 
     @Before
     public void setUp() {
-        storage.clear();
         storage.save(RESUME_ONE);
         storage.save(RESUME_TWO);
         storage.save(RESUME_THREE);
