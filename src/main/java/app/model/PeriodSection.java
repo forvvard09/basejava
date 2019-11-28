@@ -6,10 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+
 public class PeriodSection extends AbstractSection implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private final List<OrganizationPeriod> itemsPeriod;
+    private List<OrganizationPeriod> itemsPeriod;
+
+    public PeriodSection() {
+    }
 
     public PeriodSection(OrganizationPeriod... organizationPeriod) {
         this(Arrays.asList(organizationPeriod));

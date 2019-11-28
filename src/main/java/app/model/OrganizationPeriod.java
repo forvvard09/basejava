@@ -1,5 +1,10 @@
 package main.java.app.model;
 
+import main.java.app.util.LocalDateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.YearMonth;
 import java.util.Arrays;
@@ -8,11 +13,15 @@ import java.util.Objects;
 
 import static main.java.app.util.DateUtil.NOW;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class OrganizationPeriod implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private final Link homePage;
-    private final List<PositionHeld> listPositionHeld;
+    private Link homePage;
+    private List<PositionHeld> listPositionHeld;
+
+    public OrganizationPeriod() {
+    }
 
     public OrganizationPeriod(Link homePage, List<PositionHeld> listPositionHeld) {
         Objects.requireNonNull(homePage, "homePage must not be null");
@@ -49,14 +58,18 @@ public class OrganizationPeriod implements Serializable {
         return homePage.toString() + listPositionHeld;
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class PositionHeld implements Serializable {
         private static final long serialVersionUID = 1L;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private YearMonth startData;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private YearMonth finishData;
+        private String title;
+        private String description;
 
-        private final YearMonth startData;
-        private final YearMonth finishData;
-        private final String title;
-        private final String description;
-
+        public PositionHeld() {
+        }
 
         public PositionHeld(YearMonth startData, YearMonth finishData, String title, String description) {
             Objects.requireNonNull(startData, "startData must not be null");
