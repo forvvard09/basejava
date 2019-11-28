@@ -3,6 +3,7 @@ package main.java.app.storage;
 import main.java.app.exception.ExistStorageException;
 import main.java.app.exception.NotExistStorageException;
 import main.java.app.model.Resume;
+import main.java.app.storage.serializer.StreamSerializerStrategy;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 public abstract class AbstractStorageTest {
     protected final static File STORAGE_DIR = new File("./src/main/java/app/resumes");
     protected Storage storage;
-    protected  ObjectStreamStorageStrategy strategyStream;
+    protected StreamSerializerStrategy strategyStream;
 
     protected static final ResumeTestData testDataResume = new ResumeTestData();
     protected static final String UUID_1 = "uuid1";

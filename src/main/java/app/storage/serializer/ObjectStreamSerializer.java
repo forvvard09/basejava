@@ -1,11 +1,12 @@
-package main.java.app.storage;
+package main.java.app.storage.serializer;
 
 import main.java.app.exception.StorageException;
 import main.java.app.model.Resume;
+import main.java.app.storage.serializer.StreamSerializerStrategy;
 
 import java.io.*;
 
-public class ObjectStreamStorage implements ObjectStreamStorageStrategy {
+public class ObjectStreamSerializer implements StreamSerializerStrategy {
 
     @Override
     public void doWrite(Resume newResume, OutputStream os) throws IOException {
