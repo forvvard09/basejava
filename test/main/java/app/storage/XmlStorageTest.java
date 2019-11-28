@@ -1,6 +1,6 @@
 package main.java.app.storage;
 
-import main.java.app.serializer.XmlStreamSerializer;
+import main.java.app.storage.serializer.XmlStreamSerializer;
 
 public class XmlStorageTest extends AbstractStorageTest {
     public XmlStorageTest() {

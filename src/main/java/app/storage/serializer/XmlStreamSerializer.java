@@ -1,7 +1,6 @@
-package main.java.app.serializer;
+package main.java.app.storage.serializer;
 
 import main.java.app.model.*;
-import main.java.app.storage.serializer.StreamSerializerStrategy;
 import main.java.app.util.XmlParser;
 
 import java.io.*;
@@ -12,8 +11,8 @@ public class XmlStreamSerializer implements StreamSerializerStrategy {
 
     public XmlStreamSerializer() {
         xmlParser = new XmlParser(
-            Resume.class, OrganizationPeriod.class, Link.class,
-            TextSection.class, PeriodSection.class, ListSection.class, OrganizationPeriod.PositionHeld .class
+                Resume.class, OrganizationPeriod.class, Link.class,
+                TextSection.class, PeriodSection.class, ListSection.class, OrganizationPeriod.PositionHeld .class
         );
     }
 

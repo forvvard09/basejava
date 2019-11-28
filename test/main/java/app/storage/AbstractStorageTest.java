@@ -50,15 +50,17 @@ public abstract class AbstractStorageTest {
 
     @Before
     public void setUp() {
+        storage.clear();
         storage.save(RESUME_ONE);
         storage.save(RESUME_TWO);
         storage.save(RESUME_THREE);
     }
 
-    @After
+
+    /*@After
     public void doClean() {
         storage.clear();
-    }
+    }*/
 
     @Test
     public void save() {
