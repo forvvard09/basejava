@@ -10,13 +10,13 @@ public class ResumeTestData {
 
     public Resume fillResume(String uuid, String fullName) {
         Resume currentResume = new Resume(uuid, fullName);
-        setSectionPersonal(currentResume);
+//        setSectionPersonal(currentResume);
         setSectionContacts(currentResume);
-        setSectionPersonal(currentResume);
-        setSectionQualifications(currentResume);
-        setSectionAchievement(currentResume);
-        setSectionEducation(currentResume);
-        setSectionExperience(currentResume);
+//        setSectionPersonal(currentResume);
+//        setSectionQualifications(currentResume);
+//        setSectionAchievement(currentResume);
+//        setSectionEducation(currentResume);
+//        setSectionExperience(currentResume);
         return currentResume;
     }
 
