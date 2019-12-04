@@ -24,6 +24,14 @@ public class PeriodSection extends AbstractSection implements Serializable {
         this.itemsPeriod = itemsPeriod;
     }
 
+    public List<OrganizationPeriod> getItemsPeriod() {
+        return this.itemsPeriod;
+    }
+
+    public int cuntPeriods() {
+        return itemsPeriod.size();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -31,12 +39,13 @@ public class PeriodSection extends AbstractSection implements Serializable {
 
         PeriodSection that = (PeriodSection) o;
 
-        return itemsPeriod.equals(that.itemsPeriod);
+        return itemsPeriod != null ? itemsPeriod.equals(that.itemsPeriod) : that.itemsPeriod == null;
+
     }
 
     @Override
     public int hashCode() {
-        return itemsPeriod.hashCode();
+        return itemsPeriod != null ? itemsPeriod.hashCode() : 0;
     }
 
     @Override

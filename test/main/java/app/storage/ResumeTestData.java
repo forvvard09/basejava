@@ -10,13 +10,14 @@ public class ResumeTestData {
 
     public Resume fillResume(String uuid, String fullName) {
         Resume currentResume = new Resume(uuid, fullName);
-//        setSectionPersonal(currentResume);
         setSectionContacts(currentResume);
-//        setSectionPersonal(currentResume);
-//        setSectionQualifications(currentResume);
-//        setSectionAchievement(currentResume);
-//        setSectionEducation(currentResume);
-//        setSectionExperience(currentResume);
+        setSectionPersonal(currentResume);
+        setSectionObjective(currentResume);
+        setSectionQualifications(currentResume);
+        setSectionAchievement(currentResume);
+        setSectionEducation(currentResume);
+        setSectionExperience(currentResume);
+
         return currentResume;
     }
 
@@ -40,8 +41,13 @@ public class ResumeTestData {
     }
 
     private void setSectionPersonal(Resume currentResume) {
-        AbstractSection personal = new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
+        AbstractSection personal = new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
         currentResume.setSection(SectionType.valueOf("PERSONAL"), personal);
+    }
+
+    private void setSectionObjective(Resume currentResume) {
+        AbstractSection objective = new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
+        currentResume.setSection(SectionType.valueOf("OBJECTIVE"), objective);
     }
 
     private void setSectionAchievement(Resume currentResume) {

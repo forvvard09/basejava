@@ -29,6 +29,10 @@ public class ListSection extends AbstractSection implements Serializable {
         return items;
     }
 
+    public int getCountItems() {
+        return items.size();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

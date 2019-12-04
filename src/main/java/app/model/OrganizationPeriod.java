@@ -34,6 +34,14 @@ public class OrganizationPeriod implements Serializable {
         this(new Link(name, url), Arrays.asList(positionHelds));
     }
 
+    public Link getHomePage() {
+        return homePage;
+    }
+
+    public List<PositionHeld> getListPositionHeld() {
+        return listPositionHeld;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,6 +85,9 @@ public class OrganizationPeriod implements Serializable {
             this.startData = startData;
             this.title = title;
             this.finishData = finishData;
+            if (description == null) {
+                description = "";
+            }
             this.description = description;
         }
 
@@ -90,6 +101,22 @@ public class OrganizationPeriod implements Serializable {
 
         public PositionHeld(YearMonth startData, YearMonth finishData, String title) {
             this(startData, finishData, title, null);
+        }
+
+        public YearMonth getStartData() {
+            return startData;
+        }
+
+        public YearMonth getFinishData() {
+            return finishData;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDescription() {
+            return description;
         }
 
         @Override

@@ -50,23 +50,22 @@ public abstract class AbstractStorageTest {
 
     @Before
     public void setUp() {
-        storage.clear();
+        //storage.clear();
         storage.save(RESUME_ONE);
         storage.save(RESUME_TWO);
         storage.save(RESUME_THREE);
     }
 
-
-    /*@After
+    @After
     public void doClean() {
         storage.clear();
-    }*/
+    }
 
     @Test
     public void save() {
         storage.save(RESUME_TEST);
         Assert.assertEquals(4, storage.getSize());
-        Assert.assertEquals(RESUME_TEST, storage.get(RESUME_TEST.getUuid()));
+         Assert.assertEquals(RESUME_TEST, storage.get(RESUME_TEST.getUuid()));
     }
 
     @Test(expected = ExistStorageException.class)
