@@ -37,16 +37,13 @@ public class ListSection extends AbstractSection implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ListSection)) return false;
-
         ListSection that = (ListSection) o;
-
-        return items.equals(that.items);
-
+        return Objects.equals(getItems(), that.getItems());
     }
 
     @Override
     public int hashCode() {
-        return items.hashCode();
+        return Objects.hash(getItems());
     }
 
     @Override

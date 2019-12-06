@@ -24,16 +24,13 @@ public class TextSection extends AbstractSection implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TextSection)) return false;
-
         TextSection that = (TextSection) o;
-
-        return description.equals(that.description);
-
+        return Objects.equals(getDescription(), that.getDescription());
     }
 
     @Override
     public int hashCode() {
-        return description.hashCode();
+        return Objects.hash(getDescription());
     }
 
     @Override
