@@ -6,10 +6,12 @@ import main.java.app.model.*;
 import java.io.*;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
+
 
 public class DataStreamSerializer implements StreamSerializerStrategy {
+
     @Override
     public void doWrite(Resume newResume, OutputStream os) throws IOException {
         try (DataOutputStream dos = new DataOutputStream(os)) {
@@ -34,62 +36,51 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
 
     //write
 
-    private void writeContacts(DataOutputStream dos, Resume newResume) throws IOException {
-        dos.writeInt(newResume.getContacts().size());
-        for (Map.Entry<ContactType, String> entry : newResume.getContacts().entrySet()) {
-            dos.writeUTF(entry.getKey().name());
-            dos.writeUTF(entry.getValue());
-        }
-    }
-
     private void writeSections(DataOutputStream dos, Resume newResume) throws IOException {
-        dos.writeInt(newResume.getSections().size());
-        for (Map.Entry<SectionType, AbstractSection> entry : newResume.getSections().entrySet()) {
-            String nameSection = entry.getKey().name();
+        writeWithExeption(newResume.getSections().entrySet(), dos, sections -> {
+            String nameSection = sections.getKey().name();
             dos.writeUTF(nameSection);
             switch (nameSection) {
                 case "PERSONAL":
                 case "OBJECTIVE":
-                    dos.writeUTF(entry.getValue().toString());
+                    dos.writeUTF(sections.getValue().toString());
                     break;
                 case "ACHIEVEMENT":
                 case "QUALIFICATIONS":
-                    ListSection listSection = (ListSection) entry.getValue();
-                    int countRecords = listSection.getCountItems();
-                    dos.writeInt(countRecords);
-                    for (int i = 0; i < countRecords; i++) {
-                        dos.writeUTF(listSection.getItems().get(i));
-                    }
+                    writeWithExeption(((ListSection) sections.getValue()).getItems(), dos, dos::writeUTF);
                     break;
                 case "EXPERIENCE":
                 case "EDUCATION":
-                    PeriodSection periodSection = (PeriodSection) entry.getValue();
-                    int countOrganizationPeriodList = periodSection.countPeriods();
-                    dos.writeInt(countOrganizationPeriodList);
-                    writeOrganizationPeriod(dos, periodSection.getItemsPeriod());
+                    writePeriodSection(dos, (PeriodSection) sections.getValue());
                     break;
                 default:
                     break;
             }
-        }
+        });
     }
 
-    private void writeOrganizationPeriod(DataOutputStream dos, List<OrganizationPeriod> organizationPeriodList) throws IOException {
-        for (OrganizationPeriod items : organizationPeriodList) {
-            dos.writeUTF(items.getHomePage().getName());
-            dos.writeUTF(items.getHomePage().getUrl());
-            dos.writeInt(items.getListPositionHeld().size());
-            writePositionHeld(dos, items.getListPositionHeld());
-        }
+    private void writePeriodSection(DataOutputStream dos, PeriodSection section) throws IOException {
+        writeWithExeption(section.getItemsPeriod(), dos, listPeriods -> {
+            dos.writeUTF(listPeriods.getHomePage().getName());
+            dos.writeUTF(listPeriods.getHomePage().getUrl());
+            writePositionHeld(dos, listPeriods);
+        });
     }
 
-    private void writePositionHeld(DataOutputStream dos, List<OrganizationPeriod.PositionHeld> positionHeldList) throws IOException {
-        for (OrganizationPeriod.PositionHeld positionHeld : positionHeldList) {
-            dos.writeUTF(positionHeld.getStartData().toString());
-            dos.writeUTF(positionHeld.getFinishData().toString());
-            dos.writeUTF(positionHeld.getTitle());
-            dos.writeUTF(positionHeld.getDescription());
-        }
+    private void writePositionHeld(DataOutputStream dos, OrganizationPeriod tt) throws IOException {
+        writeWithExeption(tt.getListPositionHeld(), dos, currentHeld -> {
+            dos.writeUTF(currentHeld.getStartData().toString());
+            dos.writeUTF(currentHeld.getFinishData().toString());
+            dos.writeUTF(currentHeld.getTitle());
+            dos.writeUTF(currentHeld.getDescription());
+        });
+    }
+
+    private void writeContacts(DataOutputStream dos, Resume newResume) throws IOException {
+        writeWithExeption(newResume.getContacts().entrySet(), dos, contact -> {
+            dos.writeUTF(contact.getKey().name());
+            dos.writeUTF(contact.getValue());
+        });
     }
 
     //read
@@ -98,7 +89,6 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
         for (int i = 0; i < countSections; i++) {
             String nameSection = dis.readUTF();
             AbstractSection currentAbstractSection = null;
-
             switch (nameSection) {
                 case "PERSONAL":
                 case "OBJECTIVE":
@@ -160,6 +150,13 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
     private void readContact(DataInputStream dis, Resume resume, int size) throws IOException {
         for (int i = 0; i < size; i++) {
             resume.setContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
+        }
+    }
+
+    private <T> void writeWithExeption(Collection<T> collection, DataOutputStream dos, MyConsumer<T> myConsumer) throws IOException {
+        dos.writeInt(collection.size());
+        for (T t : collection) {
+            myConsumer.accept(t);
         }
     }
 }

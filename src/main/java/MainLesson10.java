@@ -39,8 +39,5 @@ public class MainLesson10 {
         AbstractSection education = new PeriodSection(Arrays.asList(educationCoursera, educationLuxoft));
 
         resume.setSection(SectionType.valueOf("QUALIFICATIONS"), new PeriodSection());
-
-
-
     }
 }

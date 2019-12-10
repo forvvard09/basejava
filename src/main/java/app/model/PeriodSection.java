@@ -28,9 +28,6 @@ public class PeriodSection extends AbstractSection implements Serializable {
         return this.itemsPeriod;
     }
 
-    public int countPeriods() {
-        return itemsPeriod.size();
-    }
 
     @Override
     public boolean equals(Object o) {

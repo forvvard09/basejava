@@ -1,7 +1,5 @@
 package main.java.app.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -27,10 +25,6 @@ public class ListSection extends AbstractSection implements Serializable {
 
     public List<String> getItems() {
         return items;
-    }
-
-    public int getCountItems() {
-        return items.size();
     }
 
     @Override
