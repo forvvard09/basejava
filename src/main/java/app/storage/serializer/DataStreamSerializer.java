@@ -34,8 +34,21 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
     }
 
 
-
     //write
+
+    private void writeContacts(DataOutputStream dos, Resume newResume) throws IOException {
+        writeWithException(newResume.getContacts().entrySet(), dos, contact -> {
+            dos.writeUTF(contact.getKey().name());
+            dos.writeUTF(contact.getValue());
+        });
+    }
+
+    private <T> void writeWithException(Collection<T> collection, DataOutputStream dos, MyConsumer<T> myConsumer) throws IOException {
+        dos.writeInt(collection.size());
+        for (T t : collection) {
+            myConsumer.accept(t);
+        }
+    }
 
     private void writeSections(DataOutputStream dos, Resume newResume) throws IOException {
         writeWithException(newResume.getSections().entrySet(), dos, sections -> {
@@ -48,7 +61,7 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
                     break;
                 case "ACHIEVEMENT":
                 case "QUALIFICATIONS":
-                    writeWithException(((ListSection) sections.getValue()).getItems(), dos, dos::writeUTF);
+                    writeWithException(((ListSection) sections.getValue()).getItems(), dos, item -> dos.writeUTF(item));
                     break;
                 case "EXPERIENCE":
                 case "EDUCATION":
@@ -67,7 +80,6 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
             writePositionHeld(dos, listPeriods);
         });
     }
-
     private void writePositionHeld(DataOutputStream dos, OrganizationPeriod tt) throws IOException {
         writeWithException(tt.getListPositionHeld(), dos, currentHeld -> {
             dos.writeUTF(currentHeld.getStartData().toString());
@@ -77,45 +89,28 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
         });
     }
 
-    private void writeContacts(DataOutputStream dos, Resume newResume) throws IOException {
-        writeWithException(newResume.getContacts().entrySet(), dos, contact -> {
-            dos.writeUTF(contact.getKey().name());
-            dos.writeUTF(contact.getValue());
-        });
-    }
-
-    private <T> void writeWithException(Collection<T> collection, DataOutputStream dos, MyConsumer<T> myConsumer) throws IOException {
-        dos.writeInt(collection.size());
-        for (T t : collection) {
-            myConsumer.accept(t);
-        }
-    }
-
     //read
 
+
     private void readContact(DataInputStream dis, Resume resume) throws IOException {
-        readWithException(dis, ()-> {
-            resume.setContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
-        });
+        readWithException(dis, () -> resume.setContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
     }
 
-    private <T> List<T> readListSection(DataInputStream dis, MySupplier<T> mySupplier ) throws IOException {
-        int sizeList = dis.readInt();
-        List<T> list = new ArrayList<>();
-        for (int i = 0; i < sizeList; i++) {
-            list.add(mySupplier.get());
+    private void readWithException(DataInputStream dis, Reader mySupplier) throws IOException {
+        int size = dis.readInt();
+        for (int i = 0; i < size; i++) {
+            mySupplier.apply();
         }
-        return list;
     }
 
     private void readSection(DataInputStream dis, Resume resume) throws IOException {
-        readWithException(dis, ()-> {
+        readWithException(dis, () -> {
             SectionType sectionType = SectionType.valueOf(dis.readUTF());
-            resume.setSection(sectionType, getSection(sectionType.name(), dis));
+            resume.setSection(sectionType, getSectionForRead(sectionType.name(), dis));
         });
     }
 
-    private AbstractSection getSection(String nameSection, DataInputStream dis) throws IOException {
+    private AbstractSection getSectionForRead(String nameSection, DataInputStream dis) throws IOException {
         AbstractSection currentAbstractSection = null;
         switch (nameSection) {
             case "PERSONAL":
@@ -124,7 +119,7 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
                 break;
             case "ACHIEVEMENT":
             case "QUALIFICATIONS":
-                currentAbstractSection = new ListSection(readListSection(dis, dis::readUTF));
+                currentAbstractSection = new ListSection(readSectionWithList(dis, dis::readUTF));
                 break;
             case "EXPERIENCE":
             case "EDUCATION":
@@ -136,37 +131,34 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
         return currentAbstractSection;
     }
 
-    private void readWithException(DataInputStream dis, Reader mySupplier) throws IOException {
-        int size = dis.readInt();
-        for (int i = 0; i < size; i++) {
-            mySupplier.apply();
+    private <T> List<T> readSectionWithList(DataInputStream dis, MySupplier<T> mySupplier) throws IOException {
+        int sizeList = dis.readInt();
+        List<T> sectionWithList = new ArrayList<>();
+        for (int i = 0; i < sizeList; i++) {
+            sectionWithList.add(mySupplier.get());
         }
+        return sectionWithList;
     }
 
     private List<OrganizationPeriod> readPeriodSection(DataInputStream dis) throws IOException {
-        int countOrganizationPeriodList = dis.readInt();
-        List<OrganizationPeriod> organizationPeriodList = new ArrayList<>();
-        readOrganizationPeriod(dis, countOrganizationPeriodList, organizationPeriodList);
-        return organizationPeriodList;
-    }
-
-    private void readOrganizationPeriod(DataInputStream dis, int countOrganizationPeriodList, List<OrganizationPeriod> organizationPeriodList) throws IOException {
-        for (int j = 0; j < countOrganizationPeriodList; j++) {
-            Link link = new Link(dis.readUTF(), dis.readUTF());
-            organizationPeriodList.add(new OrganizationPeriod(link, getListPositionHeld(dis)));
-        }
-    }
-
-    private List<OrganizationPeriod.PositionHeld> getListPositionHeld (DataInputStream dis) throws IOException {
-        List<OrganizationPeriod.PositionHeld> listPositionHeld = new ArrayList<>();
-        readWithException(dis, ()-> {
-            YearMonth startData = YearMonth.parse(dis.readUTF());
-            YearMonth finishData = YearMonth.parse(dis.readUTF());
-            String title = dis.readUTF();
-            String description = dis.readUTF();
-            listPositionHeld.add(new OrganizationPeriod.PositionHeld(startData, finishData, title, description));
-        });
-        return listPositionHeld;
+        //get List<OrganizationPeriod>
+        return
+            readSectionWithList(dis, () ->
+                //get one Organization
+                new OrganizationPeriod(
+                        new Link(dis.readUTF(), dis.readUTF()),
+                        //get List<OrganizationPeriod.PositionHeld>
+                        readSectionWithList(dis, () ->
+                                //read item held position in organization
+                                new OrganizationPeriod.PositionHeld(
+                                        YearMonth.parse(dis.readUTF()),
+                                        YearMonth.parse(dis.readUTF()),
+                                        dis.readUTF(),
+                                        dis.readUTF()
+                                )
+                        )
+                )
+            );
     }
 }
 
