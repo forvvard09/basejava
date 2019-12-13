@@ -14,60 +14,60 @@ import java.util.Objects;
 import static main.java.app.util.DateUtil.NOW;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class OrganizationPeriod implements Serializable {
+public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Link homePage;
-    private List<PositionHeld> listPositionHeld;
+    private List<Position> listPosition;
 
-    public OrganizationPeriod() {
+    public Organization() {
     }
 
-    public OrganizationPeriod(Link homePage, List<PositionHeld> listPositionHeld) {
+    public Organization(Link homePage, List<Position> listPosition) {
         Objects.requireNonNull(homePage, "homePage must not be null");
-        Objects.requireNonNull(listPositionHeld, "listPositionHeld must not be null");
+        Objects.requireNonNull(listPosition, "listPosition must not be null");
         this.homePage = homePage;
-        this.listPositionHeld = listPositionHeld;
+        this.listPosition = listPosition;
     }
 
-    public OrganizationPeriod(String name, String url, PositionHeld... positionHelds) {
-        this(new Link(name, url), Arrays.asList(positionHelds));
+    public Organization(String name, String url, Position... positions) {
+        this(new Link(name, url), Arrays.asList(positions));
     }
 
     public Link getHomePage() {
         return homePage;
     }
 
-    public List<PositionHeld> getListPositionHeld() {
-        return listPositionHeld;
+    public List<Position> getListPosition() {
+        return listPosition;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof OrganizationPeriod)) return false;
+        if (!(o instanceof Organization)) return false;
 
-        OrganizationPeriod that = (OrganizationPeriod) o;
+        Organization that = (Organization) o;
 
         if (homePage != null ? !homePage.equals(that.homePage) : that.homePage != null) return false;
-        return listPositionHeld != null ? listPositionHeld.equals(that.listPositionHeld) : that.listPositionHeld == null;
+        return listPosition != null ? listPosition.equals(that.listPosition) : that.listPosition == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = homePage != null ? homePage.hashCode() : 0;
-        result = 31 * result + (listPositionHeld != null ? listPositionHeld.hashCode() : 0);
+        result = 31 * result + (listPosition != null ? listPosition.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return homePage.toString() + listPositionHeld;
+        return homePage.toString() + listPosition;
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    public static class PositionHeld implements Serializable {
+    public static class Position implements Serializable {
         private static final long serialVersionUID = 1L;
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private YearMonth startData;
@@ -76,30 +76,27 @@ public class OrganizationPeriod implements Serializable {
         private String title;
         private String description;
 
-        public PositionHeld() {
+        public Position() {
         }
 
-        public PositionHeld(YearMonth startData, YearMonth finishData, String title, String description) {
+        public Position(YearMonth startData, YearMonth finishData, String title, String description) {
             Objects.requireNonNull(startData, "startData must not be null");
             Objects.requireNonNull(title, "title must not be null");
             this.startData = startData;
             this.title = title;
             this.finishData = finishData;
-            if (description == null) {
-                description = "";
-            }
-            this.description = description;
+            this.description = description == null ? "" : description;
         }
 
-        public PositionHeld(YearMonth startData, String title) {
+        public Position(YearMonth startData, String title) {
             this(startData, NOW, title, null);
         }
 
-        public PositionHeld(YearMonth startData, String title, String description) {
+        public Position(YearMonth startData, String title, String description) {
             this(startData, NOW, title, description);
         }
 
-        public PositionHeld(YearMonth startData, YearMonth finishData, String title) {
+        public Position(YearMonth startData, YearMonth finishData, String title) {
             this(startData, finishData, title, null);
         }
 
@@ -122,9 +119,9 @@ public class OrganizationPeriod implements Serializable {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof PositionHeld)) return false;
+            if (!(o instanceof Position)) return false;
 
-            PositionHeld that = (PositionHeld) o;
+            Position that = (Position) o;
 
             if (startData != null ? !startData.equals(that.startData) : that.startData != null) return false;
             if (finishData != null ? !finishData.equals(that.finishData) : that.finishData != null) return false;

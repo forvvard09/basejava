@@ -11,8 +11,8 @@ public class XmlStreamSerializer implements StreamSerializerStrategy {
 
     public XmlStreamSerializer() {
         xmlParser = new XmlParser(
-                Resume.class, OrganizationPeriod.class, Link.class,
-                TextSection.class, PeriodSection.class, ListSection.class, OrganizationPeriod.PositionHeld .class
+                Resume.class, Organization.class, Link.class,
+                TextSection.class, OrganizationSection.class, ListSection.class, Organization.Position.class
         );
     }
 

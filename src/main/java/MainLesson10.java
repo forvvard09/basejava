@@ -20,25 +20,25 @@ public class MainLesson10 {
         resume.setSection(SectionType.valueOf("PERSONAL"), new TextSection("Цель, Действия, Мысли"));
         System.out.println(resume.getSections());
 
-        OrganizationPeriod.PositionHeld firstPostion = new OrganizationPeriod.PositionHeld(YearMonth.of(2013, 3),
+        Organization.Position firstPostion = new Organization.Position(YearMonth.of(2013, 3),
                 YearMonth.of(2013, 5),
                 "\"Functional Programming Principles in Scala> by Martin Odersky\"");
 
-        OrganizationPeriod.PositionHeld secondPostion = new OrganizationPeriod.PositionHeld(YearMonth.of(2014, 1),
+        Organization.Position secondPostion = new Organization.Position(YearMonth.of(2014, 1),
                 YearMonth.of(2014, 5),
                 "\"Functional Programming Principles in Go> by Bobak\"");
-        List<OrganizationPeriod.PositionHeld> listPositionHeldCoursera = Arrays.asList(firstPostion, secondPostion);
+        List<Organization.Position> listPositionCoursera = Arrays.asList(firstPostion, secondPostion);
 
-        OrganizationPeriod educationCoursera = new OrganizationPeriod(new Link("Coursera", "coursera.ru"), listPositionHeldCoursera);
+        Organization educationCoursera = new Organization(new Link("Coursera", "coursera.ru"), listPositionCoursera);
 
         Link orgLuxoft = new Link("Luxoft", "");
-        List<OrganizationPeriod.PositionHeld> listPositionHeldLuxoft = Arrays.asList(new OrganizationPeriod.PositionHeld(YearMonth.of(2011, 3), YearMonth.of(2011, 4),
+        List<Organization.Position> listPositionLuxoft = Arrays.asList(new Organization.Position(YearMonth.of(2011, 3), YearMonth.of(2011, 4),
                 "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\""));
 
-        OrganizationPeriod educationLuxoft = new OrganizationPeriod(orgLuxoft, listPositionHeldLuxoft);
-        AbstractSection education = new PeriodSection(Arrays.asList(educationCoursera, educationLuxoft));
+        Organization educationLuxoft = new Organization(orgLuxoft, listPositionLuxoft);
+        AbstractSection education = new OrganizationSection(Arrays.asList(educationCoursera, educationLuxoft));
 
-        resume.setSection(SectionType.valueOf("QUALIFICATIONS"), new PeriodSection());
+        resume.setSection(SectionType.valueOf("QUALIFICATIONS"), new OrganizationSection());
 
         System.out.println(resume);
     }

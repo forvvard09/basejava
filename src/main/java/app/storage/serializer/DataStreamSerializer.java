@@ -16,7 +16,12 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
         try (DataOutputStream dos = new DataOutputStream(os)) {
             dos.writeUTF(newResume.getUuid());
             dos.writeUTF(newResume.getFullName());
-            writeContacts(dos, newResume);
+              //write contacts
+              writeCollectionWithException(newResume.getContacts().entrySet(), dos, item -> {
+                  dos.writeUTF(item.getKey().name());
+                  dos.writeUTF(item.getValue());
+              });
+
             writeSections(dos, newResume);
         }
     }
@@ -27,31 +32,23 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
             String uuid = dis.readUTF();
             String fullName = dis.readUTF();
             Resume resume = new Resume(uuid, fullName);
-            readContact(dis, resume);
+            //read contacts
+            readItemsWithException(dis, () -> resume.setContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
             readSection(dis, resume);
             return resume;
         }
     }
 
-
     //write
-
-    private void writeContacts(DataOutputStream dos, Resume newResume) throws IOException {
-        writeWithException(newResume.getContacts().entrySet(), dos, contact -> {
-            dos.writeUTF(contact.getKey().name());
-            dos.writeUTF(contact.getValue());
-        });
-    }
-
-    private <T> void writeWithException(Collection<T> collection, DataOutputStream dos, MyConsumer<T> myConsumer) throws IOException {
+    private <T> void writeCollectionWithException(Collection<T> collection, DataOutputStream dos, ElementWriter<T> myConsumer) throws IOException {
         dos.writeInt(collection.size());
         for (T t : collection) {
-            myConsumer.accept(t);
+            myConsumer.write(t);
         }
     }
 
     private void writeSections(DataOutputStream dos, Resume newResume) throws IOException {
-        writeWithException(newResume.getSections().entrySet(), dos, sections -> {
+        writeCollectionWithException(newResume.getSections().entrySet(), dos, sections -> {
             String nameSection = sections.getKey().name();
             dos.writeUTF(nameSection);
             switch (nameSection) {
@@ -61,11 +58,11 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
                     break;
                 case "ACHIEVEMENT":
                 case "QUALIFICATIONS":
-                    writeWithException(((ListSection) sections.getValue()).getItems(), dos, item -> dos.writeUTF(item));
+                    writeCollectionWithException(((ListSection) sections.getValue()).getItems(), dos, item -> dos.writeUTF(item));
                     break;
                 case "EXPERIENCE":
                 case "EDUCATION":
-                    writePeriodSection(dos, (PeriodSection) sections.getValue());
+                    writeOrganizationSection(dos, (OrganizationSection) sections.getValue());
                     break;
                 default:
                     break;
@@ -73,84 +70,62 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
         });
     }
 
-    private void writePeriodSection(DataOutputStream dos, PeriodSection section) throws IOException {
-        writeWithException(section.getItemsPeriod(), dos, listPeriods -> {
-            dos.writeUTF(listPeriods.getHomePage().getName());
-            dos.writeUTF(listPeriods.getHomePage().getUrl());
-            writePositionHeld(dos, listPeriods);
-        });
-    }
-    private void writePositionHeld(DataOutputStream dos, OrganizationPeriod tt) throws IOException {
-        writeWithException(tt.getListPositionHeld(), dos, currentHeld -> {
-            dos.writeUTF(currentHeld.getStartData().toString());
-            dos.writeUTF(currentHeld.getFinishData().toString());
-            dos.writeUTF(currentHeld.getTitle());
-            dos.writeUTF(currentHeld.getDescription());
+    private void writeOrganizationSection(DataOutputStream dos, OrganizationSection section) throws IOException {
+        writeCollectionWithException(section.getListOrganizations(), dos, oneOrg -> {
+            dos.writeUTF(oneOrg.getHomePage().getName());
+            dos.writeUTF(oneOrg.getHomePage().getUrl());
+            writeCollectionWithException(oneOrg.getListPosition(), dos, position -> {
+                dos.writeUTF(position.getStartData().toString());
+                dos.writeUTF(position.getFinishData().toString());
+                dos.writeUTF(position.getTitle());
+                dos.writeUTF(position.getDescription());
+            });
         });
     }
 
     //read
-
-
-    private void readContact(DataInputStream dis, Resume resume) throws IOException {
-        readWithException(dis, () -> resume.setContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
-    }
-
-    private void readWithException(DataInputStream dis, Reader mySupplier) throws IOException {
-        int size = dis.readInt();
-        for (int i = 0; i < size; i++) {
-            mySupplier.apply();
-        }
-    }
-
     private void readSection(DataInputStream dis, Resume resume) throws IOException {
-        readWithException(dis, () -> {
+        readItemsWithException(dis, () -> {
             SectionType sectionType = SectionType.valueOf(dis.readUTF());
-            resume.setSection(sectionType, getSectionForRead(sectionType.name(), dis));
+            AbstractSection currentAbstractSection = null;
+            switch (sectionType.name()) {
+                case "PERSONAL":
+                case "OBJECTIVE":
+                    currentAbstractSection = new TextSection(dis.readUTF());
+                    break;
+                case "ACHIEVEMENT":
+                case "QUALIFICATIONS":
+                    currentAbstractSection = new ListSection(readList(dis, dis::readUTF));
+                    break;
+                case "EXPERIENCE":
+                case "EDUCATION":
+                    currentAbstractSection = new OrganizationSection(readOrganizationSection(dis));
+                    break;
+                default:
+                    throw new IllegalStateException();
+            }
+            resume.setSection(sectionType, currentAbstractSection);
         });
     }
 
-    private AbstractSection getSectionForRead(String nameSection, DataInputStream dis) throws IOException {
-        AbstractSection currentAbstractSection = null;
-        switch (nameSection) {
-            case "PERSONAL":
-            case "OBJECTIVE":
-                currentAbstractSection = new TextSection(dis.readUTF());
-                break;
-            case "ACHIEVEMENT":
-            case "QUALIFICATIONS":
-                currentAbstractSection = new ListSection(readSectionWithList(dis, dis::readUTF));
-                break;
-            case "EXPERIENCE":
-            case "EDUCATION":
-                currentAbstractSection = new PeriodSection(readPeriodSection(dis));
-                break;
-            default:
-                break;
+    private void readItemsWithException(DataInputStream dis, ElementProcessor elementProcessor) throws IOException {
+        int size = dis.readInt();
+        for (int i = 0; i < size; i++) {
+            elementProcessor.process();
         }
-        return currentAbstractSection;
     }
 
-    private <T> List<T> readSectionWithList(DataInputStream dis, MySupplier<T> mySupplier) throws IOException {
-        int sizeList = dis.readInt();
-        List<T> sectionWithList = new ArrayList<>();
-        for (int i = 0; i < sizeList; i++) {
-            sectionWithList.add(mySupplier.get());
-        }
-        return sectionWithList;
-    }
-
-    private List<OrganizationPeriod> readPeriodSection(DataInputStream dis) throws IOException {
-        //get List<OrganizationPeriod>
+    private List<Organization> readOrganizationSection(DataInputStream dis) throws IOException {
+        //read List<Organization>
         return
-            readSectionWithList(dis, () ->
-                //get one Organization
-                new OrganizationPeriod(
+            readList(dis, () ->
+                //read one Organization
+                new Organization(
                         new Link(dis.readUTF(), dis.readUTF()),
-                        //get List<OrganizationPeriod.PositionHeld>
-                        readSectionWithList(dis, () ->
+                        //read List<Organization.Position>
+                        readList(dis, () ->
                                 //read item held position in organization
-                                new OrganizationPeriod.PositionHeld(
+                                new Organization.Position(
                                         YearMonth.parse(dis.readUTF()),
                                         YearMonth.parse(dis.readUTF()),
                                         dis.readUTF(),
@@ -159,6 +134,20 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
                         )
                 )
             );
+    }
+
+    private <T> List<T> readList(DataInputStream dis, ElementReader<T> elementReader) throws IOException {
+        int sizeList = dis.readInt();
+        List<T> sectionWithList = new ArrayList<>();
+        for (int i = 0; i < sizeList; i++) {
+            sectionWithList.add(elementReader.read());
+        }
+        return sectionWithList;
+    }
+
+    @FunctionalInterface
+    private interface ElementReader<T> {
+        T read() throws IOException;
     }
 }
 

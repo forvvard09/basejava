@@ -90,7 +90,7 @@ public abstract class AbstractStorageTest {
     public void update() {
         Resume r = new Resume(UUID_1, "TEST_NAME");
         storage.update((r));
-        //Assert.assertSame(r, storage.get(r.getUuid()));
+        //Assert.assertSame(r, storage.read(r.getUuid()));
         assertEquals(r, storage.get(UUID_1));
     }
 

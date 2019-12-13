@@ -3,7 +3,7 @@ package main.java.app.storage.serializer;
 import java.io.IOException;
 
 @FunctionalInterface
-public interface Reader {
+public interface ElementProcessor {
 
-    void apply() throws IOException;
+    void process() throws IOException;
 }

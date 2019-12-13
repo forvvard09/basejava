@@ -65,44 +65,44 @@ public class ResumeTestData {
     }
 
     private void setSectionEducation(Resume currentResume) {
-        OrganizationPeriod.PositionHeld firstPostion = new OrganizationPeriod.PositionHeld(YearMonth.of(2013, 3),
+        Organization.Position firstPostion = new Organization.Position(YearMonth.of(2013, 3),
                 YearMonth.of(2013, 5),
                 "\"Functional Programming Principles in Scala> by Martin Odersky\"");
 
-        OrganizationPeriod.PositionHeld secondPostion = new OrganizationPeriod.PositionHeld(YearMonth.of(2014, 1),
+        Organization.Position secondPostion = new Organization.Position(YearMonth.of(2014, 1),
                 YearMonth.of(2014, 5),
                 "\"Functional Programming Principles in Go> by Bobak\"");
-        List<OrganizationPeriod.PositionHeld> listPositionHeldCoursera = Arrays.asList(firstPostion, secondPostion);
+        List<Organization.Position> listPositionCoursera = Arrays.asList(firstPostion, secondPostion);
 
-        OrganizationPeriod educationCoursera = new OrganizationPeriod(new Link("Coursera", "coursera.ru"), listPositionHeldCoursera);
+        Organization educationCoursera = new Organization(new Link("Coursera", "coursera.ru"), listPositionCoursera);
 
         Link orgLuxoft = new Link("Luxoft", "");
-        List<OrganizationPeriod.PositionHeld> listPositionHeldLuxoft = Arrays.asList(new OrganizationPeriod.PositionHeld(YearMonth.of(2011, 3), YearMonth.of(2011, 4),
+        List<Organization.Position> listPositionLuxoft = Arrays.asList(new Organization.Position(YearMonth.of(2011, 3), YearMonth.of(2011, 4),
                 "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\""));
 
-        OrganizationPeriod educationLuxoft = new OrganizationPeriod(orgLuxoft, listPositionHeldLuxoft);
-        AbstractSection education = new PeriodSection(Arrays.asList(educationCoursera, educationLuxoft));
+        Organization educationLuxoft = new Organization(orgLuxoft, listPositionLuxoft);
+        AbstractSection education = new OrganizationSection(Arrays.asList(educationCoursera, educationLuxoft));
         currentResume.setSection(SectionType.valueOf("EDUCATION"), education);
     }
 
     private void setSectionExperience(Resume currentResume) {
-        OrganizationPeriod experienceJavaOnline = new OrganizationPeriod("Java Online Projects", "",
-                             new OrganizationPeriod.PositionHeld(YearMonth.of(2013, 10),
+        Organization experienceJavaOnline = new Organization("Java Online Projects", "",
+                             new Organization.Position(YearMonth.of(2013, 10),
                         "Автор проекта",
                         "Создание, организация и проведение Java онлайн проектов и стажировок."));
 
-        OrganizationPeriod experienceWrike = new OrganizationPeriod("Wrike", "",
-                        new OrganizationPeriod.PositionHeld(YearMonth.of(2014, 10),
+        Organization experienceWrike = new Organization("Wrike", "",
+                        new Organization.Position(YearMonth.of(2014, 10),
                                 YearMonth.of(2016, 1),
                                 "Старший разработчик (backend)",
                                 "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."),
-                        new OrganizationPeriod.PositionHeld(YearMonth.of(2016, 2),
+                        new Organization.Position(YearMonth.of(2016, 2),
                                 YearMonth.of(2018, 11),
                                 "Главный разработчик (fullstack)",
                                 "Проектирование и разработка микросерверной инфраструктуры взаимодействия сервисов (JavaScript, Jquerry, Angular, Docker, Kubernetes)")
         );
 
-        AbstractSection experience = new PeriodSection(Arrays.asList(experienceJavaOnline, experienceWrike));
+        AbstractSection experience = new OrganizationSection(Arrays.asList(experienceJavaOnline, experienceWrike));
         currentResume.setSection(SectionType.valueOf("EXPERIENCE"), experience);
     }
 }
