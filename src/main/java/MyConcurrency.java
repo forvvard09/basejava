@@ -1,5 +1,7 @@
 package main.java;
 
+import main.java.app.util.LazySingleton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +64,7 @@ public class MyConcurrency {
         });
 
 //        Thread.sleep(999);
+        LazySingleton.getInstance();
         System.out.println(counter);
     }
 
