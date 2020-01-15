@@ -1,5 +1,6 @@
 package main.java.app.storage;
 
+import main.java.Config;
 import main.java.app.exception.ExistStorageException;
 import main.java.app.exception.NotExistStorageException;
 import main.java.app.model.Resume;
@@ -18,7 +19,7 @@ import java.util.Objects;
 import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
-    protected final static File STORAGE_DIR = new File("./src/main/java/app/resumes");
+    protected static final File STORAGE_DIR = Config.get().getStorageDir();
     protected Storage storage;
     protected StreamSerializerStrategy strategyStream;
 
