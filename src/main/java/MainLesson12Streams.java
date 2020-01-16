@@ -2,10 +2,10 @@ package main.java;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class MainLesson12Streams {
-    private volatile int sum;
 
     public static void main(String[] args) {
 
@@ -17,7 +17,7 @@ public class MainLesson12Streams {
         System.out.println(lesson.addOrEven(Arrays.asList(1, 2, 3, 4, 5, 5)));
     }
 
-    public int minValue(int[] values) {
+    private int minValue(int[] values) {
         return (Arrays.stream(values)
                 .distinct()
 //                .sorted().reduce((x, y) -> x * 10 + y).getAsInt();
@@ -28,15 +28,12 @@ public class MainLesson12Streams {
                 .orElseThrow(RuntimeException::new);
     }
 
-    public List<Integer> addOrEven(List<Integer> integers) {
-        sum = 0;
+    private List<Integer> addOrEven(List<Integer> integers) {
+        AtomicInteger sum = new AtomicInteger(0);
         return integers.stream()
-                .peek(x -> adding(x))
+                .peek(x -> sum.getAndAdd(x))
+                //.peek(sum::getAndAdd)
                 .collect(Collectors.partitioningBy(x -> x % 2 == 0))
-                .get(sum % 2 != 0);
-    }
-
-    private synchronized void adding(int x) {
-        sum += x;
+                .get(sum.get() % 2 != 0);
     }
 }
