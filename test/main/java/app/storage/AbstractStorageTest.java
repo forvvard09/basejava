@@ -20,18 +20,18 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
-    protected Storage storage;
-    protected StreamSerializerStrategy strategyStream;
-
+    protected static final String DB_URL = Config.get().getDbUrl();
+    protected static final String DB_USER = Config.get().getDbUser();
+    protected static final String DB_PASSWORD = Config.get().getDbPassword();
     protected static final ResumeTestData testDataResume = new ResumeTestData();
     protected static final String UUID_1 = "uuid1";
     protected static final String UUID_2 = "uuid2";
     protected static final String UUID_3 = "uuid3";
     protected static final String TEST_UID = "testUuid";
+    protected static final Resume RESUME_TEST;
     private static final Resume RESUME_ONE;
     private static final Resume RESUME_TWO;
     private static final Resume RESUME_THREE;
-    protected static final Resume RESUME_TEST;
 
     static {
         //resume 1
@@ -44,6 +44,9 @@ public abstract class AbstractStorageTest {
         RESUME_TEST = testDataResume.fillResume(TEST_UID, "NameTest");
     }
 
+    protected Storage storage;
+    protected StreamSerializerStrategy strategyStream;
+
     protected AbstractStorageTest(Storage storage) {
         Objects.requireNonNull(storage, "storage must not be null");
         this.storage = storage;
@@ -51,7 +54,7 @@ public abstract class AbstractStorageTest {
 
     @Before
     public void setUp() {
-        //storage.clear();
+//        storage.clear();
         storage.save(RESUME_ONE);
         storage.save(RESUME_TWO);
         storage.save(RESUME_THREE);
@@ -66,7 +69,7 @@ public abstract class AbstractStorageTest {
     public void save() {
         storage.save(RESUME_TEST);
         Assert.assertEquals(4, storage.getSize());
-         Assert.assertEquals(RESUME_TEST, storage.get(RESUME_TEST.getUuid()));
+        Assert.assertEquals(RESUME_TEST, storage.get(RESUME_TEST.getUuid()));
     }
 
     @Test(expected = ExistStorageException.class)
