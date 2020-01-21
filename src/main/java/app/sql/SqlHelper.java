@@ -15,25 +15,21 @@ public class SqlHelper {
         this.connectionFactory = connectionFactory;
     }
 
-    public <T> T execute(String sqlQuery, SqlStrategy<T> runnerExecite) {
+    public <T> T execute(String sqlQuery, SqlExecutor<T> executor) {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sqlQuery)) {
-            return runnerExecite.execute(ps);
+            return executor.execute(ps);
         } catch (SQLException e) {
             if (e.getSQLState().equals("23505")) {
                 throw new ExistStorageException("This uuid already in use.");
             } else {
-                throw new StorageException(e);
+                throw new StorageException("Sql error", e);
             }
         }
     }
 
     public void execute(String sqlQuery) {
-        try (Connection conn = connectionFactory.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sqlQuery)) {
-            ps.execute();
-        } catch (SQLException e) {
-            throw new StorageException(e);
-        }
+        //execute(sqlQuery, ps -> ps.execute());
+        execute(sqlQuery, PreparedStatement::execute);
     }
 }

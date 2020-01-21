@@ -2,20 +2,17 @@ package main.java.app.storage;
 
 import main.java.app.exception.NotExistStorageException;
 import main.java.app.model.Resume;
-import main.java.app.sql.ConnectionFactory;
 import main.java.app.sql.SqlHelper;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class SqlStorage implements Storage {
     private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
-    private final ConnectionFactory connectionFactory;
     private SqlHelper sqlHelper;
 
     //Java 7
@@ -30,26 +27,25 @@ public class SqlStorage implements Storage {
 
     //Java 8 Lambda
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
-        connectionFactory = () -> DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-        sqlHelper = new SqlHelper(connectionFactory);
+        sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
     }
 
     @Override
     public void save(Resume resume) {
+        LOG.info("SqlStorage. Save new resume.");
         sqlHelper.execute("INSERT INTO resume (uuid, full_name) values (?, ?)", ps -> {
             ps.setString(1, resume.getUuid());
             ps.setString(2, resume.getFullName());
             ps.executeUpdate();
             return null;
         });
-        LOG.info("Save sql.");
     }
 
     @Override
     public Resume get(String uuid) {
+        LOG.info("SqlStorage. Get resume. Uuid: " + uuid);
         return sqlHelper.execute("SELECT * FROM resume r WHERE r.uuid =?", ps -> {
             ps.setString(1, uuid);
-            LOG.info("Get sql. Uuid: " + uuid);
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
                 throw new NotExistStorageException(uuid);
@@ -60,6 +56,7 @@ public class SqlStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
+        LOG.info("SqlStorage. Delete resume. Uuid: " + uuid);
         sqlHelper.execute("DELETE FROM resume r WHERE r.uuid =?", ps -> {
             ps.setString(1, uuid);
             if (ps.executeUpdate() != 1) {
@@ -67,11 +64,11 @@ public class SqlStorage implements Storage {
             }
             return null;
         });
-        LOG.info("Delete sql. Uuid: " + uuid);
     }
 
     @Override
     public void update(Resume newResume) {
+        LOG.info("SqlStorage. Update resume. Uuid: " + newResume.getUuid());
         sqlHelper.execute("UPDATE Resume Set full_name = ? WHERE resume.uuid = ?", ps -> {
             ps.setString(1, newResume.getFullName());
             ps.setString(2, newResume.getUuid());
@@ -80,43 +77,39 @@ public class SqlStorage implements Storage {
             }
             return null;
         });
-        LOG.info("Update sql. Uuid: " + newResume.getUuid());
     }
 
     @Override
     public void clear() {
+        LOG.info("SqlStorage. Clear storage.");
         sqlHelper.execute("DELETE FROM resume");
-        LOG.info("Clear sql.");
     }
 
     @Override
     public int getSize() {
+        LOG.info("SqlStorage. Get size storage.");
         return sqlHelper.execute("SELECT COUNT(*) FROM resume", ps -> {
             ResultSet rs = ps.executeQuery();
             int countResume = 0;
             if (rs.next()) {
                 countResume = rs.getInt(1);
             }
-            LOG.info("Get size sql.");
             return countResume;
         });
     }
 
     @Override
     public List<Resume> getAllSorted() {
-        return sqlHelper.execute("SELECT * FROM resume", ps -> {
+        LOG.info("SqlStorage. Get sorted list resume.");
+        return sqlHelper.execute("SELECT * FROM resume ORDER BY full_name, uuid", ps -> {
             ResultSet rs = ps.executeQuery();
-            List<Resume> list = new ArrayList<>();
+            List<Resume> listResume = new ArrayList<>();
             while (rs.next()) {
-                list.add(new Resume(rs.getString("uuid").trim(), rs.getString("full_name")));
+                listResume.add(new Resume(rs.getString("uuid").trim(), rs.getString("full_name")));
             }
-            LOG.info("Get all sorted.");
-            return doSortCopyAll(list);
+            return listResume;
         });
     }
 
-    private List<Resume> doSortCopyAll(List<Resume> listResume) {
-        Collections.sort(listResume);
-        return new ArrayList<>(listResume);
-    }
+
 }
