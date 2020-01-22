@@ -1,19 +1,19 @@
 create table resume
 (
-    uuid      char(36) not null
+    uuid      varchar(36) not null
         constraint resume_pk
             primary key,
-    full_name text     not null
+    full_name text        not null
 );
 
 create table contact
 (
-    id          serial   not null
+    id          serial      not null
         constraint contact_pk
             primary key,
-    type        text     not null,
-    value       text     not null,
-    resume_uuid char(36) not null
+    type        text        not null,
+    value       text        not null,
+    resume_uuid varchar(36) not null
         constraint contact_resume_uuid_fk
             references resume
             on update restrict on delete cascade
