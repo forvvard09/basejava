@@ -1,5 +1,8 @@
 package main.java;
 
+import main.java.app.storage.SqlStorage;
+import main.java.app.storage.Storage;
+
 import java.io.*;
 import java.util.Properties;
 
@@ -7,12 +10,15 @@ public class Config {
     private final static File PROPS = new File("./config/resumes.properties");
     private static final Config INSTANCE = new Config();
 
-    private File storageDir;
-    private String dbUrl;
-    private String dbUser;
-    private String dbPassword;
+    private final File storageDir;
+    private final Properties props = new Properties();
+   /* private final String dbUrl;
+    private final String dbUser;
+    private final String dbPassword;*/
 
-    Properties props = new Properties();
+    private final Storage storage;
+
+
 
     public static Config get() {
         return INSTANCE;
@@ -22,9 +28,11 @@ public class Config {
         try (InputStream is = new FileInputStream(PROPS)) {
             props.load(is);
             storageDir = new File(props.getProperty("storage.dir"));
-            dbUrl = props.getProperty("db.url");
+            /*dbUrl = props.getProperty("db.url");
             dbUser = props.getProperty("db.user");
-            dbPassword = props.getProperty("db.password");
+            dbPassword = props.getProperty("db.password");*/
+            storage = new SqlStorage(props.getProperty("db.url"), props.getProperty("db.user"), props.getProperty("db.password"));
+
         } catch (IOException e) {
             throw new IllegalStateException("Invalid config file." + PROPS.getAbsolutePath());
         }
@@ -34,7 +42,7 @@ public class Config {
         return storageDir;
     }
 
-    public String getDbUrl() {
+    /*public String getDbUrl() {
         return dbUrl;
     }
 
@@ -44,5 +52,9 @@ public class Config {
 
     public String getDbPassword() {
         return dbPassword;
+    }*/
+
+    public Storage getStorage() {
+        return storage;
     }
 }

@@ -20,9 +20,9 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
-    protected static final String DB_URL = Config.get().getDbUrl();
+    /*protected static final String DB_URL = Config.get().getDbUrl();
     protected static final String DB_USER = Config.get().getDbUser();
-    protected static final String DB_PASSWORD = Config.get().getDbPassword();
+    protected static final String DB_PASSWORD = Config.get().getDbPassword();*/
     protected static final ResumeTestData testDataResume = new ResumeTestData();
     protected static final String UUID_1 = "uuid1";
     protected static final String UUID_2 = "uuid2";
@@ -55,8 +55,8 @@ public abstract class AbstractStorageTest {
     @Before
     public void setUp() {
 //        storage.clear();
-        storage.save(RESUME_ONE);
         storage.save(RESUME_TWO);
+        storage.save(RESUME_ONE);
         storage.save(RESUME_THREE);
     }
 

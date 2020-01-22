@@ -33,7 +33,8 @@ public class SqlStorage implements Storage {
     @Override
     public void save(Resume resume) {
         LOG.info("SqlStorage. Save new resume.");
-        sqlHelper.execute("INSERT INTO resume (uuid, full_name) values (?, ?)", ps -> {
+        //!!! sqlHelper.<Void>
+        sqlHelper.<Void>execute("INSERT INTO resume (uuid, full_name) values (?, ?)", ps -> {
             ps.setString(1, resume.getUuid());
             ps.setString(2, resume.getFullName());
             ps.executeUpdate();
@@ -57,7 +58,7 @@ public class SqlStorage implements Storage {
     @Override
     public void delete(String uuid) {
         LOG.info("SqlStorage. Delete resume. Uuid: " + uuid);
-        sqlHelper.execute("DELETE FROM resume r WHERE r.uuid =?", ps -> {
+        sqlHelper.<Void>execute("DELETE FROM resume r WHERE r.uuid =?", ps -> {
             ps.setString(1, uuid);
             if (ps.executeUpdate() != 1) {
                 throw new NotExistStorageException(uuid);
@@ -69,7 +70,7 @@ public class SqlStorage implements Storage {
     @Override
     public void update(Resume newResume) {
         LOG.info("SqlStorage. Update resume. Uuid: " + newResume.getUuid());
-        sqlHelper.execute("UPDATE Resume Set full_name = ? WHERE resume.uuid = ?", ps -> {
+        sqlHelper.<Void>execute("UPDATE Resume Set full_name = ? WHERE resume.uuid = ?", ps -> {
             ps.setString(1, newResume.getFullName());
             ps.setString(2, newResume.getUuid());
             if (ps.executeUpdate() != 1) {
@@ -90,11 +91,12 @@ public class SqlStorage implements Storage {
         LOG.info("SqlStorage. Get size storage.");
         return sqlHelper.execute("SELECT COUNT(*) FROM resume", ps -> {
             ResultSet rs = ps.executeQuery();
-            int countResume = 0;
+            /*int countResume = 0;
             if (rs.next()) {
                 countResume = rs.getInt(1);
             }
-            return countResume;
+            return countResume;*/
+            return rs.next() ? rs.getInt(1) : 0;
         });
     }
 
