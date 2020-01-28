@@ -11,10 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,10 +21,10 @@ public abstract class AbstractStorageTest {
     protected static final String DB_USER = Config.get().getDbUser();
     protected static final String DB_PASSWORD = Config.get().getDbPassword();*/
     protected static final ResumeTestData testDataResume = new ResumeTestData();
-    protected static final String UUID_1 = "uuid1";
-    protected static final String UUID_2 = "uuid2";
-    protected static final String UUID_3 = "uuid3";
-    protected static final String TEST_UID = "testUuid";
+    protected static final String UUID_1 = UUID.randomUUID().toString();
+    protected static final String UUID_2 = UUID.randomUUID().toString();
+    protected static final String UUID_3 = UUID.randomUUID().toString();
+    protected static final String TEST_UID = UUID.randomUUID().toString();
     protected static final Resume RESUME_TEST;
     private static final Resume RESUME_ONE;
     private static final Resume RESUME_TWO;
