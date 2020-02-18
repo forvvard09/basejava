@@ -1,6 +1,5 @@
 package main.java.app.sql;
 
-import main.java.app.exception.ExistStorageException;
 import main.java.app.exception.StorageException;
 
 import java.sql.Connection;
@@ -20,11 +19,7 @@ public class SqlHelper {
              PreparedStatement ps = conn.prepareStatement(sqlQuery)) {
             return executor.execute(ps);
         } catch (SQLException e) {
-            if (e.getSQLState().equals("23505")) {
-                throw new ExistStorageException("This uuid already in use.");
-            } else {
-                throw new StorageException("Sql error", e);
-            }
+            throw ExceptionUtil.convertException(e);
         }
     }
 
@@ -32,4 +27,22 @@ public class SqlHelper {
         //execute(sqlQuery, ps -> ps.execute());
         execute(sqlQuery, PreparedStatement::execute);
     }
+
+    public <T> T transactionExecute(SqlTransaction<T> executor) {
+        try (Connection conn = connectionFactory.getConnection()) {
+            try {
+                conn.setAutoCommit(false);
+                T res = executor.execute(conn);
+                conn.commit();
+                return res;
+            } catch (SQLException e) {
+                conn.rollback();
+                throw ExceptionUtil.convertException(e);
+            }
+        } catch (SQLException e) {
+            throw new StorageException(e);
+        }
+    }
+
+
 }

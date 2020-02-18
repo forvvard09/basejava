@@ -10,7 +10,8 @@ public class ResumeTestData {
 
     public Resume fillResume(String uuid, String fullName) {
         Resume currentResume = new Resume(uuid, fullName);
-        /*setSectionContacts(currentResume);
+        setSectionContacts(currentResume);
+        /*
         setSectionPersonal(currentResume);
         setSectionObjective(currentResume);
         setSectionQualifications(currentResume);

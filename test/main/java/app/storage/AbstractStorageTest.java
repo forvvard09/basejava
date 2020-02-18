@@ -16,10 +16,11 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = Config.get().getStorageDir();
     /*protected static final String DB_URL = Config.get().getDbUrl();
     protected static final String DB_USER = Config.get().getDbUser();
     protected static final String DB_PASSWORD = Config.get().getDbPassword();*/
+
+    protected static final File STORAGE_DIR = Config.get().getStorageDir();
     protected static final ResumeTestData testDataResume = new ResumeTestData();
     protected static final String UUID_1 = UUID.randomUUID().toString();
     protected static final String UUID_2 = UUID.randomUUID().toString();

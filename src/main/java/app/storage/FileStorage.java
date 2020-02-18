@@ -1,6 +1,7 @@
 package main.java.app.storage;
 
 import main.java.app.exception.StorageException;
+
 import main.java.app.model.Resume;
 import main.java.app.storage.serializer.StreamSerializerStrategy;
 
