@@ -3,6 +3,7 @@ package main.java.app.storage;
 import main.java.Config;
 import main.java.app.exception.ExistStorageException;
 import main.java.app.exception.NotExistStorageException;
+import main.java.app.model.ContactType;
 import main.java.app.model.Resume;
 import main.java.app.storage.serializer.StreamSerializerStrategy;
 import org.junit.After;
@@ -91,6 +92,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void update() {
         Resume r = new Resume(UUID_1, "TEST_NAME");
+        r.setContact(ContactType.SKYPE, "USERS");
         storage.update((r));
         //Assert.assertSame(r, storage.read(r.getUuid()));
         assertEquals(r, storage.get(UUID_1));

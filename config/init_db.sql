@@ -20,5 +20,5 @@ create table contact
 );
 
 create unique index contact_uuid_type_index
-    on contact (resume_uuid, type);
+    on contact (resume_uuid, id);
 

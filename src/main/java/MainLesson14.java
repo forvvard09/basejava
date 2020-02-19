@@ -15,8 +15,12 @@ public class MainLesson14 {
         // возвращет null уесли успешно записывает, и value, если запись уже есть
         System.out.println(testMap.putIfAbsent("1", "test"));
 
-        testMap.computeIfPresent("1", String::concat);
+        //если ключ используется, то выполнится лямюда функция, и будет выполнено действие для сущестующего value
+        // возвращет null и ничего не происходит если такой ключ не используется
+        System.out.println(testMap.computeIfPresent("1", (key, value) -> "999" + "-> " + value));
 
+        //запишет, если ключ 4 не используется и выведет результат выполнения lambda
+        System.out.println(testMap.computeIfAbsent("3", value -> "Five"));
 
         System.out.println(testMap);
 
