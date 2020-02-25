@@ -6,10 +6,7 @@ import main.java.app.model.Resume;
 import main.java.app.sql.SqlHelper;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class SqlStorage implements Storage {
@@ -125,6 +122,36 @@ public class SqlStorage implements Storage {
                     return convertResultQueryToSortedListResumes(rs);
                 });
     }
+
+    //второй способ через 2 запроса
+    /*@Override
+    public List<Resume> getAllSorted() {
+        LOG.info("SqlStorage. Get sorted list resume");
+        List<Resume> listResumes = new ArrayList<>();
+        sqlHelper.transactionExecute(conn -> {
+                    try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM resume")) {
+                        ResultSet rs = ps.executeQuery();
+                        while (rs.next()) {
+                            listResumes.add(new Resume(rs.getString("uuid"), rs.getString("full_name")));
+                        }
+                    }
+                    try (PreparedStatement ps = conn.prepareStatement("SELECT * from contact c where c.resume_uuid = ?")) {
+                        for (Resume resume: listResumes) {
+                            ps.setString(1, resume.getUuid());
+                            ResultSet rs = ps.executeQuery();
+                            while (rs.next()) {
+                                if (rs.getString("type") != null) {
+                                    resume.setContact(ContactType.valueOf(rs.getString("type")), rs.getString("value"));
+                                }
+                            }
+                        }
+                    }
+                    return null;
+                }
+        );
+        Collections.sort(listResumes);
+        return listResumes;
+    }*/
 
     private List<Resume> convertResultQueryToSortedListResumes(ResultSet rs) throws SQLException {
         Map<String, Resume> resultMap = new LinkedHashMap<>();

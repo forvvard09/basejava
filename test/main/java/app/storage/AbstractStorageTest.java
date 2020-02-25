@@ -93,6 +93,7 @@ public abstract class AbstractStorageTest {
     public void update() {
         Resume r = new Resume(UUID_1, "TEST_NAME");
         r.setContact(ContactType.SKYPE, "USERS");
+        r.setContact(ContactType.PHONE, "+78921022020");
         storage.update((r));
         //Assert.assertSame(r, storage.read(r.getUuid()));
         assertEquals(r, storage.get(UUID_1));
