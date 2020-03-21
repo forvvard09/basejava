@@ -11,11 +11,11 @@ public class ResumeTestData {
     public Resume fillResume(String uuid, String fullName) {
         Resume currentResume = new Resume(uuid, fullName);
         setSectionContacts(currentResume);
-        /*
         setSectionPersonal(currentResume);
         setSectionObjective(currentResume);
-        setSectionQualifications(currentResume);
         setSectionAchievement(currentResume);
+        setSectionQualifications(currentResume);
+        /*
         setSectionEducation(currentResume);
         setSectionExperience(currentResume);*/
         return currentResume;

@@ -7,7 +7,10 @@ import java.io.*;
 import java.util.Properties;
 
 public class Config {
-    private final static File PROPS = new File("./config/resumes.properties");
+    //    private final static File PROPS = new File("./config/resumes.properties");
+//    private final static File PROPS = new File("C:/Users/poddubnyak/Dropbox/07 Programming/topJavaProjects/basejava/config/resumes.properties");
+    private final static File PROPS = new File("D:/Dropbox/07 Programming/topJavaProjects/basejava/config/resumes.properties");
+
     private static final Config INSTANCE = new Config();
 
     private final File storageDir;
@@ -25,9 +28,17 @@ public class Config {
     }
 
     private Config() {
+
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         try (InputStream is = new FileInputStream(PROPS)) {
             props.load(is);
             storageDir = new File(props.getProperty("storage.dir"));
+
             /*dbUrl = props.getProperty("db.url");
             dbUser = props.getProperty("db.user");
             dbPassword = props.getProperty("db.password");*/

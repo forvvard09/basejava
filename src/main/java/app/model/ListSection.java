@@ -42,6 +42,6 @@ public class ListSection extends AbstractSection implements Serializable {
 
     @Override
     public String toString() {
-        return System.lineSeparator().concat("* ") + String.join(System.lineSeparator().concat("* "), items);
+        return String.join(System.lineSeparator(), items);
     }
 }
