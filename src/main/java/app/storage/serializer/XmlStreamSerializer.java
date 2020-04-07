@@ -18,14 +18,14 @@ public class XmlStreamSerializer implements StreamSerializerStrategy {
 
     @Override
     public void doWrite(Resume newResume, OutputStream os) throws IOException {
-        try(Writer w = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
+        try (Writer w = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
             xmlParser.marshall(newResume, w);
         }
     }
 
     @Override
     public Resume doRead(InputStream is) throws IOException {
-        try(Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+        try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
             return xmlParser.unmarshall(reader);
         }
     }

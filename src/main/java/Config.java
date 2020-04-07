@@ -3,7 +3,10 @@ package main.java;
 import main.java.app.storage.SqlStorage;
 import main.java.app.storage.Storage;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class Config {
@@ -21,11 +24,6 @@ public class Config {
 
     private final Storage storage;
 
-
-
-    public static Config get() {
-        return INSTANCE;
-    }
 
     private Config() {
 
@@ -47,6 +45,10 @@ public class Config {
         } catch (IOException e) {
             throw new IllegalStateException("Invalid config file." + PROPS.getAbsolutePath());
         }
+    }
+
+    public static Config get() {
+        return INSTANCE;
     }
 
     public File getStorageDir() {

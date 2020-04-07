@@ -16,11 +16,11 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
         try (DataOutputStream dos = new DataOutputStream(os)) {
             dos.writeUTF(newResume.getUuid());
             dos.writeUTF(newResume.getFullName());
-              //write contacts
-              writeCollectionWithException(newResume.getContacts().entrySet(), dos, item -> {
-                  dos.writeUTF(item.getKey().name());
-                  dos.writeUTF(item.getValue());
-              });
+            //write contacts
+            writeCollectionWithException(newResume.getContacts().entrySet(), dos, item -> {
+                dos.writeUTF(item.getKey().name());
+                dos.writeUTF(item.getValue());
+            });
 
             writeSections(dos, newResume);
         }
@@ -87,7 +87,7 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
     private void readSection(DataInputStream dis, Resume resume) throws IOException {
         readItemsWithException(dis, () -> {
             SectionType sectionType = SectionType.valueOf(dis.readUTF());
-            AbstractSection currentAbstractSection = null;
+            AbstractSection currentAbstractSection;
             switch (sectionType.name()) {
                 case "PERSONAL":
                 case "OBJECTIVE":
@@ -118,22 +118,22 @@ public class DataStreamSerializer implements StreamSerializerStrategy {
     private List<Organization> readOrganizationSection(DataInputStream dis) throws IOException {
         //read List<Organization>
         return
-            readList(dis, () ->
-                //read one Organization
-                new Organization(
-                        new Link(dis.readUTF(), dis.readUTF()),
-                        //read List<Organization.Position>
-                        readList(dis, () ->
-                                //read item held position in organization
-                                new Organization.Position(
-                                        YearMonth.parse(dis.readUTF()),
-                                        YearMonth.parse(dis.readUTF()),
-                                        dis.readUTF(),
-                                        dis.readUTF()
+                readList(dis, () ->
+                        //read one Organization
+                        new Organization(
+                                new Link(dis.readUTF(), dis.readUTF()),
+                                //read List<Organization.Position>
+                                readList(dis, () ->
+                                        //read item held position in organization
+                                        new Organization.Position(
+                                                YearMonth.parse(dis.readUTF()),
+                                                YearMonth.parse(dis.readUTF()),
+                                                dis.readUTF(),
+                                                dis.readUTF()
+                                        )
                                 )
                         )
-                )
-            );
+                );
     }
 
     private <T> List<T> readList(DataInputStream dis, ElementReader<T> elementReader) throws IOException {

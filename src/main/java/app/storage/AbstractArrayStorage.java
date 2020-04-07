@@ -3,9 +3,7 @@ package main.java.app.storage;
 import main.java.app.exception.StorageException;
 import main.java.app.model.Resume;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {

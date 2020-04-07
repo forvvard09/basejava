@@ -13,7 +13,7 @@ public class TestEnum {
         System.out.println(instance);
         System.out.println(instance.ordinal()); //выводит порядковый номер
         System.out.println();
-        for(SectionType type : SectionType.values()) {
+        for (SectionType type : SectionType.values()) {
             System.out.println(type.getTitle());
         }
     }

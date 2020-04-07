@@ -20,29 +20,30 @@ public class MainPrintListFilesOrDir {
             e.printStackTrace();
         }
         File[] listFilesHomework = dirPath.listFiles();
-            if (listFilesHomework != null) {
-                for (File file : listFilesHomework) {
-                    if (!file.isDirectory()) {
-                        for (int i = 0; i < level; i++) {
-                            System.out.print("   ");
-                        }
-                        System.out.println(file.getName());
-                    } else {
-                        listDir.add(file);
+        if (listFilesHomework != null) {
+            for (File file : listFilesHomework) {
+                if (!file.isDirectory()) {
+                    for (int i = 0; i < level; i++) {
+                        System.out.print("   ");
                     }
-                }
-                if (listDir.size() > 0) {
-                    level++;
-                    for(File dir: listDir) {
-                        for (int i = 0; i < level; i++) {
-                            System.out.print("..");
-                        }
-                        System.out.println(String.format("%s%s", dir.getName(), "/"));
-                        printListFiles(dir, level);
-                    }
+                    System.out.println(file.getName());
+                } else {
+                    listDir.add(file);
                 }
             }
+            if (listDir.size() > 0) {
+                level++;
+                for (File dir : listDir) {
+                    for (int i = 0; i < level; i++) {
+                        System.out.print("..");
+                    }
+                    System.out.println(String.format("%s%s", dir.getName(), "/"));
+                    printListFiles(dir, level);
+                }
+            }
+        }
     }
+
     public static void main(String[] args) throws IOException {
         //рекурсивный вывод имени файлов в каталогах и подкаталогах
         System.out.println("рекурсивный вывод имени файлов в каталогах и подкаталогах:");

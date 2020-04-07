@@ -34,7 +34,7 @@ public class MyConcurrencyNext {
 
 
         for (int i = 0; i < THREADS_NUMBER; i++) {
-            Future<Integer> future = executorService.submit(()->
+            Future<Integer> future = executorService.submit(() ->
 
 //            Thread thread = new Thread(() ->
             {

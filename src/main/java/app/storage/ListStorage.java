@@ -3,8 +3,6 @@ package main.java.app.storage;
 import main.java.app.model.Resume;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**

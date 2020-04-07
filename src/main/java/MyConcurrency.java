@@ -47,7 +47,7 @@ public class MyConcurrency {
         for (int i = 0; i < THREADS_NUMBER; i++) {
             Thread thread = new Thread(() -> {
                 for (int j = 0; j < 1000; j++) {
-                   myConcurrency.inc();
+                    myConcurrency.inc();
 //                      counter++;
                 }
             });
@@ -74,7 +74,7 @@ public class MyConcurrency {
     }
 
     private static void deadLock(Object lock1, Object lock2) {
-        new Thread(()-> {
+        new Thread(() -> {
             System.out.println("Waiting " + lock1);
             synchronized (lock1) {
                 System.out.println("Holding " + lock1);
@@ -91,9 +91,9 @@ public class MyConcurrency {
         }).start();
     }
 
-    private  void inc() {
-            synchronized (this) {
-                counter++;
-            }
+    private void inc() {
+        synchronized (this) {
+            counter++;
+        }
     }
 }

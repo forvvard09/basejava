@@ -87,19 +87,19 @@ public class ResumeTestData {
 
     private void setSectionExperience(Resume currentResume) {
         Organization experienceJavaOnline = new Organization("Java Online Projects", "",
-                             new Organization.Position(YearMonth.of(2013, 10),
+                new Organization.Position(YearMonth.of(2013, 10),
                         "Автор проекта",
                         "Создание, организация и проведение Java онлайн проектов и стажировок."));
 
         Organization experienceWrike = new Organization("Wrike", "",
-                        new Organization.Position(YearMonth.of(2014, 10),
-                                YearMonth.of(2016, 1),
-                                "Старший разработчик (backend)",
-                                "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."),
-                        new Organization.Position(YearMonth.of(2016, 2),
-                                YearMonth.of(2018, 11),
-                                "Главный разработчик (fullstack)",
-                                "Проектирование и разработка микросерверной инфраструктуры взаимодействия сервисов (JavaScript, Jquerry, Angular, Docker, Kubernetes)")
+                new Organization.Position(YearMonth.of(2014, 10),
+                        YearMonth.of(2016, 1),
+                        "Старший разработчик (backend)",
+                        "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."),
+                new Organization.Position(YearMonth.of(2016, 2),
+                        YearMonth.of(2018, 11),
+                        "Главный разработчик (fullstack)",
+                        "Проектирование и разработка микросерверной инфраструктуры взаимодействия сервисов (JavaScript, Jquerry, Angular, Docker, Kubernetes)")
         );
 
         AbstractSection experience = new OrganizationSection(Arrays.asList(experienceJavaOnline, experienceWrike));

@@ -2,6 +2,7 @@ package main.java.app.storage.serializer;
 
 import main.java.app.model.Resume;
 import main.java.app.util.JsonParser;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 

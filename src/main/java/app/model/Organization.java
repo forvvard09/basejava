@@ -147,8 +147,7 @@ public class Organization implements Serializable {
                 resultOrganizationPeriod = String.format("%s%s - %s %s %s", System.lineSeparator(), startData.toString(), currentlyTime, title, description.toString());
             } else if (description == null) {
                 resultOrganizationPeriod = String.format("%s%s - %s %s", System.lineSeparator(), startData.toString(), currentlyTime, title);
-            }
-              else {
+            } else {
                 resultOrganizationPeriod = String.format("%s - %s %s %s", System.lineSeparator(), startData.toString(), finishData.toString(), title, description.toString());
             }
             return resultOrganizationPeriod + System.lineSeparator();
