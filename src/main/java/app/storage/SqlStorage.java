@@ -77,12 +77,9 @@ public class SqlStorage implements Storage {
                     "WHERE s.resume_uuid = ?")) {
                 ps.setString(1, uuid);
                 ResultSet rs = ps.executeQuery();
-
-                if (rs.getString("type") != null) {
-                    while (rs.next()) {
-                        SectionType typeSection = SectionType.valueOf(rs.getString("type"));
-                        resume.setSection(typeSection, writeSections(typeSection, rs.getString("value"), resume.getUuid()));
-                    }
+                while (rs.next()) {
+                    SectionType typeSection = SectionType.valueOf(rs.getString("type"));
+                    resume.setSection(typeSection, writeSections(typeSection, rs.getString("value"), resume.getUuid()));
                 }
             }
             return null;
@@ -106,7 +103,7 @@ public class SqlStorage implements Storage {
     public void update(Resume newResume) {
         LOG.info("SqlStorage. Update resume. Uuid: " + newResume.getUuid());
         sqlHelper.transactionExecute(conn -> {
-            try (PreparedStatement ps = conn.prepareStatement("UPDATE Resume Set full_name = ? " +
+            try (PreparedStatement ps = conn.prepareStatement("UPDATE Resume Set full_name = ?" +
                     "WHERE resume.uuid = ?")) {
                         ps.setString(1, newResume.getFullName());
                         ps.setString(2, newResume.getUuid());
