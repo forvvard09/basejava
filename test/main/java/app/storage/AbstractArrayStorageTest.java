@@ -5,6 +5,8 @@ import main.java.app.model.Resume;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static main.java.app.storage.ResumeTestData.RESUME_TEST;
+
 public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
 
     protected AbstractArrayStorageTest(Storage storage) {

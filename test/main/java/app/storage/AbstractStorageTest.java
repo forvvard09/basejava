@@ -14,6 +14,7 @@ import org.junit.Test;
 import java.io.File;
 import java.util.*;
 
+import static main.java.app.storage.ResumeTestData.*;
 import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
@@ -23,25 +24,7 @@ public abstract class AbstractStorageTest {
 
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
     protected static final ResumeTestData testDataResume = new ResumeTestData();
-    protected static final String UUID_1 = UUID.randomUUID().toString();
-    protected static final String UUID_2 = UUID.randomUUID().toString();
-    protected static final String UUID_3 = UUID.randomUUID().toString();
-    protected static final String TEST_UID = UUID.randomUUID().toString();
-    protected static final Resume RESUME_TEST;
-    private static final Resume RESUME_ONE;
-    private static final Resume RESUME_TWO;
-    private static final Resume RESUME_THREE;
 
-    static {
-        //resume 1
-        RESUME_ONE = testDataResume.fillResume(UUID_1, "Name1");
-        //resume 2
-        RESUME_TWO = testDataResume.fillResume(UUID_2, "Name2");
-        //resume 3
-        RESUME_THREE = testDataResume.fillResume(UUID_3, "Name3");
-        //resume 4
-        RESUME_TEST = testDataResume.fillResume(TEST_UID, "NameTest");
-    }
 
     protected Storage storage;
     protected StreamSerializerStrategy strategyStream;
@@ -53,7 +36,7 @@ public abstract class AbstractStorageTest {
 
     @Before
     public void setUp() {
-//        storage.clear();
+        storage.clear();
         storage.save(RESUME_TWO);
         storage.save(RESUME_ONE);
         storage.save(RESUME_THREE);
@@ -61,7 +44,7 @@ public abstract class AbstractStorageTest {
 
     @After
     public void doClean() {
-        storage.clear();
+//        storage.clear();
     }
 
     @Test
