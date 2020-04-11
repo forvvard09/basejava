@@ -5,66 +5,46 @@ import main.java.app.model.*;
 import java.time.YearMonth;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class ResumeTestData {
 
-    public Resume fillResume(String uuid, String fullName) {
-        Resume currentResume = new Resume(uuid, fullName);
-        setSectionContacts(currentResume);
-        setSectionPersonal(currentResume);
-        setSectionObjective(currentResume);
-        setSectionAchievement(currentResume);
-        setSectionQualifications(currentResume);
-        /*
-        setSectionEducation(currentResume);
-        setSectionExperience(currentResume);*/
-        return currentResume;
-    }
+    public static final String UUID_1 = UUID.randomUUID().toString();
+    public static final String UUID_2 = UUID.randomUUID().toString();
+    public static final String UUID_3 = UUID.randomUUID().toString();
+    public static final String TEST_UID = UUID.randomUUID().toString();
 
-    private void setContactPhone(Resume currentResume) {
-        currentResume.setContact(ContactType.valueOf("PHONE"), "+7(921) 855-0482");
-    }
+    public static final Resume RESUME_TEST;
+    public static final Resume RESUME_ONE;
+    public static final Resume RESUME_TWO;
+    public static final Resume RESUME_THREE;
 
-    private void setContactSkype(Resume currentResume) {
-        currentResume.setContact(ContactType.valueOf("SKYPE"), "userSkype");
-    }
+    static {
+        //resume 1
+        RESUME_ONE = new Resume(UUID_1, "Name1");
+        //resume 2
+        RESUME_TWO = new Resume(UUID_2, "Name2");
+        //resume 3
+        RESUME_THREE = new Resume(UUID_3, "Name3");
+        //resume 4
+        RESUME_TEST = new Resume(TEST_UID, "NameTest");
 
-    private void setContactEmeil(Resume currentResume) {
-        currentResume.setContact(ContactType.valueOf("EMEIL"), "contact1@mail.ru");
-    }
-
-
-    private void setSectionContacts(Resume currentResume) {
-        currentResume.setContact(ContactType.valueOf("PHONE"), "+7(921) 855-0482");
-        currentResume.setContact(ContactType.valueOf("SKYPE"), "userSkype");
-        currentResume.setContact(ContactType.valueOf("EMEIL"), "contact1@mail.ru");
-    }
-
-    private void setSectionPersonal(Resume currentResume) {
         AbstractSection personal = new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
-        currentResume.setSection(SectionType.valueOf("PERSONAL"), personal);
-    }
 
-    private void setSectionObjective(Resume currentResume) {
+
         AbstractSection objective = new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
-        currentResume.setSection(SectionType.valueOf("OBJECTIVE"), objective);
-    }
 
-    private void setSectionAchievement(Resume currentResume) {
+
         AbstractSection achievement = new ListSection(Arrays.asList("С 2013 года: разработка проектов 'Разработка Web приложения','Java Enterprise', 'Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)'. Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.",
                 "Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.",
                 "Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM. Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления окружением на стеке: Scala/Play/Anorm/JQuery. Разработка SSO аутентификации и авторизации различных ERP модулей, интеграция CIFS/SMB java сервера."));
-        currentResume.setSection(SectionType.valueOf("ACHIEVEMENT"), achievement);
-    }
 
-    private void setSectionQualifications(Resume currentResume) {
+
         AbstractSection qualifications = new ListSection(Arrays.asList("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2",
                 "Родной русский, английский \"upper intermediate",
                 "JavaScript: jQuery, ExtJS, Bootstrap.js, underscore.js"));
-        currentResume.setSection(SectionType.valueOf("QUALIFICATIONS"), qualifications);
-    }
 
-    private void setSectionEducation(Resume currentResume) {
+
         Organization.Position firstPostion = new Organization.Position(YearMonth.of(2013, 3),
                 YearMonth.of(2013, 5),
                 "\"Functional Programming Principles in Scala> by Martin Odersky\"");
@@ -82,10 +62,8 @@ public class ResumeTestData {
 
         Organization educationLuxoft = new Organization(orgLuxoft, listPositionLuxoft);
         AbstractSection education = new OrganizationSection(Arrays.asList(educationCoursera, educationLuxoft));
-        currentResume.setSection(SectionType.valueOf("EDUCATION"), education);
-    }
 
-    private void setSectionExperience(Resume currentResume) {
+
         Organization experienceJavaOnline = new Organization("Java Online Projects", "",
                 new Organization.Position(YearMonth.of(2013, 10),
                         "Автор проекта",
@@ -103,6 +81,27 @@ public class ResumeTestData {
         );
 
         AbstractSection experience = new OrganizationSection(Arrays.asList(experienceJavaOnline, experienceWrike));
-        currentResume.setSection(SectionType.valueOf("EXPERIENCE"), experience);
+
+        RESUME_ONE.setContact(ContactType.valueOf("PHONE"), "+7(921) 855-0482");
+        RESUME_ONE.setContact(ContactType.valueOf("SKYPE"), "userSkype");
+        RESUME_ONE.setContact(ContactType.valueOf("EMEIL"), "contact1@mail.ru");
+        RESUME_ONE.setSection(SectionType.valueOf("PERSONAL"), personal);
+        RESUME_ONE.setSection(SectionType.valueOf("OBJECTIVE"), objective);
+        RESUME_ONE.setSection(SectionType.valueOf("ACHIEVEMENT"), achievement);
+        RESUME_ONE.setSection(SectionType.valueOf("QUALIFICATIONS"), qualifications);
+
+        RESUME_ONE.setSection(SectionType.valueOf("EXPERIENCE"), experience);
+
+        RESUME_TWO.setContact(ContactType.valueOf("PHONE"), "+7(921) 855-0482");
+        RESUME_TWO.setContact(ContactType.valueOf("EMEIL"), "contact1@mail.ru");
+        RESUME_TWO.setSection(SectionType.valueOf("PERSONAL"), personal);
+        RESUME_TWO.setSection(SectionType.valueOf("ACHIEVEMENT"), achievement);
+        RESUME_TWO.setSection(SectionType.valueOf("QUALIFICATIONS"), qualifications);
+        RESUME_TWO.setSection(SectionType.valueOf("EXPERIENCE"), experience);
+
+        RESUME_THREE.setSection(SectionType.valueOf("PERSONAL"), personal);
+        RESUME_THREE.setSection(SectionType.valueOf("ACHIEVEMENT"), achievement);
+        RESUME_THREE.setSection(SectionType.valueOf("EDUCATION"), education);
+        RESUME_THREE.setSection(SectionType.valueOf("EXPERIENCE"), experience);
     }
 }
