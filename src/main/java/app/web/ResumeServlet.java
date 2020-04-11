@@ -13,9 +13,18 @@ import java.util.List;
 import java.util.Map;
 
 public class ResumeServlet extends HttpServlet {
+    // предпочительнее делать так
+    //private Storage storage = Config.get().getStorage();
 
-    private Storage storage = Config.get().getStorage();
+    //в качестве примера
+    private Storage storage;
 
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        storage = Config.get().getStorage();
+
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -45,8 +54,9 @@ public class ResumeServlet extends HttpServlet {
         for (int i = 0; i < resumes.size(); i++) {
             bodyTable += "<tr>\n";
             bodyTable += "<td>" + (1 + i) + "</td>\n";
-            bodyTable += "<td>" + resumes.get(i).getUuid() + "</td>\n";
-            bodyTable += "<td>" + resumes.get(i).getFullName() + "</td>\n";
+            bodyTable += "<td> <a href=\"resume?uuid=" + resumes.get(i).getUuid() + "\">" + resumes.get(i).getFullName() + " </a></td>\n";
+            bodyTable += "<td>" + resumes.get(i).getContacts().get(ContactType.PHONE) + "</td>\n";
+
         }
         bodyTable += "</tr>\n";
         String table = String.format("<head>" + "<title>" + "%s" + "</title>" + "</head>" + "<body>\n" +

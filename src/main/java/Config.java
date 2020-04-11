@@ -12,7 +12,7 @@ import java.util.Properties;
 public class Config {
     //    private final static File PROPS = new File("./config/resumes.properties");
 //    private final static File PROPS = new File("C:/Users/poddubnyak/Dropbox/07 Programming/topJavaProjects/basejava/config/resumes.properties");
-    private final static File PROPS = new File("D:/Dropbox/07 Programming/topJavaProjects/basejava/config/resumes.properties");
+    private final static File PROPS = new File(getHomeDir(), "/config/resumes.properties");
 
     private static final Config INSTANCE = new Config();
 
@@ -26,13 +26,6 @@ public class Config {
 
 
     private Config() {
-
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
         try (InputStream is = new FileInputStream(PROPS)) {
             props.load(is);
             storageDir = new File(props.getProperty("storage.dir"));
@@ -69,5 +62,14 @@ public class Config {
 
     public Storage getStorage() {
         return storage;
+    }
+
+    public static File getHomeDir() {
+        String prop = System.getProperty("homeDir");
+        File homeDir = new File(prop != null ? prop : ".");
+        if (!homeDir.isDirectory()) {
+            throw new IllegalStateException(homeDir + "is not directory.");
+        }
+        return homeDir;
     }
 }
