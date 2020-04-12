@@ -13,7 +13,7 @@ public class MainLesson10 {
 
         Resume resume = new Resume("testResume");
         resume.setContact(ContactType.SKYPE, "userSkype");
-        resume.setContact(ContactType.EMEIL, "userEmeil");
+        resume.setContact(ContactType.EMAIL, "userEmail");
 
         System.out.println(resume);
         System.out.println(resume.getContacts());

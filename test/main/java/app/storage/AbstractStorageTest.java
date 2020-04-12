@@ -12,7 +12,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 import static main.java.app.storage.ResumeTestData.*;
 import static org.junit.Assert.assertEquals;

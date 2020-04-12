@@ -3,7 +3,7 @@ package main.java.app.model;
 public enum ContactType {
     PHONE("Телефон: "),
     SKYPE("Skype: "),
-    EMEIL("EMEIL: "),
+    EMAIL("EMAIL: "),
     LINKEDIN("Профиль LinkedIn: "),
     GITHUB("Профиль GitHub: "),
     STACKOVERFLOW("Профиль StackOveflow: ");

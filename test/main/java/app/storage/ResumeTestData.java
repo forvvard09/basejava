@@ -84,7 +84,7 @@ public class ResumeTestData {
 
         RESUME_ONE.setContact(ContactType.valueOf("PHONE"), "+7(921) 855-0482");
         RESUME_ONE.setContact(ContactType.valueOf("SKYPE"), "userSkype");
-        RESUME_ONE.setContact(ContactType.valueOf("EMEIL"), "contact1@mail.ru");
+        RESUME_ONE.setContact(ContactType.valueOf("EMAIL"), "contact1@mail.ru");
         RESUME_ONE.setSection(SectionType.valueOf("PERSONAL"), personal);
         RESUME_ONE.setSection(SectionType.valueOf("OBJECTIVE"), objective);
         RESUME_ONE.setSection(SectionType.valueOf("ACHIEVEMENT"), achievement);
@@ -93,7 +93,7 @@ public class ResumeTestData {
         RESUME_ONE.setSection(SectionType.valueOf("EXPERIENCE"), experience);
 
         RESUME_TWO.setContact(ContactType.valueOf("PHONE"), "+7(921) 855-0482");
-        RESUME_TWO.setContact(ContactType.valueOf("EMEIL"), "contact1@mail.ru");
+        RESUME_TWO.setContact(ContactType.valueOf("EMAIL"), "contact1@mail.ru");
         RESUME_TWO.setSection(SectionType.valueOf("PERSONAL"), personal);
         RESUME_TWO.setSection(SectionType.valueOf("ACHIEVEMENT"), achievement);
         RESUME_TWO.setSection(SectionType.valueOf("QUALIFICATIONS"), qualifications);
