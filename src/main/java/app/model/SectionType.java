@@ -5,8 +5,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public enum SectionType {
-    PERSONAL("Личные качества"),
     OBJECTIVE("Позиция"),
+    PERSONAL("Личные качества"),
     ACHIEVEMENT("Достижения"),
     QUALIFICATIONS("Квалификация"),
     EXPERIENCE("Опыт работы"),

@@ -62,7 +62,7 @@ public class ResumeServlet extends HttpServlet {
                 resume = storage.get(uuid);
                 break;
             default:
-                throw new IllegalArgumentException("Action " + action + "is legal");
+                throw new IllegalArgumentException("Action " + action + "is legal.");
         }
         request.setAttribute("resume", resume);
         request.getRequestDispatcher(("view".equals(action) ? "/WEB-INF/jsp/view.jsp" : "/WEB-INF/jsp/edit.jsp")

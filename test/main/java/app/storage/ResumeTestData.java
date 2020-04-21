@@ -45,14 +45,14 @@ public class ResumeTestData {
                 "JavaScript: jQuery, ExtJS, Bootstrap.js, underscore.js"));
 
 
-        Organization.Position firstPostion = new Organization.Position(YearMonth.of(2013, 3),
+        Organization.Position firstPosition = new Organization.Position(YearMonth.of(2013, 3),
                 YearMonth.of(2013, 5),
                 "\"Functional Programming Principles in Scala> by Martin Odersky\"");
 
-        Organization.Position secondPostion = new Organization.Position(YearMonth.of(2014, 1),
+        Organization.Position secondPosition = new Organization.Position(YearMonth.of(2014, 1),
                 YearMonth.of(2014, 5),
                 "\"Functional Programming Principles in Go> by Bobak\"");
-        List<Organization.Position> listPositionCoursera = Arrays.asList(firstPostion, secondPostion);
+        List<Organization.Position> listPositionCoursera = Arrays.asList(firstPosition, secondPosition);
 
         Organization educationCoursera = new Organization(new Link("Coursera", "coursera.ru"), listPositionCoursera);
 
@@ -94,12 +94,14 @@ public class ResumeTestData {
 
         RESUME_TWO.setContact(ContactType.valueOf("PHONE"), "+7(921) 855-0482");
         RESUME_TWO.setContact(ContactType.valueOf("EMAIL"), "contact1@mail.ru");
+        RESUME_TWO.setSection(SectionType.valueOf("OBJECTIVE"), objective);
         RESUME_TWO.setSection(SectionType.valueOf("PERSONAL"), personal);
         RESUME_TWO.setSection(SectionType.valueOf("ACHIEVEMENT"), achievement);
         RESUME_TWO.setSection(SectionType.valueOf("QUALIFICATIONS"), qualifications);
         RESUME_TWO.setSection(SectionType.valueOf("EXPERIENCE"), experience);
 
         RESUME_THREE.setSection(SectionType.valueOf("PERSONAL"), personal);
+        RESUME_THREE.setSection(SectionType.valueOf("OBJECTIVE"), objective);
         RESUME_THREE.setSection(SectionType.valueOf("ACHIEVEMENT"), achievement);
         RESUME_THREE.setSection(SectionType.valueOf("EDUCATION"), education);
         RESUME_THREE.setSection(SectionType.valueOf("EXPERIENCE"), experience);
