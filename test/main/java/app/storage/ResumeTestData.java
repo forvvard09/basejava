@@ -46,19 +46,18 @@ public class ResumeTestData {
 
 
         Organization.Position firstPosition = new Organization.Position(YearMonth.of(2013, 3),
-                YearMonth.of(2013, 5),
-                "\"Functional Programming Principles in Scala> by Martin Odersky\"");
+                YearMonth.of(2013, 5), "", "Functional Programming Principles in Scala - by Martin Odersky");
 
         Organization.Position secondPosition = new Organization.Position(YearMonth.of(2014, 1),
-                YearMonth.of(2014, 5),
-                "\"Functional Programming Principles in Go> by Bobak\"");
+                YearMonth.of(2014, 5), "", "Functional Programming Principles in Go - by Bobak");
+
         List<Organization.Position> listPositionCoursera = Arrays.asList(firstPosition, secondPosition);
 
         Organization educationCoursera = new Organization(new Link("Coursera", "coursera.ru"), listPositionCoursera);
 
         Link orgLuxoft = new Link("Luxoft", "");
         List<Organization.Position> listPositionLuxoft = Arrays.asList(new Organization.Position(YearMonth.of(2011, 3), YearMonth.of(2011, 4),
-                "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\""));
+                "", "Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.'"));
 
         Organization educationLuxoft = new Organization(orgLuxoft, listPositionLuxoft);
         AbstractSection education = new OrganizationSection(Arrays.asList(educationCoursera, educationLuxoft));
@@ -85,11 +84,15 @@ public class ResumeTestData {
         RESUME_ONE.setContact(ContactType.valueOf("PHONE"), "+7(921) 855-0482");
         RESUME_ONE.setContact(ContactType.valueOf("SKYPE"), "userSkype");
         RESUME_ONE.setContact(ContactType.valueOf("EMAIL"), "contact1@mail.ru");
+        RESUME_ONE.setContact(ContactType.valueOf("LINKEDIN"), "user01");
+        RESUME_ONE.setContact(ContactType.valueOf("GITHUB"), "user01");
+        RESUME_ONE.setContact(ContactType.valueOf("STACKOVERFLOW"), "user01");
+
         RESUME_ONE.setSection(SectionType.valueOf("PERSONAL"), personal);
         RESUME_ONE.setSection(SectionType.valueOf("OBJECTIVE"), objective);
         RESUME_ONE.setSection(SectionType.valueOf("ACHIEVEMENT"), achievement);
         RESUME_ONE.setSection(SectionType.valueOf("QUALIFICATIONS"), qualifications);
-
+        RESUME_ONE.setSection(SectionType.valueOf("EDUCATION"), education);
         RESUME_ONE.setSection(SectionType.valueOf("EXPERIENCE"), experience);
 
         RESUME_TWO.setContact(ContactType.valueOf("PHONE"), "+7(921) 855-0482");

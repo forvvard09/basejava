@@ -18,10 +18,22 @@ import java.util.*;
 public class Resume implements Comparable<Resume>, Serializable {
     private static final long serialVersionUID = 1L;
 
+    public static final Resume EMPTY = new Resume();
+
+    static {
+        EMPTY.setSection(SectionType.OBJECTIVE, TextSection.EMPTY);
+        EMPTY.setSection(SectionType.PERSONAL, TextSection.EMPTY);
+        EMPTY.setSection(SectionType.ACHIEVEMENT, ListSection.EMPTY);
+        EMPTY.setSection(SectionType.QUALIFICATIONS, ListSection.EMPTY);
+        EMPTY.setSection(SectionType.EDUCATION, new OrganizationSection(Organization.EMPTY));
+        EMPTY.setSection(SectionType.EXPERIENCE, new OrganizationSection(Organization.EMPTY));
+    }
+
     private String uuid;
     private String fullName;
-    private Map<SectionType, AbstractSection> sections;
-    private Map<ContactType, String> contacts;
+
+    private Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
+    private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
     public Resume() {
     }
@@ -35,8 +47,8 @@ public class Resume implements Comparable<Resume>, Serializable {
         Objects.requireNonNull(fullName, "fullName must not be null");
         this.uuid = uuid;
         this.fullName = fullName;
-        contacts = new EnumMap<>(ContactType.class);
-        sections = new EnumMap<>(SectionType.class);
+//        contacts = new EnumMap<>(ContactType.class);
+//        sections = new EnumMap<>(SectionType.class);
     }
 
     public String getUuid() {
@@ -60,6 +72,9 @@ public class Resume implements Comparable<Resume>, Serializable {
     }
 
     public void setContact(ContactType typeContact, String contact) {
+        /*if (contacts == null) {
+            contacts = new EnumMap<>(ContactType.class);
+        }*/
         contacts.put(typeContact, contact);
     }
 
@@ -72,7 +87,14 @@ public class Resume implements Comparable<Resume>, Serializable {
     }
 
     public void setSection(SectionType typeSection, AbstractSection section) {
+        /*if (sections == null) {
+            sections = new EnumMap<>(SectionType.class);
+        }*/
         sections.put(typeSection, section);
+    }
+
+    public void removeSection(SectionType typeSection) {
+        sections.remove(typeSection);
     }
 
     @Override

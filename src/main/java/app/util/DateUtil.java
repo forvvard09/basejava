@@ -17,4 +17,11 @@ public class DateUtil {
         if (date == null) return "";
         return date.equals(NOW) ? "н.в." : date.format(DATE_FORMATTER);
     }
+
+    public static YearMonth parse(String date) {
+        if (HtmlUtil.isEmpty(date) || "н.в.".equals(date)) {
+            return NOW;
+        }
+        return YearMonth.parse(date, DATE_FORMATTER);
+    }
 }

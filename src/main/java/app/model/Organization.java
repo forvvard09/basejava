@@ -17,8 +17,11 @@ import static main.java.app.util.DateUtil.NOW;
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    public static final Organization EMPTY = new Organization("", "", Position.EMPTY);
+
     private Link homePage;
     private List<Position> listPosition;
+
 
     public Organization() {
     }
@@ -69,6 +72,9 @@ public class Organization implements Serializable {
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
         private static final long serialVersionUID = 1L;
+
+        public static final Position EMPTY = new Position();
+
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private YearMonth startData;
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
@@ -81,23 +87,23 @@ public class Organization implements Serializable {
 
         public Position(YearMonth startData, YearMonth finishData, String title, String description) {
             Objects.requireNonNull(startData, "startData must not be null");
-            Objects.requireNonNull(title, "title must not be null");
+            Objects.requireNonNull(description, "description must not be null");
             this.startData = startData;
-            this.title = title;
+            this.title = title == null ? "" : title;
             this.finishData = finishData;
-            this.description = description == null ? "" : description;
+            this.description = description;
         }
 
-        public Position(YearMonth startData, String title) {
-            this(startData, NOW, title, null);
+        public Position(YearMonth startData, String description) {
+            this(startData, NOW, null, description);
         }
 
         public Position(YearMonth startData, String title, String description) {
             this(startData, NOW, title, description);
         }
 
-        public Position(YearMonth startData, YearMonth finishData, String title) {
-            this(startData, finishData, title, null);
+        public Position(YearMonth startData, YearMonth finishData, String description) {
+            this(startData, finishData, null, description);
         }
 
         public YearMonth getStartData() {

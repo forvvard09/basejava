@@ -21,6 +21,10 @@ public class Link implements Serializable {
         this.url = url == null ? "" : url;
     }
 
+    public Link(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
@@ -37,7 +41,7 @@ public class Link implements Serializable {
         Link link = (Link) o;
 
         if (!name.equals(link.name)) return false;
-        return url != null ? url.equals(link.url) : link.url == null;
+        return Objects.equals(url, link.url);
 
     }
 

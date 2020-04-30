@@ -23,7 +23,8 @@
             <c:forEach var="contactEntry" items="${resume.contacts}">
                 <jsp:useBean id="contactEntry"
                              type="java.util.Map.Entry<main.java.app.model.ContactType, java.lang.String>"/>
-                <%=contactEntry.getKey().toHtml(contactEntry.getValue())%>
+                <dfn><%=contactEntry.getKey().getTitle()%>
+                </dfn><%=contactEntry.getKey().toHtml(contactEntry.getValue())%>
                 <br/>
             </c:forEach>
         </p>
@@ -77,12 +78,12 @@
 
                                     <c:if test="${empty org.homePage.url}">
                                         <td>
-                                            <h3>${org.homePage.name}</h3>
+                                            <h4>${org.homePage.name}</h4>
                                         </td>
                                     </c:if>
                                     <c:if test="${not empty org.homePage.url}">
                                         <td>
-                                            <a href="${org.homePage.url}"><h3>${org.homePage.url}</h3></a>
+                                            <a href="${org.homePage.url}"><h4>${org.homePage.url}</h4></a>
                                         </td>
                                     </c:if>
                                 </tr>
@@ -94,8 +95,10 @@
                                         </td>
 
                                         <td>
-                                            <b>${position.title}</b>
-                                            <br>
+                                            <c:if test="${not empty position.title}">
+                                                <b>${position.title}</b>
+                                                <br>
+                                            </c:if>
                                                 ${position.description}
                                         </td>
                                     </tr>
@@ -109,7 +112,9 @@
         </table>
         </p>
     </c:if>
-    <button onclick="window.history.back()">OK</button>
+    <p style="text-align: center">
+        <button onclick="window.history.back()">OK</button>
+    </p>
 </section>
 <jsp:include page="fragment/footer.jsp"></jsp:include>
 </body>
